@@ -32,21 +32,30 @@
 //  Created by Manuel Deneu on 31/05/2018.
 //
 
+#include <str.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <assert.h>
 #include "WidgetImpl.h"
+#include <font/embedded.h>
 #include "AKButton.h"
 #include "AKColor.h"
+#include "window.h"
+#include "common.h" // draw_bevel
 
-static void AKWidgetInitBase( AKButton * button)
-{
-    
-    widget_t* self = (widget_t*) &button->button;
-    assert(self);
-    self->data = self;
-    
-    
-}
+//#include <drawctx.h>
+
+static pixel_t color_highlight = PIXEL(255, 255, 255, 255);
+static pixel_t color_shadow = PIXEL(255, 85, 85, 85);
+
+
+static void button_repaint(widget_t *widget);
+static void paint_internal(widget_t *widget);
+static void button_handle_position_event(widget_t *widget, pos_event_t event);
+
+
+
+static void AKButton_Draw(AKView * view , DrawContext* context);
 
 static void AKButton_destroy(widget_t *widget)
 {
@@ -60,22 +69,60 @@ static void AKButton_destroy(widget_t *widget)
     //deinit_button(&self->button);
 }
 
-bool AKButtonInit( AKButton * button , const char* text , uint16_t textSize)
+bool AKButtonInit( AKButton * button ,widget_t* parent, const char* text , uint16_t textSize)
 {
     assert(button);
     
-    if( init_button(&button->button, NULL /*Parent*/, NULL/* data */, text, textSize,
-                    AKColorTo8bit( &AKColorWhite) /* backgroundColor*/,
-                    AKColorTo8bit( &AKColorLightGray) /*foregroundColor*/,
-                    AKColorTo8bit( &AKColorBlack) /* textColor*/)
-       )
+    
+    const AKSize sizeView = AKSizeMake( 200 , 50  );
+    
+    if (AKViewInit( &button->view , parent , sizeView))
     {
         
-        button->button.widget.destroy = AKButton_destroy;
+        
+        source_init(&button->foregroundColor);
+        source_set_color(&button->foregroundColor, AKColorTo8bit(&AKColorLightGray));
+        
+        source_init(&button->textColor);
+        source_set_color(&button->textColor, AKColorTo8bit(&AKColorBlack) );
+        
+        
+        if (text == NULL)
+            button->text = NULL;
+        else
+            button->text = str_dup(text);
+        
+        errno_t rc = embedded_font_create(&button->font, textSize);
+        if (rc != EOK)
+        {
+            free(button->text);
+            button->text = NULL;
+            return false;
+        }
+        
+        /*
+    if( init_button(&button->button, NULL , NULL, text, textSize,
+                    AKColorTo8bit( &AKColorWhite) ,
+                    AKColorTo8bit( &AKColorLightGray) ,
+                    AKColorTo8bit( &AKColorBlack) )
+       )
+    {
+        */
+        
+        button->view.widget.destroy = AKButton_destroy;
         button->onClick = NULL;
         button->userPtr = NULL;
         
-        AKWidgetInitBase(button);
+        //button->view.widget.destroy = button_destroy;
+        //button->view.widget.reconfigure = button_reconfigure; UNUSED
+        //button->view.widget.rearrange = button_rearrange;
+        button->view.widget.repaint = button_repaint;
+        //button->view.widget.handle_keyboard_event = button_handle_keyboard_event;
+        button->view.widget.handle_position_event = button_handle_position_event;
+        
+        
+        button->view.Draw = AKButton_Draw;
+        
         return true;
     }
     
@@ -86,21 +133,21 @@ bool AKButtonInit( AKButton * button , const char* text , uint16_t textSize)
 void AKButtonDeInit( AKButton* button)
 {
     assert(button);
-    deinit_button(&button->button);
+    //deinit_button(&button->button);
 }
 
 widget_t* AKButtonGetWidget( AKButton * button)
 {
     assert(button);
     
-    return &button->button.widget;
+    return &button->view.widget;
 }
 
 static void Internal_onClick(widget_t *widget, void *data)
 {
     assert(widget);
     
-    AKButton* self = (AKButton*) widget->data;
+    AKButton* self = (AKButton*) widget;//widget->data;
     assert(self);
     
     if (self->onClick)
@@ -115,12 +162,121 @@ void AKButtonSetClickedAction( AKButton* button , AKButtonClicked action)
     
     button->onClick = action;
     sig_connect(
-                &button->button.clicked,
-                &button->button.widget,
+                &button->clicked,
+                &button->view.widget,
                 Internal_onClick);
 }
 
 
+static void AKButton_Draw(AKView * view , DrawContext* context)
+{
+    AKButton *btn = (AKButton *) view;
+    widget_t *widget = &view->widget;
+    
+    
+    source_t source;
+    source_init(&source);
+    
+    if ((widget->width >= 8) && (widget->height >= 8))
+    {
+        drawctx_set_source(context->ctx, &source);
+        
+        draw_bevel(context->ctx, &source, widget->hpos + 3, widget->vpos + 3,
+                   widget->width - 6, widget->height - 6, color_highlight,
+                   color_shadow);
+        
+        drawctx_set_source(context->ctx,&btn->foregroundColor );
+        
+        drawctx_transfer(context->ctx, widget->hpos + 4, widget->vpos + 4,
+                         widget->width - 8, widget->height - 8);
+    }
+    
+    sysarg_t cpt_width;
+    sysarg_t cpt_height;
+    font_get_box(btn->font, btn->text, &cpt_width, &cpt_height);
+    
+    if ((widget->width >= cpt_width) && (widget->height >= cpt_height)) {
+        sysarg_t x = ((widget->width - cpt_width) / 2) + widget->hpos;
+        sysarg_t y = ((widget->height - cpt_height) / 2) + widget->vpos;
+        
+        drawctx_set_source(context->ctx, &btn->textColor);
+        drawctx_set_font(context->ctx, btn->font);
+        
+        if (btn->text)
+            drawctx_print(context->ctx, btn->text, x, y);
+    }
+    
+}
 
+/* **** **** **** **** **** **** **** **** **** **** **** **** **** **** */
+
+
+static void button_handle_position_event(widget_t *widget, pos_event_t event)
+{
+    AKButton *btn = (AKButton *) widget;
+    widget->window->focus = widget;
+    
+    // TODO make the click logic more robust (mouse grabbing, mouse moves)
+    if (event.btn_num == 1)
+    {
+        if (event.type == POS_RELEASE)
+        {
+            sig_send(&btn->clicked, NULL);
+        }
+    }
+}
+
+static void button_repaint(widget_t *widget)
+{
+    paint_internal(widget);
+    window_damage(widget->window);
+}
+
+static void paint_internal(widget_t *widget)
+{
+    AKButton *btn = (AKButton *) widget;
+    
+    surface_t *surface = window_claim(btn->view.widget.window);
+    if (!surface)
+        window_yield(btn->view.widget.window);
+    
+    source_t source;
+    source_init(&source);
+    
+    drawctx_t drawctx;
+    drawctx_init(&drawctx, surface);
+    
+    drawctx_set_source(&drawctx, &btn->view.background);
+    drawctx_transfer(&drawctx, widget->hpos, widget->vpos,
+                     widget->width, widget->height);
+    
+    if ((widget->width >= 8) && (widget->height >= 8)) {
+        drawctx_set_source(&drawctx, &source);
+        draw_bevel(&drawctx, &source, widget->hpos + 3, widget->vpos + 3,
+                   widget->width - 6, widget->height - 6, color_highlight,
+                   color_shadow);
+        
+        drawctx_set_source(&drawctx,&btn->foregroundColor );
+        drawctx_transfer(&drawctx, widget->hpos + 4, widget->vpos + 4,
+                         widget->width - 8, widget->height - 8);
+    }
+    
+    sysarg_t cpt_width;
+    sysarg_t cpt_height;
+    font_get_box(btn->font, btn->text, &cpt_width, &cpt_height);
+    
+    if ((widget->width >= cpt_width) && (widget->height >= cpt_height)) {
+        sysarg_t x = ((widget->width - cpt_width) / 2) + widget->hpos;
+        sysarg_t y = ((widget->height - cpt_height) / 2) + widget->vpos;
+        
+        drawctx_set_source(&drawctx, &btn->textColor);
+        drawctx_set_font(&drawctx, btn->font);
+        
+        if (btn->text)
+            drawctx_print(&drawctx, btn->text, x, y);
+    }
+    
+    window_yield(btn->view.widget.window);
+}
     
 

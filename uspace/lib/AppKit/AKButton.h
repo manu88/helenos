@@ -35,7 +35,9 @@
 #ifndef AKButton_h
 #define AKButton_h
 
-#include <button.h>
+#include <AKView.h>
+#include <connection.h>
+//#include <button.h>
 
 
 
@@ -43,20 +45,18 @@ typedef struct _AKButton AKButton;
 
 typedef void (*AKButtonClicked)(AKButton * button);
 
-/*
- typedef struct button {
- widget_t widget;
- source_t background;
- source_t foreground;
- source_t text;
- char *caption;
- font_t *font;
- signal_t clicked;
- } button_t;
- */
+
 typedef struct _AKButton
 {
-    button_t button;  // needs to stay first!
+    AKView view; // needs to stay first!
+    
+    source_t foregroundColor;
+    source_t textColor;
+    
+    font_t *font;
+    
+    char *text;
+    signal_t clicked;
     
     void* userPtr;
     
@@ -70,7 +70,7 @@ typedef struct _AKButton
 /*
  Will reset fields like userPtr, onClick, etc !
  */
-bool AKButtonInit( AKButton * button , const char* text , uint16_t textSize);
+bool AKButtonInit( AKButton * button ,widget_t* parent, const char* text , uint16_t textSize);
 
 void AKButtonDeInit( AKButton* button);
 

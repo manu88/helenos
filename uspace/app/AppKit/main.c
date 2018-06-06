@@ -147,12 +147,12 @@ int main(int argc, char *argv[])
         return 4;
     }
     */
-    if (AKButtonInit( &btn_confirm , "Confirm" , 16) == false)
+    if (AKButtonInit( &btn_confirm , NULL/* parent*/ , "Confirm" , 16) == false)
     {
         return 5;
     }
 
-    if (AKButtonInit( &btn_cancel , "Cancel" , 16) == false)
+    if (AKButtonInit( &btn_cancel , NULL/* parent*/ ,"Cancel" , 16) == false)
     {
         return 6;
     }
