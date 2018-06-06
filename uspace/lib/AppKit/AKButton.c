@@ -43,18 +43,14 @@
 #include "window.h"
 #include "common.h" // draw_bevel
 
-//#include <drawctx.h>
+
 
 static pixel_t color_highlight = PIXEL(255, 255, 255, 255);
 static pixel_t color_shadow = PIXEL(255, 85, 85, 85);
 
+//static void button_handle_position_event(widget_t *widget, pos_event_t event);
 
-static void button_repaint(widget_t *widget);
-static void paint_internal(widget_t *widget);
-static void button_handle_position_event(widget_t *widget, pos_event_t event);
-
-
-
+static void AKButton_MouseEvent(AKView* view , const AKMouseEvent* event);
 static void AKButton_Draw(AKView * view , DrawContext* context);
 
 static void AKButton_destroy(widget_t *widget)
@@ -65,8 +61,7 @@ static void AKButton_destroy(widget_t *widget)
     assert(self );
     
     WidgetRemoveFromParent( widget);
-    //AKGridViewDeInit( self);
-    //deinit_button(&self->button);
+
 }
 
 bool AKButtonInit( AKButton * button ,widget_t* parent, const char* text , uint16_t textSize)
@@ -78,7 +73,6 @@ bool AKButtonInit( AKButton * button ,widget_t* parent, const char* text , uint1
     
     if (AKViewInit( &button->view , parent , sizeView))
     {
-        
         
         source_init(&button->foregroundColor);
         source_set_color(&button->foregroundColor, AKColorTo8bit(&AKColorLightGray));
@@ -100,29 +94,12 @@ bool AKButtonInit( AKButton * button ,widget_t* parent, const char* text , uint1
             return false;
         }
         
-        /*
-    if( init_button(&button->button, NULL , NULL, text, textSize,
-                    AKColorTo8bit( &AKColorWhite) ,
-                    AKColorTo8bit( &AKColorLightGray) ,
-                    AKColorTo8bit( &AKColorBlack) )
-       )
-    {
-        */
-        
         button->view.widget.destroy = AKButton_destroy;
         button->onClick = NULL;
         button->userPtr = NULL;
-        
-        //button->view.widget.destroy = button_destroy;
-        //button->view.widget.reconfigure = button_reconfigure; UNUSED
-        //button->view.widget.rearrange = button_rearrange;
-        button->view.widget.repaint = button_repaint;
-        //button->view.widget.handle_keyboard_event = button_handle_keyboard_event;
-        button->view.widget.handle_position_event = button_handle_position_event;
-        
-        
+
         button->view.Draw = AKButton_Draw;
-        
+        button->view.MouseEvent = AKButton_MouseEvent;
         return true;
     }
     
@@ -133,7 +110,11 @@ bool AKButtonInit( AKButton * button ,widget_t* parent, const char* text , uint1
 void AKButtonDeInit( AKButton* button)
 {
     assert(button);
-    //deinit_button(&button->button);
+    
+    free(button->text);
+    font_release(button->font);
+    
+    AKViewDeInit(&button->view);
 }
 
 widget_t* AKButtonGetWidget( AKButton * button)
@@ -208,75 +189,12 @@ static void AKButton_Draw(AKView * view , DrawContext* context)
     
 }
 
-/* **** **** **** **** **** **** **** **** **** **** **** **** **** **** */
-
-
-static void button_handle_position_event(widget_t *widget, pos_event_t event)
+static void AKButton_MouseEvent(AKView* view , const AKMouseEvent* event)
 {
-    AKButton *btn = (AKButton *) widget;
-    widget->window->focus = widget;
+    AKButton *btn = (AKButton *) view;
     
-    // TODO make the click logic more robust (mouse grabbing, mouse moves)
-    if (event.btn_num == 1)
+    if (event->state == AKMouseState_Release)
     {
-        if (event.type == POS_RELEASE)
-        {
-            sig_send(&btn->clicked, NULL);
-        }
+        sig_send(&btn->clicked, NULL);
     }
 }
-
-static void button_repaint(widget_t *widget)
-{
-    paint_internal(widget);
-    window_damage(widget->window);
-}
-
-static void paint_internal(widget_t *widget)
-{
-    AKButton *btn = (AKButton *) widget;
-    
-    surface_t *surface = window_claim(btn->view.widget.window);
-    if (!surface)
-        window_yield(btn->view.widget.window);
-    
-    source_t source;
-    source_init(&source);
-    
-    drawctx_t drawctx;
-    drawctx_init(&drawctx, surface);
-    
-    drawctx_set_source(&drawctx, &btn->view.background);
-    drawctx_transfer(&drawctx, widget->hpos, widget->vpos,
-                     widget->width, widget->height);
-    
-    if ((widget->width >= 8) && (widget->height >= 8)) {
-        drawctx_set_source(&drawctx, &source);
-        draw_bevel(&drawctx, &source, widget->hpos + 3, widget->vpos + 3,
-                   widget->width - 6, widget->height - 6, color_highlight,
-                   color_shadow);
-        
-        drawctx_set_source(&drawctx,&btn->foregroundColor );
-        drawctx_transfer(&drawctx, widget->hpos + 4, widget->vpos + 4,
-                         widget->width - 8, widget->height - 8);
-    }
-    
-    sysarg_t cpt_width;
-    sysarg_t cpt_height;
-    font_get_box(btn->font, btn->text, &cpt_width, &cpt_height);
-    
-    if ((widget->width >= cpt_width) && (widget->height >= cpt_height)) {
-        sysarg_t x = ((widget->width - cpt_width) / 2) + widget->hpos;
-        sysarg_t y = ((widget->height - cpt_height) / 2) + widget->vpos;
-        
-        drawctx_set_source(&drawctx, &btn->textColor);
-        drawctx_set_font(&drawctx, btn->font);
-        
-        if (btn->text)
-            drawctx_print(&drawctx, btn->text, x, y);
-    }
-    
-    window_yield(btn->view.widget.window);
-}
-    
-

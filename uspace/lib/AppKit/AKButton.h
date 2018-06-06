@@ -36,10 +36,7 @@
 #define AKButton_h
 
 #include <AKView.h>
-#include <connection.h>
-//#include <button.h>
-
-
+#include <connection.h> // signal_t
 
 typedef struct _AKButton AKButton;
 

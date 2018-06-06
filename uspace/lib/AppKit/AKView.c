@@ -230,6 +230,8 @@ static void AKView_handle_position_event(widget_t *widget, pos_event_t event)
     AKView *view = (AKView *) widget;
     assert(view);
     
+    widget->window->focus = widget;
+    
     if (view->MouseEvent)
     {
         AKMouseEvent ev;
