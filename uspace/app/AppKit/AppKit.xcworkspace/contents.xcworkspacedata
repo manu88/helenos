@@ -5,12 +5,6 @@
       location = "group:main.c">
    </FileRef>
    <FileRef
-      location = "group:Utils.h">
-   </FileRef>
-   <FileRef
-      location = "group:Utils.c">
-   </FileRef>
-   <FileRef
       location = "group:ApplicationKit.h">
    </FileRef>
    <FileRef
@@ -108,6 +102,12 @@
    </FileRef>
    <FileRef
       location = "group:WidgetImpl.c">
+   </FileRef>
+   <FileRef
+      location = "group:Utils.h">
+   </FileRef>
+   <FileRef
+      location = "group:Utils.c">
    </FileRef>
    <FileRef
       location = "group:upng.c">
