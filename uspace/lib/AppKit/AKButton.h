@@ -43,6 +43,17 @@ typedef struct _AKButton AKButton;
 
 typedef void (*AKButtonClicked)(AKButton * button);
 
+/*
+ typedef struct button {
+ widget_t widget;
+ source_t background;
+ source_t foreground;
+ source_t text;
+ char *caption;
+ font_t *font;
+ signal_t clicked;
+ } button_t;
+ */
 typedef struct _AKButton
 {
     button_t button;  // needs to stay first!

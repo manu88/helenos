@@ -4,115 +4,271 @@
    <FileRef
       location = "group:main.c">
    </FileRef>
-   <FileRef
-      location = "group:../../lib/AppKit/AKApplication.c">
-   </FileRef>
-   <FileRef
-      location = "group:../../lib/AppKit/AKApplication.h">
-   </FileRef>
-   <FileRef
-      location = "group:../../lib/AppKit/AKButton.c">
-   </FileRef>
-   <FileRef
-      location = "group:../../lib/AppKit/AKButton.h">
-   </FileRef>
-   <FileRef
-      location = "group:../../lib/AppKit/AKColor.c">
-   </FileRef>
-   <FileRef
-      location = "group:../../lib/AppKit/AKColor.h">
-   </FileRef>
-   <FileRef
-      location = "group:../../lib/AppKit/AKColorPickerWindow.c">
-   </FileRef>
-   <FileRef
-      location = "group:../../lib/AppKit/AKColorPickerWindow.h">
-   </FileRef>
-   <FileRef
-      location = "group:../../lib/AppKit/AKEvent.c">
-   </FileRef>
-   <FileRef
-      location = "group:../../lib/AppKit/AKEvent.h">
-   </FileRef>
-   <FileRef
-      location = "group:../../lib/AppKit/AKGeometry.c">
-   </FileRef>
-   <FileRef
-      location = "group:../../lib/AppKit/AKGeometry.h">
-   </FileRef>
-   <FileRef
-      location = "group:../../lib/AppKit/AKGridView.c">
-   </FileRef>
-   <FileRef
-      location = "group:../../lib/AppKit/AKGridView.h">
-   </FileRef>
-   <FileRef
-      location = "group:../../lib/AppKit/AKImage.c">
-   </FileRef>
-   <FileRef
-      location = "group:../../lib/AppKit/AKImage.h">
-   </FileRef>
-   <FileRef
-      location = "group:../../lib/AppKit/AKImageView.c">
-   </FileRef>
-   <FileRef
-      location = "group:../../lib/AppKit/AKImageView.h">
-   </FileRef>
-   <FileRef
-      location = "group:../../lib/AppKit/AKLabel.c">
-   </FileRef>
-   <FileRef
-      location = "group:../../lib/AppKit/AKLabel.h">
-   </FileRef>
-   <FileRef
-      location = "group:../../lib/AppKit/AKSlider.c">
-   </FileRef>
-   <FileRef
-      location = "group:../../lib/AppKit/AKSlider.h">
-   </FileRef>
-   <FileRef
-      location = "group:../../lib/AppKit/AKTextField.c">
-   </FileRef>
-   <FileRef
-      location = "group:../../lib/AppKit/AKTextField.h">
-   </FileRef>
-   <FileRef
-      location = "group:../../lib/AppKit/AKView.c">
-   </FileRef>
-   <FileRef
-      location = "group:../../lib/AppKit/AKView.h">
-   </FileRef>
-   <FileRef
-      location = "group:../../lib/AppKit/AKWindow.c">
-   </FileRef>
-   <FileRef
-      location = "group:../../lib/AppKit/AKWindow.h">
-   </FileRef>
-   <FileRef
-      location = "group:../../lib/AppKit/ApplicationKit.h">
-   </FileRef>
-   <FileRef
-      location = "group:../../lib/AppKit/DrawContext.c">
-   </FileRef>
-   <FileRef
-      location = "group:../../lib/AppKit/DrawContext.h">
-   </FileRef>
-   <FileRef
-      location = "group:../../lib/AppKit/upng.c">
-   </FileRef>
-   <FileRef
-      location = "group:../../lib/AppKit/upng.h">
-   </FileRef>
-   <FileRef
-      location = "group:../../lib/AppKit/Utils.c">
-   </FileRef>
-   <FileRef
-      location = "group:../../lib/AppKit/Utils.h">
-   </FileRef>
-   <FileRef
-      location = "group:../../lib/AppKit/WidgetImpl.c">
-   </FileRef>
-   <FileRef
-      location = "group:../../lib/AppKit/WidgetImpl.h">
-   </FileRef>
+   <Group
+      location = "container:"
+      name = "libAppKit">
+      <FileRef
+         location = "group:../../lib/AppKit/AKApplication.c">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/AppKit/AKApplication.h">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/AppKit/AKButton.c">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/AppKit/AKButton.h">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/AppKit/AKColor.c">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/AppKit/AKColor.h">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/AppKit/AKColorPickerWindow.c">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/AppKit/AKColorPickerWindow.h">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/AppKit/AKEvent.c">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/AppKit/AKEvent.h">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/AppKit/AKGeometry.c">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/AppKit/AKGeometry.h">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/AppKit/AKGridView.c">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/AppKit/AKGridView.h">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/AppKit/AKImage.c">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/AppKit/AKImage.h">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/AppKit/AKImageView.c">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/AppKit/AKImageView.h">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/AppKit/AKLabel.c">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/AppKit/AKLabel.h">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/AppKit/AKSlider.c">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/AppKit/AKSlider.h">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/AppKit/AKTextField.c">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/AppKit/AKTextField.h">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/AppKit/AKView.c">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/AppKit/AKView.h">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/AppKit/AKWindow.c">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/AppKit/AKWindow.h">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/AppKit/ApplicationKit.h">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/AppKit/DrawContext.c">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/AppKit/DrawContext.h">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/AppKit/upng.c">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/AppKit/upng.h">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/AppKit/Utils.c">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/AppKit/Utils.h">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/AppKit/WidgetImpl.c">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/AppKit/WidgetImpl.h">
+      </FileRef>
+   </Group>
+   <Group
+      location = "container:"
+      name = "gui">
+      <FileRef
+         location = "group:../../lib/gui/button.c">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/gui/button.h">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/gui/canvas.c">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/gui/canvas.h">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/gui/common.c">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/gui/common.h">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/gui/connection.c">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/gui/connection.h">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/gui/grid.c">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/gui/grid.h">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/gui/label.c">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/gui/label.h">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/gui/minimal.c">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/gui/minimal.h">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/gui/terminal.c">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/gui/terminal.h">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/gui/widget.c">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/gui/widget.h">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/gui/window.c">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/gui/window.h">
+      </FileRef>
+   </Group>
+   <Group
+      location = "group:../../lib/c/include/io"
+      name = "io">
+      <FileRef
+         location = "group:chargrid.h">
+      </FileRef>
+      <FileRef
+         location = "group:console.h">
+      </FileRef>
+      <FileRef
+         location = "group:con_srv.h">
+      </FileRef>
+      <FileRef
+         location = "group:input.h">
+      </FileRef>
+      <FileRef
+         location = "group:pixel.h">
+      </FileRef>
+      <FileRef
+         location = "group:klog.h">
+      </FileRef>
+      <FileRef
+         location = "group:style.h">
+      </FileRef>
+      <FileRef
+         location = "group:window.h">
+      </FileRef>
+      <FileRef
+         location = "group:concaps.h">
+      </FileRef>
+      <FileRef
+         location = "group:color.h">
+      </FileRef>
+      <FileRef
+         location = "group:output.h">
+      </FileRef>
+      <FileRef
+         location = "group:kbd_event.h">
+      </FileRef>
+      <FileRef
+         location = "group:serial.h">
+      </FileRef>
+      <FileRef
+         location = "group:pixelmap.h">
+      </FileRef>
+      <FileRef
+         location = "group:mode.h">
+      </FileRef>
+      <FileRef
+         location = "group:log.h">
+      </FileRef>
+      <FileRef
+         location = "group:printf_core.h">
+      </FileRef>
+      <FileRef
+         location = "group:keycode.h">
+      </FileRef>
+      <FileRef
+         location = "group:pos_event.h">
+      </FileRef>
+      <FileRef
+         location = "group:table.h">
+      </FileRef>
+      <FileRef
+         location = "group:chardev.h">
+      </FileRef>
+      <FileRef
+         location = "group:chardev_srv.h">
+      </FileRef>
+      <FileRef
+         location = "group:cons_event.h">
+      </FileRef>
+      <FileRef
+         location = "group:logctl.h">
+      </FileRef>
+      <FileRef
+         location = "group:charfield.h">
+      </FileRef>
+      <FileRef
+         location = "group:verify.h">
+      </FileRef>
+      <FileRef
+         location = "group:kio.h">
+      </FileRef>
+      <FileRef
+         location = "group:visualizer.h">
+      </FileRef>
+   </Group>
 </Workspace>

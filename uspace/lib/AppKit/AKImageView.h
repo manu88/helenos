@@ -52,7 +52,4 @@ typedef struct _AKImageView
 
 bool AKImageViewInitWithImage(AKImageView* imageView ,widget_t * parent, AKImage* image);
 
-
-
-
 #endif /* AKImageView_h */

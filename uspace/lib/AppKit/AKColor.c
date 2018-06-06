@@ -42,8 +42,8 @@ const AKColor AKColorWhite  = { 1.f , 1.f , 1.f , 1.f};
 const AKColor AKColorBlack  = { 0.f , 0.f , 0.f , 1.f};
 
 
-const AKColor AKColorGray        = { 0.7f , 0.7f , 0.7f , 1.f};
-const AKColor AKColorLightGray   = { 0.5f , 0.5f , 0.5f , 1.f};
+const AKColor AKColorGray        = { 0.5f , 0.5f , 0.5f , 1.f};
+const AKColor AKColorLightGray   = { 0.7f , 0.7f , 0.7f , 1.f};
 const AKColor AKColorDarkGray    = { 0.3f , 0.3f , 0.3f , 1.f};
 
 

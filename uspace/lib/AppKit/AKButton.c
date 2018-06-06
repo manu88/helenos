@@ -67,7 +67,7 @@ bool AKButtonInit( AKButton * button , const char* text , uint16_t textSize)
     if( init_button(&button->button, NULL /*Parent*/, NULL/* data */, text, textSize,
                     AKColorTo8bit( &AKColorWhite) /* backgroundColor*/,
                     AKColorTo8bit( &AKColorLightGray) /*foregroundColor*/,
-                    AKColorTo8bit( &AKColorDarkGray) /* textColor*/)
+                    AKColorTo8bit( &AKColorBlack) /* textColor*/)
        )
     {
         

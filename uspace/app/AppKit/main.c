@@ -26,8 +26,12 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+/*
+    AppKit library demo
+ */
+
 #include <assert.h>
-#include "ApplicationKit.h"
+#include <ApplicationKit.h>
 
 #include <stdbool.h>
 #include <stdio.h>
@@ -36,8 +40,6 @@
 #include <task.h>
 
 #include <window.h>
-
-#include "Utils.h"
 
 static void colorPickerWindowColorChanged(AKColorPickerWindow * colorPicker);
 
@@ -50,7 +52,7 @@ AKColorPickerWindow* colorPicker = NULL;
 
 AKImageView imageView;
 
-static int testImage()
+static int loadImage()
 {
     AKImage image;
     
@@ -122,7 +124,7 @@ int main(int argc, char *argv[])
 	
     assert(AKApplicationInstance != NULL);
     
-    if (testImage())
+    if (loadImage())
     {
         printf("Init imageView ok \n");
     }
