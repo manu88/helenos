@@ -1,2 +1,6 @@
-# Things to do
+# Things to fix
 - there's a lot of memory leaks that needs to be fixed.
+
+
+# Things to do
+- finish PNG reader

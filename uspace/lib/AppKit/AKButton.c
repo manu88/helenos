@@ -71,7 +71,7 @@ bool AKButtonInit( AKButton * button ,widget_t* parent, const char* text , uint1
     
     const AKSize sizeView = AKSizeMake( 200 , 50  );
     
-    if (AKViewInit( &button->view , parent , sizeView))
+    if (AKViewInit( &button->base.view , parent , sizeView))
     {
         
         source_init(&button->foregroundColor);
@@ -94,12 +94,12 @@ bool AKButtonInit( AKButton * button ,widget_t* parent, const char* text , uint1
             return false;
         }
         
-        button->view.widget.destroy = AKButton_destroy;
+        button->base.view.widget.destroy = AKButton_destroy;
         button->onClick = NULL;
         button->userPtr = NULL;
 
-        button->view.Draw = AKButton_Draw;
-        button->view.MouseEvent = AKButton_MouseEvent;
+        button->base.view.Draw = AKButton_Draw;
+        button->base.view.MouseEvent = AKButton_MouseEvent;
         return true;
     }
     
@@ -114,14 +114,14 @@ void AKButtonDeInit( AKButton* button)
     free(button->text);
     font_release(button->font);
     
-    AKViewDeInit(&button->view);
+    AKViewDeInit(&button->base.view);
 }
 
 widget_t* AKButtonGetWidget( AKButton * button)
 {
     assert(button);
     
-    return &button->view.widget;
+    return &button->base.view.widget;
 }
 
 static void Internal_onClick(widget_t *widget, void *data)
@@ -144,7 +144,7 @@ void AKButtonSetClickedAction( AKButton* button , AKButtonClicked action)
     button->onClick = action;
     sig_connect(
                 &button->clicked,
-                &button->view.widget,
+                &button->base.view.widget,
                 Internal_onClick);
 }
 

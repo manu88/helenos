@@ -35,7 +35,7 @@
 #ifndef AKButton_h
 #define AKButton_h
 
-#include <AKView.h>
+#include <AKControl.h>
 #include <connection.h> // signal_t
 
 typedef struct _AKButton AKButton;
@@ -45,7 +45,7 @@ typedef void (*AKButtonClicked)(AKButton * button);
 
 typedef struct _AKButton
 {
-    AKView view; // needs to stay first!
+    AKControl base; // needs to stay first!
     
     source_t foregroundColor;
     source_t textColor;

@@ -50,7 +50,6 @@ typedef struct _AKView
 {
     widget_t widget;
     
-    
     // 'private' Properties
     source_t background;
 

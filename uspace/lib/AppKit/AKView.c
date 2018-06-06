@@ -68,11 +68,12 @@ bool AKViewInit( AKView* view , widget_t* parent , AKSize size)
     view->widget.handle_keyboard_event = AKView_handle_keyboard_event;
     view->widget.handle_position_event = AKView_handle_position_event;
     
+    /*
     view->widget.width_min = size.width;
     view->widget.height_min = size.height;
     view->widget.width_ideal = view->widget.width_min;
     view->widget.height_ideal = view->widget.height_min;
-    
+    */
     
     source_init(&view->background);
     source_set_color(&view->background, AKColorTo8bit( &AKColorWhite));

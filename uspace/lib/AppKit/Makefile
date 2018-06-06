@@ -41,6 +41,7 @@ SOURCES = \
 	AKLabel.c \
 	AKButton.c \
 	AKView.c \
+	AKControl.c \
 	AKGridView.c \
 	AKColor.c \
 	AKSlider.c \

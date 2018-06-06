@@ -86,6 +86,12 @@
          location = "group:../../lib/AppKit/AKView.h">
       </FileRef>
       <FileRef
+         location = "group:../../lib/AppKit/AKControl.h">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/AppKit/AKControl.c">
+      </FileRef>
+      <FileRef
          location = "group:../../lib/AppKit/AKWindow.c">
       </FileRef>
       <FileRef
