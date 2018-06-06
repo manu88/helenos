@@ -71,7 +71,7 @@ typedef struct _AKView
 
 // Every callback will be set to NULL. You must set them after init
 
-bool AKViewInit( AKView* view , widget_t* parent , AKSize size);
+bool AKViewInit( AKView* view , widget_t* parent /*, AKSize size*/);
 void AKViewDeInit( AKView* view);
 
 void AKViewUpdateView( AKView* view);

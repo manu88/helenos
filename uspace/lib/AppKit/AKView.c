@@ -49,7 +49,7 @@ static void paint_internal(widget_t *widget);
 static void AKView_destroy(widget_t *widget);
 static void AKView_reconfigure(widget_t *widget);
 
-bool AKViewInit( AKView* view , widget_t* parent , AKSize size)
+bool AKViewInit( AKView* view , widget_t* parent /*, AKSize size*/)
 {
     assert(view );
     

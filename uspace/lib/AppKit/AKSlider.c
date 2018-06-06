@@ -42,11 +42,14 @@ static void AKSliderDraw(AKView * view , DrawContext* context/*, int x , int y ,
 bool AKSliderInit( AKSlider* slider , widget_t* parent)
 {
     
-    const AKSize sizeView = AKSizeMake( 200 , 50  );
     
-    if (AKViewInit( &slider->view , parent , sizeView))
+    
+    if (AKViewInit( &slider->view , parent /*, sizeView*/))
     {
         slider->value = 0.5;
+        
+        
+        const AKSize sizeView = AKSizeMake( 200 , 50  );
         
         slider->handleRect = AKRectMake(0,0, sizeView.width , sizeView.height);// AKViewGetBounds(&slider->view);
         

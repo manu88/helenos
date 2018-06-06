@@ -51,14 +51,14 @@ bool AKTextFieldInit( AKTextField* textField , widget_t* parent)
     assert(textField);
     
     
-    const AKSize sizeView = AKSizeMake( 200 , 50  );
+    //const AKSize sizeView = AKSizeMake( 200 , 50  );
     
-    if (AKViewInit( &textField->view , parent , sizeView))
+    if (AKViewInit( &textField->view , parent /*, sizeView*/))
     {
         // debug
         AKViewSetBackgroundColor(&textField->view , &AKColorGreen);
         
-        textField->text = str_dup("Button");
+        textField->text = str_dup("Label");
         textField->view.Draw = AKTextFieldDraw;
         
         textField->view.KeyEvent =AKTextFieldKeyEvent;
