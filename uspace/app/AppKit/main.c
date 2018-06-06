@@ -55,11 +55,11 @@ static int testImage()
     AKImage image;
     
     
-    //const char* fileP = "data/images/helenos.tga";
-    const char* fileP = "data/images/helenos.png";
+    const char* fileP = "data/images/helenos.tga";
+    //const char* fileP = "data/images/helenos.png";
     
-    //if ( AKImageInitWithTGAFile(&image ,fileP ) == false)
-    if ( AKImageInitWithPNGFile(&image ,fileP ) == false)
+    if ( AKImageInitWithTGAFile(&image ,fileP ) == false)
+    //if ( AKImageInitWithPNGFile(&image ,fileP ) == false)
     {
         return 0;
     }
