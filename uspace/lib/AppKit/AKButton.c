@@ -53,6 +53,7 @@ static pixel_t color_shadow = PIXEL(255, 85, 85, 85);
 static void AKButton_MouseEvent(AKView* view , const AKMouseEvent* event);
 static void AKButton_Draw(AKView * view , DrawContext* context);
 
+/*
 static void AKButton_destroy(widget_t *widget)
 {
     
@@ -63,6 +64,7 @@ static void AKButton_destroy(widget_t *widget)
     WidgetRemoveFromParent( widget);
 
 }
+ */
 
 bool AKButtonInit( AKButton * button ,widget_t* parent, const char* text , uint16_t textSize)
 {
@@ -99,7 +101,9 @@ bool AKButtonInit( AKButton * button ,widget_t* parent, const char* text , uint1
             return false;
         }
         
-        button->base.view.widget.destroy = AKButton_destroy;
+        //button->base.view.widget.destroy = AKButton_destroy;
+        
+        
         button->onClick = NULL;
         button->userPtr = NULL;
 
@@ -127,6 +131,21 @@ widget_t* AKButtonGetWidget( AKButton * button)
     assert(button);
     
     return &button->base.view.widget;
+}
+
+void AKButtonSetText( AKButton* button , const char*text)
+{
+    assert(button);
+    assert(text);
+    
+    if(button->text)
+    {
+        free(button->text);
+    }
+    
+    button->text = str_dup(text);
+    
+    AKViewUpdateView( (AKView* ) button);
 }
 
 static void Internal_onClick(widget_t *widget, void *data)

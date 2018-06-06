@@ -75,6 +75,7 @@ void AKButtonDeInit( AKButton* button);
 widget_t* AKButtonGetWidget( AKButton * button);
 
 void AKButtonSetClickedAction( AKButton* button , AKButtonClicked action);
-//bool AKButtonConnect( AKButton* button , AKButtonClicked method);
+
+void AKButtonSetText( AKButton* button , const char*text);
 
 #endif /* AKButton_h */

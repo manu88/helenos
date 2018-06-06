@@ -40,6 +40,7 @@
 #include "AKView.h"
 #include "AKColor.h"
 #include "AKEvent.h"
+#include "WidgetImpl.h"
 
 static void AKView_handle_position_event(widget_t *widget, pos_event_t event);
 static void AKView_handle_keyboard_event(widget_t *widget, kbd_event_t event);
@@ -127,6 +128,9 @@ static void AKView_destroy(widget_t *widget)
 {
     AKView *view = (AKView *) widget;
     assert(view);
+    
+    
+    WidgetRemoveFromParent(widget);
     
     if(view->RemovedFromParentEvent)
     {

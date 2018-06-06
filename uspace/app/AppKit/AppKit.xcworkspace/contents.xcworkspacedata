@@ -59,6 +59,12 @@
          location = "group:../../lib/AppKit/AKColor.h">
       </FileRef>
       <FileRef
+         location = "group:../../lib/AppKit/AKAlertWindow.h">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/AppKit/AKAlertWindow.c">
+      </FileRef>
+      <FileRef
          location = "group:../../lib/AppKit/AKColorPickerWindow.c">
       </FileRef>
       <FileRef

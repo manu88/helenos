@@ -111,6 +111,8 @@ static void on_cancel(AKButton *button)
     
     AKControlSetActive((AKControl*) &btn_confirm , !state);
     
+    AKButtonSetText( &btn_cancel , state? "Enable" : "Disable");
+    
 /*
     if (colorPicker)
     {
@@ -165,7 +167,7 @@ int main(int argc, char *argv[])
         return 5;
     }
 
-    if (AKButtonInit( &btn_cancel , NULL/* parent*/ ,"Cancel" , 16) == false)
+    if (AKButtonInit( &btn_cancel , NULL/* parent*/ ,"Disable" , 16) == false)
     {
         return 6;
     }

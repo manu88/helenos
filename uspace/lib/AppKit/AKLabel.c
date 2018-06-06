@@ -56,15 +56,18 @@
  */
 
 static void AKLabelDraw(AKView * view , DrawContext* context);
- 
- static void my_label_destroy(widget_t *widget)
- {
+
+
+/*
+static void my_label_destroy(widget_t *widget)
+{
  //    AKLabel *lbl = (AKLabel *) widget;
  
      WidgetRemoveFromParent( widget);
  
      //free(lbl);
  }
+ */
  
 
 bool AKLabelInit(AKLabel *lbl, widget_t *parent, const char *caption, uint16_t points/*, const AKColor* background, const AKColor* textColor*/ )
@@ -80,7 +83,8 @@ bool AKLabelInit(AKLabel *lbl, widget_t *parent, const char *caption, uint16_t p
         //lbl->view.widget.repaint = label_repaint;
         //lbl->view.widget.handle_keyboard_event = label_handle_keyboard_event;
         //lbl->view.widget.handle_position_event = label_handle_position_event;
-        lbl->view.widget.destroy = my_label_destroy;
+        
+        //lbl->view.widget.destroy = my_label_destroy;
 
         source_init(&lbl->text);
         source_set_color(&lbl->text, AKColorTo8bit( &AKColorBlue));
@@ -179,7 +183,6 @@ void AKLabelSetText( AKLabel* label , const char* text)
         window_refresh(label->view.widget.window);
     }
     
-    //label->label.rewrite(&label->label.widget, (void *) text);
 }
 
 

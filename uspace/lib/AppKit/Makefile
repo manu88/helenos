@@ -49,6 +49,7 @@ SOURCES = \
 	AKGeometry.c \
 	AKEvent.c \
 	AKColorPickerWindow.c \
+	AKAlertWindow.c \
 	AKApplication.c \
 	AKTextField.c \
 	

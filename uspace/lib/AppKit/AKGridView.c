@@ -41,6 +41,7 @@
 
 
 
+
 static void AKGridView_destroy(widget_t *widget)
 {
     
@@ -51,6 +52,7 @@ static void AKGridView_destroy(widget_t *widget)
     WidgetRemoveFromParent(widget);
     //AKGridViewDeInit( self);
 }
+
 
 bool AKGridViewInit(AKGridView *gridView, widget_t * parent, size_t cols , size_t rows)
 {
