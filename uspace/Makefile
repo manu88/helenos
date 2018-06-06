@@ -193,7 +193,7 @@ DIRS = \
 	drv/test/test3 \
 	drv/time/cmos-rtc \
 	app/AppKit \
-	
+
 
 ## sun4u driver won't compile on 32-bit targets
 ifeq ($(UARCH),sparc64)
@@ -252,7 +252,8 @@ LIBS = \
 	lib/pcut \
 	lib/bithenge \
 	lib/posix \
-	lib/ieee80211
+	lib/ieee80211 \
+	lib/AppKit \
 
 BASE_BUILDS := $(addsuffix .build,$(BASE_LIBS))
 BUILDS := $(addsuffix .build,$(DIRS) $(LIBS))

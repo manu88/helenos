@@ -27,20 +27,29 @@
 #
 
 USPACE_PREFIX = ../..
+LIBRARY = libAppKit
+LIBS = gui draw softrend compress graph math
+#LIBS = gui draw softrend compress AppKit
 
-# TODO: Should be just "AppKit", rest is transitive dependencies. "AppKit" needs to stay first !
-LIBS =  AppKit gui draw softrend compress  math
-
-
-BINARY = AppKit
-
-SOURCES = main.c \
-
-
-
-
-
-
-
+SOURCES = \
+	WidgetImpl.c \
+	upng.c \
+	Utils.c \
+	AKImage.c \
+	AKImageView.c \
+	AKWindow.c \
+	AKLabel.c \
+	AKButton.c \
+	AKView.c \
+	AKGridView.c \
+	AKColor.c \
+	AKSlider.c \
+	DrawContext.c \
+	AKGeometry.c \
+	AKEvent.c \
+	AKColorPickerWindow.c \
+	AKApplication.c \
+	AKTextField.c \
+	
 
 include $(USPACE_PREFIX)/Makefile.common
