@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:main.c">
+   </FileRef>
+   <FileRef
+      location = "group:Utils.h">
+   </FileRef>
+   <FileRef
+      location = "group:Utils.c">
+   </FileRef>
+   <FileRef
+      location = "group:ApplicationKit.h">
+   </FileRef>
+   <FileRef
+      location = "group:AKImageView.h">
+   </FileRef>
+   <FileRef
+      location = "group:AKImageView.c">
+   </FileRef>
+   <FileRef
+      location = "group:AKImage.h">
+   </FileRef>
+   <FileRef
+      location = "group:AKImage.c">
+   </FileRef>
+   <FileRef
+      location = "group:AKGridView.h">
+   </FileRef>
+   <FileRef
+      location = "group:AKGridView.c">
+   </FileRef>
+   <FileRef
+      location = "group:AKApplication.h">
+   </FileRef>
+   <FileRef
+      location = "group:AKApplication.c">
+   </FileRef>
+   <FileRef
+      location = "group:AKColorPickerWindow.h">
+   </FileRef>
+   <FileRef
+      location = "group:AKColorPickerWindow.c">
+   </FileRef>
+   <FileRef
+      location = "group:AKColor.h">
+   </FileRef>
+   <FileRef
+      location = "group:AKColor.c">
+   </FileRef>
+   <FileRef
+      location = "group:AKGeometry.h">
+   </FileRef>
+   <FileRef
+      location = "group:AKGeometry.c">
+   </FileRef>
+   <FileRef
+      location = "group:AKWindow.h">
+   </FileRef>
+   <FileRef
+      location = "group:AKWindow.c">
+   </FileRef>
+   <FileRef
+      location = "group:DrawContext.h">
+   </FileRef>
+   <FileRef
+      location = "group:DrawContext.c">
+   </FileRef>
+   <FileRef
+      location = "group:AKView.h">
+   </FileRef>
+   <FileRef
+      location = "group:AKView.c">
+   </FileRef>
+   <FileRef
+      location = "group:AKEvent.h">
+   </FileRef>
+   <FileRef
+      location = "group:AKEvent.c">
+   </FileRef>
+   <FileRef
+      location = "group:AKSlider.h">
+   </FileRef>
+   <FileRef
+      location = "group:AKSlider.c">
+   </FileRef>
+   <FileRef
+      location = "group:AKLabel.h">
+   </FileRef>
+   <FileRef
+      location = "group:AKLabel.c">
+   </FileRef>
+   <FileRef
+      location = "group:AKTextField.h">
+   </FileRef>
+   <FileRef
+      location = "group:AKTextField.c">
+   </FileRef>
+   <FileRef
+      location = "group:AKButton.h">
+   </FileRef>
+   <FileRef
+      location = "group:AKButton.c">
+   </FileRef>
+   <FileRef
+      location = "group:WidgetImpl.h">
+   </FileRef>
+   <FileRef
+      location = "group:WidgetImpl.c">
+   </FileRef>
+   <FileRef
+      location = "group:upng.c">
+   </FileRef>
+   <FileRef
+      location = "group:upng.h">
+   </FileRef>
+</Workspace>

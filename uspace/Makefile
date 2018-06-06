@@ -191,7 +191,9 @@ DIRS = \
 	drv/test/test1 \
 	drv/test/test2 \
 	drv/test/test3 \
-	drv/time/cmos-rtc
+	drv/time/cmos-rtc \
+	app/AppKit \
+	
 
 ## sun4u driver won't compile on 32-bit targets
 ifeq ($(UARCH),sparc64)
