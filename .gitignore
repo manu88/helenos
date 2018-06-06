@@ -423,3 +423,5 @@ tools/gcc-*.tar.bz2
 tools/gdb-*.tar.gz
 tools/sycek/
 tools/downloads/
+.DS_Store
+
