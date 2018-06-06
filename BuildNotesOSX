@@ -1,0 +1,79 @@
+HelenOS Macos Build notes (amd64)
+
+
+cd tools
+./toolchain.sh amd64
+
+
+* Error
+system (usually part of genisoimage).
+The following alternatives were tried:
+genisoimage --version
+mkisofs --version
+xorriso --version
+-> brew install cdrtools
+
+needs to manually create /usr/local/cross/ia64-pc-linux-gnu
+
+
+* make PROFILE=amd64
+needs to symlink python2 from python2.7 -ish
+
+
+HelenOS/uspace/lib/posix/Makefile needs some patching because of --remove-destination flag not being recognized by bsd's cp 
+
+Around line 115
+
+change cp --remove-destination [...] with
+rm -r -f $@
+cp -r  ../c/include $@
+
+
+
+
+* in file  HelenOS/boot/Makefile 
+
+line 56 : cp -r -L "$(USPACE_PATH)/lib/c/include/." "$(DIST_PATH)/inc/c/" -> change -r to -R (or remove -L ?)
+dito line 57 : cp -r -L "$(ROOT_PATH)/abi/include/." "$(DIST_PATH)/inc/c/" -> change -r to -R (or remove -L ?)
+
+
+* in file HelenOS/boot/Makefile.grub
+
+line 53 : $(GENISOIMAGE) -J -r -input-charset utf-8 -V "HelenOS-CD" -eltorito-boot $(ELTORITO) -no-emul-boot -boot-load-size 64 -boot-info-table -o $@ $(DISTROOT)/
+  	-> remove '-input-charset utf-8c'
+line 61 :change -r to -R (or remove -L ?)
+
+
+
+ Run with  qemu-system-x86_64 -m 256 -boot d -cdrom image.iso
+
+**** Compositor:
+comp:0/winreg
+
+
+
+
+**** Add apps:
+tuto:  http://www.helenos.org/wiki/AddingApp
+
+init is here : HelenOS/uspace/app/init/init.c 
+
+
+***** Use filesystem
+http://www.helenos.org/wiki/Tutorial
+
+create image disk
+dd if=/dev/zero of=disk.img bs=4096 count=1024
+
+in HelenOS
+loc show-cat disk
+mkfat --type 12 devices/\hw\pci0\00:01.0\ata-c1\d0
+mkdir /mnt
+mount fat /mnt devices/\hw\pci0\00:01.0\ata-c1\d0
+
+stop with : umount /mnt
+
+
+**** Harbour
+ 
+replace nproc with sysctl -n hw.physicalcpu (lines 335 389 )

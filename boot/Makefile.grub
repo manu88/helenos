@@ -50,7 +50,7 @@ all: $(BOOT_OUTPUT)
 
 $(BOOT_OUTPUT): build_dist
 ifeq ($(GRUB_ARCH),pc)
-	$(GENISOIMAGE) -J -r -input-charset utf-8 -V "HelenOS-CD" -eltorito-boot $(ELTORITO) -no-emul-boot -boot-load-size 64 -boot-info-table -o $@ $(DISTROOT)/
+	$(GENISOIMAGE) -J -r  -V "HelenOS-CD" -eltorito-boot $(ELTORITO) -no-emul-boot -boot-load-size 64 -boot-info-table -o $@ $(DISTROOT)/
 endif
 ifeq ($(GRUB_ARCH),efi)
 	$(GENISOIMAGE) -J -r -input-charset utf-8 -V "HelenOS-CD" --efi-boot $(ELTORITO) -o $@ $(DISTROOT)/
@@ -58,7 +58,7 @@ endif
 
 build_dist: clean $(COMPONENTS)
 	mkdir -p $(BOOT)
-	cp -r -L $(GRUB) $(BOOT)/grub
+	cp -R -L $(GRUB) $(BOOT)/grub
 ifeq ($(GRUB_ARCH),efi)
 	gunzip $(IMAGE)
 endif

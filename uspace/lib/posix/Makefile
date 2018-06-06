@@ -118,7 +118,8 @@ $(EXPORT_STARTUP_FILE): $(LIBC_STARTUP_FILE)
 	cp $< $@
 
 $(INCLUDE_LIBC): $(shell find ../c/include -name '*.h')
-	cp -r -L --remove-destination -T ../c/include $@
+	rm -r -f $@
+	cp -r ../c/include $@
 	find ../c/include -type f -and -not -name '*.h' -delete
 
 export: $(EXPORT_DIR)/config.mk $(EXPORT_DIR)/config.rc
