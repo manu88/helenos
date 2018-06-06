@@ -35,7 +35,7 @@
 #ifndef AKSlider_h
 #define AKSlider_h
 
-#include "AKView.h"
+#include "AKControl.h"
 
 
 typedef struct _AKSlider AKSlider;
@@ -45,7 +45,7 @@ typedef void (*AKSliderValueChanged)(AKSlider * slider);
 
 typedef struct _AKSlider
 {
-    AKView view;
+    AKControl base;
     void* userData;
     
     AKRect handleRect;

@@ -8,16 +8,49 @@
       location = "container:"
       name = "libAppKit">
       <FileRef
+         location = "group:../../lib/AppKit/ApplicationKit.h">
+      </FileRef>
+      <FileRef
          location = "group:../../lib/AppKit/AKApplication.c">
       </FileRef>
       <FileRef
          location = "group:../../lib/AppKit/AKApplication.h">
       </FileRef>
       <FileRef
+         location = "group:../../lib/AppKit/AKWindow.c">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/AppKit/AKWindow.h">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/AppKit/AKView.c">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/AppKit/AKView.h">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/AppKit/AKGridView.c">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/AppKit/AKGridView.h">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/AppKit/AKControl.h">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/AppKit/AKControl.c">
+      </FileRef>
+      <FileRef
          location = "group:../../lib/AppKit/AKButton.c">
       </FileRef>
       <FileRef
          location = "group:../../lib/AppKit/AKButton.h">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/AppKit/AKSlider.c">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/AppKit/AKSlider.h">
       </FileRef>
       <FileRef
          location = "group:../../lib/AppKit/AKColor.c">
@@ -44,12 +77,6 @@
          location = "group:../../lib/AppKit/AKGeometry.h">
       </FileRef>
       <FileRef
-         location = "group:../../lib/AppKit/AKGridView.c">
-      </FileRef>
-      <FileRef
-         location = "group:../../lib/AppKit/AKGridView.h">
-      </FileRef>
-      <FileRef
          location = "group:../../lib/AppKit/AKImage.c">
       </FileRef>
       <FileRef
@@ -68,37 +95,10 @@
          location = "group:../../lib/AppKit/AKLabel.h">
       </FileRef>
       <FileRef
-         location = "group:../../lib/AppKit/AKSlider.c">
-      </FileRef>
-      <FileRef
-         location = "group:../../lib/AppKit/AKSlider.h">
-      </FileRef>
-      <FileRef
          location = "group:../../lib/AppKit/AKTextField.c">
       </FileRef>
       <FileRef
          location = "group:../../lib/AppKit/AKTextField.h">
-      </FileRef>
-      <FileRef
-         location = "group:../../lib/AppKit/AKView.c">
-      </FileRef>
-      <FileRef
-         location = "group:../../lib/AppKit/AKView.h">
-      </FileRef>
-      <FileRef
-         location = "group:../../lib/AppKit/AKControl.h">
-      </FileRef>
-      <FileRef
-         location = "group:../../lib/AppKit/AKControl.c">
-      </FileRef>
-      <FileRef
-         location = "group:../../lib/AppKit/AKWindow.c">
-      </FileRef>
-      <FileRef
-         location = "group:../../lib/AppKit/AKWindow.h">
-      </FileRef>
-      <FileRef
-         location = "group:../../lib/AppKit/ApplicationKit.h">
       </FileRef>
       <FileRef
          location = "group:../../lib/AppKit/DrawContext.c">

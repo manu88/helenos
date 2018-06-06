@@ -15,7 +15,12 @@ typedef struct _AKControl
 {
     AKView view;
     
+    bool isActive; // defaut : true
+    
 } AKControl;
+
+
+bool AKControlInit( AKControl* control , widget_t* parent);
 
 
 

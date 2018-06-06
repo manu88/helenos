@@ -71,7 +71,7 @@ bool AKButtonInit( AKButton * button ,widget_t* parent, const char* text , uint1
     
     //const AKSize sizeView = AKSizeMake( 200 , 50  );
     
-    if (AKViewInit( &button->base.view , parent /*, sizeView*/))
+    if (AKControlInit( &button->base , parent /*, sizeView*/))
     {
         
         source_init(&button->foregroundColor);

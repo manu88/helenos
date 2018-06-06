@@ -44,7 +44,7 @@ bool AKSliderInit( AKSlider* slider , widget_t* parent)
     
     
     
-    if (AKViewInit( &slider->view , parent /*, sizeView*/))
+    if (AKControlInit( &slider->base , parent /*, sizeView*/))
     {
         slider->value = 0.5;
         
@@ -60,8 +60,8 @@ bool AKSliderInit( AKSlider* slider , widget_t* parent)
         slider->handleRect.size.width = 20;
         
         
-        slider->view.Draw = AKSliderDraw;
-        slider->view.MouseEvent = AKSliderMouseEvent;
+        slider->base.view.Draw = AKSliderDraw;
+        slider->base.view.MouseEvent = AKSliderMouseEvent;
         
         slider->onValueChange = NULL;
         
