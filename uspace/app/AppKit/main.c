@@ -196,10 +196,21 @@ int main(int argc, char *argv[])
     assert(gridW == b2W->parent);
     /* END TESTS */
     
+    AKAlertWindow popup;
+    
+    if ( AKAlertWindowInit(&popup , "Hello") == false)
+    {
+        return 8;
+    }
+    
+    AKWindowRun((AKWindow*) &popup);
+    
     AKWindowResize( &win , 0, 0, 430, 240, WINDOW_PLACEMENT_CENTER);
 
     AKWindowSetFocusedView( &win , (AKView*) &textField);
     AKWindowRun( &win);
+    
+    
     
     
     

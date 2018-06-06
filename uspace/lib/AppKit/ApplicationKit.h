@@ -59,6 +59,7 @@
 
 // Top level components
 #include <AKColorPickerWindow.h>
+#include <AKAlertWindow.h>
 #include <AKApplication.h>
 
 
