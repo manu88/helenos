@@ -65,6 +65,7 @@ extern void source_reset_transform(source_t *);
 extern void source_set_filter(source_t *, filter_t);
 
 extern void source_set_color(source_t *, pixel_t);
+extern pixel_t source_get_color( const source_t *);
 extern void source_set_texture(source_t *, surface_t *, pixelmap_extend_t);
 
 extern void source_set_alpha(source_t *, pixel_t);

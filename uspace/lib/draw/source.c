@@ -72,6 +72,11 @@ void source_set_color(source_t *source, pixel_t color)
 	source->color = color;
 }
 
+pixel_t source_get_color( const source_t *source)
+{
+    return source->color;
+}
+
 void source_set_texture(source_t *source, surface_t *texture,
     pixelmap_extend_t extend)
 {
