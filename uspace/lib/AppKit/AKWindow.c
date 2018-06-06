@@ -32,11 +32,16 @@
 //  Created by Manuel Deneu on 31/05/2018.
 //
 
+#include <stdio.h>
 #include <assert.h>
 #include "AKWindow.h"
 #include "AKView.h"
 
 #define DEFAULT_COMPOSITOR (const char*)"comp:0/winreg"
+
+static void AKWindowRoot_destroy(widget_t *widget);
+
+
 
 
 bool AKWindowInitWithName( AKWindow *win , window_flags_t flags , const char* name)
@@ -46,7 +51,11 @@ bool AKWindowInitWithName( AKWindow *win , window_flags_t flags , const char* na
     
     win->win = window_open(DEFAULT_COMPOSITOR, NULL, flags, name);
     
+    win->win->root.destroy = AKWindowRoot_destroy;
     
+    win->win->root.data = win;
+    
+    win->OnEvent = NULL;
     win->isOpen = false;
     return win->win != NULL;
 }
@@ -140,5 +149,17 @@ bool AKWindowHasFocus( const AKWindow* win)
     return win->win->is_focused;
 }
 
+static void AKWindowRoot_destroy(widget_t *widget)
+{
+    AKWindow* win = (AKWindow*) widget->data;
+    
+    assert(win);
+    
+    if(win->OnEvent)
+    {
+        win->OnEvent(win , AKWindowEvent_Closed);
+    }
+    widget_deinit(widget);
+}
 
 

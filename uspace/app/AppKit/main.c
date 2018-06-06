@@ -78,6 +78,18 @@ static int loadImage()
     return 1;
 }
 
+static void onColorPickerWindowEvent(AKWindow * window, AKWindowEvent event   )
+{
+    assert( colorPicker != NULL);
+    assert( window == (AKWindow *) colorPicker);
+    printf("Received ColorPickerWindowEvent :  %i\n" , event);
+    
+    //AKWindowClose( (AKWindow*) colorPicker);
+    
+    //free(colorPicker);
+    colorPicker = NULL;
+}
+
 static void on_confirm(AKButton * button)
 {
     assert(button == &btn_confirm);
@@ -86,6 +98,8 @@ static void on_confirm(AKButton * button)
     if(colorPicker == NULL)
     {
         colorPicker = AKColorPickerWindowCreate("Color picker", NULL ,colorPickerWindowColorChanged);
+        
+        ((AKWindow*)colorPicker)->OnEvent = onColorPickerWindowEvent;
         AKWindowRun( (AKWindow*) colorPicker);
     }
 }
@@ -93,7 +107,7 @@ static void on_confirm(AKButton * button)
 static void on_cancel(AKButton *button)
 {
     assert(button == &btn_cancel);
-
+/*
     if (colorPicker)
     {
         AKWindowClose( (AKWindow*) colorPicker);
@@ -101,6 +115,7 @@ static void on_cancel(AKButton *button)
         //free(colorPicker);
         colorPicker = NULL;
     }
+ */
 }
 
 static void colorPickerWindowColorChanged(AKColorPickerWindow * colorPicker)
@@ -136,6 +151,8 @@ int main(int argc, char *argv[])
         return 2;
     }
     
+    
+    
     if (AKTextFieldInit(&textField , NULL)== false)
     {
         return 5;
@@ -147,7 +164,7 @@ int main(int argc, char *argv[])
         return 4;
     }
     */
-    if (AKButtonInit( &btn_confirm , NULL/* parent*/ , "Confirm" , 16) == false)
+    if (AKButtonInit( &btn_confirm , NULL/* parent*/ , "Show colors" , 16) == false)
     {
         return 5;
     }

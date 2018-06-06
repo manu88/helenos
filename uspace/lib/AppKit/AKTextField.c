@@ -50,7 +50,6 @@ bool AKTextFieldInit( AKTextField* textField , widget_t* parent)
 {
     assert(textField);
     
-    
     //const AKSize sizeView = AKSizeMake( 200 , 50  );
     
     if (AKViewInit( &textField->view , parent /*, sizeView*/))

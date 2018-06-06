@@ -38,13 +38,22 @@
 
 #include <window.h>
 
+typedef enum
+{
+  AKWindowEvent_Closed
+} AKWindowEvent;
+
 typedef struct _AKView AKView;
 
+typedef struct _AKWindow AKWindow;
 typedef struct _AKWindow
 {
     window_t *win;
     
     bool isOpen; // Temp hack TODO: find a better system
+    
+    
+    void (*OnEvent)(AKWindow * window, AKWindowEvent event   );
 } AKWindow;
 
 /*
