@@ -35,10 +35,10 @@
 #ifndef AKColorPickerWindow_h
 #define AKColorPickerWindow_h
 
-#include "AKWindow.h"
-#include "AKLabel.h"
-#include "AKSlider.h"
-#include "AKGridView.h"
+#include <AKWindow.h>
+#include <AKLabel.h>
+#include <AKSlider.h>
+#include <AKGridView.h>
 #include <grid.h>
 
 typedef struct _AKColorPickerWindow AKColorPickerWindow;

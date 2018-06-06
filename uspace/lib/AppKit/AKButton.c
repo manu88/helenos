@@ -80,6 +80,11 @@ bool AKButtonInit( AKButton * button ,widget_t* parent, const char* text , uint1
         source_init(&button->textColor);
         source_set_color(&button->textColor, AKColorTo8bit(&AKColorBlack) );
         
+        source_init(&button->inactiveTextColor);
+        source_set_color(&button->inactiveTextColor, AKColorTo8bit(&AKColorGray) );
+        
+        
+        
         
         if (text == NULL)
             button->text = NULL;
@@ -180,7 +185,8 @@ static void AKButton_Draw(AKView * view , DrawContext* context)
         sysarg_t x = ((widget->width - cpt_width) / 2) + widget->hpos;
         sysarg_t y = ((widget->height - cpt_height) / 2) + widget->vpos;
         
-        drawctx_set_source(context->ctx, &btn->textColor);
+        drawctx_set_source(context->ctx, AKControlIsActive(&btn->base)? &btn->textColor : &btn->inactiveTextColor );
+        
         drawctx_set_font(context->ctx, btn->font);
         
         if (btn->text)
@@ -191,10 +197,17 @@ static void AKButton_Draw(AKView * view , DrawContext* context)
 
 static void AKButton_MouseEvent(AKView* view , const AKMouseEvent* event)
 {
+    
     AKButton *btn = (AKButton *) view;
+    
+    if (AKControlIsActive(&btn->base) ==false)
+    {
+        return ;
+    }
     
     if (event->state == AKMouseState_Release)
     {
         sig_send(&btn->clicked, NULL);
     }
+
 }

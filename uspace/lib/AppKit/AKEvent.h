@@ -36,7 +36,7 @@
 #define AKEvent_h
 
 #include <io/keycode.h>
-#include "AKGeometry.h"
+#include <AKGeometry.h>
 #include <wchar.h>
 
 typedef enum

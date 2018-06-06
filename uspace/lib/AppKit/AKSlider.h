@@ -35,7 +35,7 @@
 #ifndef AKSlider_h
 #define AKSlider_h
 
-#include "AKControl.h"
+#include <AKControl.h>
 
 
 typedef struct _AKSlider AKSlider;

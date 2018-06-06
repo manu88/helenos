@@ -38,7 +38,7 @@
 #include <drawctx.h>
 #include <surface.h>
 #include <io/pixel.h>
-#include "AKGeometry.h"
+#include <AKGeometry.h>
 
 typedef struct
 {

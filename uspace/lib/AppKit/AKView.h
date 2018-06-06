@@ -38,11 +38,11 @@
 #include <source.h>
 //#include <adt/list.h>
 
-#include "widget.h"
-#include "AKColor.h"
-#include "DrawContext.h"
-#include "AKGeometry.h"
-#include "AKEvent.h"
+#include <widget.h>
+#include <AKColor.h>
+#include <DrawContext.h>
+#include <AKGeometry.h>
+#include <AKEvent.h>
 
 typedef struct _AKView AKView;
 

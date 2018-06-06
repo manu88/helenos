@@ -22,6 +22,7 @@ typedef struct _AKControl
 
 bool AKControlInit( AKControl* control , widget_t* parent);
 
-
+void AKControlSetActive( AKControl* control , bool active);
+bool AKControlIsActive( const AKControl* control);
 
 #endif /* AKControl_h */

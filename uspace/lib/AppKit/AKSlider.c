@@ -42,23 +42,22 @@ static void AKSliderDraw(AKView * view , DrawContext* context/*, int x , int y ,
 bool AKSliderInit( AKSlider* slider , widget_t* parent)
 {
     
-    
-    
     if (AKControlInit( &slider->base , parent /*, sizeView*/))
     {
         slider->value = 0.5;
         
         
-        const AKSize sizeView = AKSizeMake( 200 , 50  );
         
-        slider->handleRect = AKRectMake(0,0, sizeView.width , sizeView.height);// AKViewGetBounds(&slider->view);
+        
+        //slider->handleRect = AKRectMake(0,0, sizeView.width , sizeView.height);// AKViewGetBounds(&slider->view);
         
         //printf("AKSliderInit.handleRect : %f %f %f %f\n" , slider->handleRect.origin.x , slider->handleRect.origin.y , slider->handleRect.size.width , slider->handleRect.size.height );
         
+        /*
         slider->handleRect.origin.y += 5;
         slider->handleRect.size.height -= 10;
         slider->handleRect.size.width = 20;
-        
+        */
         
         slider->base.view.Draw = AKSliderDraw;
         slider->base.view.MouseEvent = AKSliderMouseEvent;
@@ -119,9 +118,15 @@ static void AKSliderDraw(AKView * view , DrawContext* context/*, int x , int y ,
     */
     //printf("Draw handle at rect : %f %f %f %f\n" , handleRect.origin.x , handleRect.origin.y , handleRect.size.width , handleRect.size.height );
     
+    
+    self->handleRect.size.height = bounds.size.height - 10;
+    self->handleRect.size.width  = 20;
     self->handleRect.origin = bounds.origin;
+    
     self->handleRect.origin.y += 5;
     self->handleRect.origin.x = self->value* bounds.size.width;
+    
+    
     DrawContextRect( context ,AKColorTo8bit(&self->handleColor) ,&self->handleRect);
 }
 
@@ -130,6 +135,12 @@ static void AKSliderMouseEvent(AKView* view , const AKMouseEvent* event)
     AKSlider* self = (AKSlider*) view;
     
     assert(self && event);
+    
+    if (AKControlIsActive(&self->base) ==false)
+    {
+        return ;
+    }
+    
     
     if (event->state == AKMouseState_Press)
     {

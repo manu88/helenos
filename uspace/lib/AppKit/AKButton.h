@@ -49,6 +49,7 @@ typedef struct _AKButton
     
     source_t foregroundColor;
     source_t textColor;
+    source_t inactiveTextColor;
     
     font_t *font;
     

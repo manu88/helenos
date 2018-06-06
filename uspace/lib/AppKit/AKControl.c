@@ -21,3 +21,25 @@ bool AKControlInit( AKControl* control , widget_t* parent)
     
     return false;
 }
+
+
+void AKControlSetActive( AKControl* control , bool active)
+{
+    assert(control);
+    
+    
+    const bool changed = control->isActive != active;
+    control->isActive = active;
+    
+    if (changed)
+    {
+        AKViewUpdateView(&control->view);
+    }
+}
+
+bool AKControlIsActive( const AKControl* control)
+{
+    assert(control);
+    
+    return control->isActive;
+}

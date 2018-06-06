@@ -39,27 +39,27 @@
 #define ApplicationKitVersion_Min   (int) 0
 #define ApplicationKitVersion_Patch (int) 0
 
-#include "AKView.h"
+#include <AKView.h>
 
-#include "AKWindow.h"
+#include <AKWindow.h>
 
-#include "AKColor.h"
-#include "AKGeometry.h"
+#include <AKColor.h>
+#include <AKGeometry.h>
 
-#include "AKEvent.h"
-#include "AKImage.h"
+#include <AKEvent.h>
+#include <AKImage.h>
 
 // Basic components
-#include "AKGridView.h"
-#include "AKLabel.h"
-#include "AKButton.h"
-#include "AKSlider.h"
-#include "AKTextField.h"
-#include "AKImageView.h"
+#include <AKGridView.h>
+#include <AKLabel.h>
+#include <AKButton.h>
+#include <AKSlider.h>
+#include <AKTextField.h>
+#include <AKImageView.h>
 
 // Top level components
-#include "AKColorPickerWindow.h"
-#include "AKApplication.h"
+#include <AKColorPickerWindow.h>
+#include <AKApplication.h>
 
 
 

@@ -35,7 +35,7 @@
 #ifndef AKLabel_h
 #define AKLabel_h
 
-#include "AKColor.h"
+#include <AKColor.h>
 #include <label.h>
 
 typedef struct

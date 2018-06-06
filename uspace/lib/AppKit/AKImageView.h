@@ -35,8 +35,8 @@
 #ifndef AKImageView_h
 #define AKImageView_h
 
-#include "AKView.h"
-#include "AKImage.h"
+#include <AKView.h>
+#include <AKImage.h>
 #include "canvas.h"
 
 typedef struct _AKImageView

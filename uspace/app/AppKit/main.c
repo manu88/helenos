@@ -107,6 +107,11 @@ static void on_confirm(AKButton * button)
 static void on_cancel(AKButton *button)
 {
     assert(button == &btn_cancel);
+    
+    bool state = AKControlIsActive( (AKControl*) &btn_confirm);
+    
+    AKControlSetActive((AKControl*) &btn_confirm , !state);
+    
 /*
     if (colorPicker)
     {
