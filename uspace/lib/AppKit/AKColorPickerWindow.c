@@ -78,7 +78,7 @@ bool AKColorPickerWindowInitWithTitle(AKColorPickerWindow* colorPicker , const c
         colorPicker->sliderB.userData = colorPicker;
         colorPicker->sliderB.onValueChange = sliderColorChanged;
         
-        AKGridViewAdd(&colorPicker->grid ,&colorPicker->colorLabel.label.widget ,0, 0, 2, 1);
+        AKGridViewAdd(&colorPicker->grid , (widget_t *)&colorPicker->colorLabel ,0, 0, 2, 1);
         
         if (AKGridViewAdd(&colorPicker->grid , (widget_t*) &colorPicker->sliderR ,0, 2, 2, 1) == false)
         {

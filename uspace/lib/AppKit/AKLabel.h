@@ -36,11 +36,18 @@
 #define AKLabel_h
 
 #include <AKColor.h>
-#include <label.h>
-
+//#include <label.h>
+#include <AKView.h>
 typedef struct
 {
-    label_t label;  // needs to stay first!
+    AKView view;
+    //label_t label;  // needs to stay first!
+    //widget_t widget;
+    //source_t background;
+    source_t text;
+    char *caption;
+    font_t *font;
+    //slot_t rewrite;
     
 } AKLabel;
 

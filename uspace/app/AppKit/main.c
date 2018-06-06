@@ -49,7 +49,6 @@ AKWindow win;
 AKButton btn_confirm;
 AKButton btn_cancel;
 AKColorPickerWindow* colorPicker = NULL;
-
 AKImageView imageView;
 
 static int loadImage()
@@ -149,26 +148,18 @@ int main(int argc, char *argv[])
         printf("Init imageView ok \n");
     }
     
-    /* TEMP */
     
     if (AKWindowInit( &win,  WINDOW_MAIN | WINDOW_DECORATED | WINDOW_RESIZEABLE) == 0)
     {
         return 2;
     }
     
-    
-    
     if (AKTextFieldInit(&textField , NULL)== false)
     {
         return 5;
     }
     
-    /*
-    if (AKLabelInit(&label, NULL, "Hello there!", 16  ) == false)
-    {
-        return 4;
-    }
-    */
+
     if (AKButtonInit( &btn_confirm , NULL/* parent*/ , "Show colors" , 16) == false)
     {
         return 5;
@@ -193,7 +184,6 @@ int main(int argc, char *argv[])
     AKGridViewAdd(&gridView, AKButtonGetWidget(&btn_cancel),  1, 1, 1, 1);
     AKGridViewAdd(&gridView, &imageView.canvas.widget,  0, 2, 1, 1);
     
-    
     /* Some tests*/
     widget_t* gridW = (widget_t*) &gridView.grid;
     
@@ -213,27 +203,10 @@ int main(int argc, char *argv[])
     
     
     
-    printf("Start running \n");
+    
     //task_retval(0);
     async_manager();
     
-    printf("Stop running \n");
-    /*
-     AKGridView gridView;
-     AKTextField textField;
-     AKWindow win;
-     AKButton btn_confirm;
-     AKButton btn_cancel;
-     AKColorPickerWindow colorPicker;
-     */
-    
-    /*
-    AKGridViewDeInit(&gridView);
-    AKButtonDeInit(&btn_confirm);
-    AKButtonDeInit(&btn_cancel);
-    */
-    
-    //AKWindowDeInit(&win);
     return 0;
 	
 }

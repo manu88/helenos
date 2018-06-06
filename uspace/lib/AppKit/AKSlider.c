@@ -36,7 +36,7 @@
 #include "AKSlider.h"
 
 static void AKSliderMouseEvent(AKView* view , const AKMouseEvent* event);
-static void AKSliderDraw(AKView * view , DrawContext* context/*, int x , int y , int width , int height*/);
+static void AKSliderDraw(AKView * view , DrawContext* context);
 
 
 bool AKSliderInit( AKSlider* slider , widget_t* parent)
