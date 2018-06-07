@@ -58,7 +58,7 @@ typedef struct _AKView
     // no default implementation
     void (*GeometryChanged)(AKView * view , int x , int y , int width , int height);
     
-    void (*Draw)(AKView * view , DrawContext* context/*, int x , int y , int width , int height*/);
+    void (*Draw)(AKView * view , DrawContext* context );
     
     void (*MouseEvent)(AKView* view , const AKMouseEvent* event);
     void (*KeyEvent)(AKView* view , const AKKeyEvent* event);

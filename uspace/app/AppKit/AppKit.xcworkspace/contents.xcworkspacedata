@@ -8,6 +8,9 @@
       location = "container:"
       name = "libAppKit">
       <FileRef
+         location = "group:../../lib/AppKit/AKCommonsPriv.h">
+      </FileRef>
+      <FileRef
          location = "group:../../lib/AppKit/AKFont.h">
       </FileRef>
       <FileRef

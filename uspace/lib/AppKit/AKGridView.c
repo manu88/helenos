@@ -32,8 +32,8 @@
 //  Created by Manuel Deneu on 04/06/2018.
 //
 
-#include <stdio.h>
-#include <assert.h>
+
+#include "AKCommonsPriv.h"
 #include "AKGridView.h"
 #include "WidgetImpl.h"
 #include "AKColor.h"
@@ -44,8 +44,6 @@
 
 static void AKGridView_destroy(widget_t *widget)
 {
-    
-    printf("AKGridView_destroy\n");
     AKGridView *self = (AKGridView *) widget;
     assert(self );
     

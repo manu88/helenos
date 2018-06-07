@@ -32,11 +32,11 @@
 //  Created by Manuel Deneu on 01/06/2018.
 //
 
+#include <AKCommonsPriv.h>
 #include <str.h>
-#include <assert.h>
-#include <stdio.h>
+#include "AKCommonsPriv.h"
 #include <window.h>
-#include <font/embedded.h>
+
 #include <stdlib.h>
 #include "AKTextField.h"
 #include "AKColor.h"
@@ -61,12 +61,22 @@ bool AKTextFieldInit( AKTextField* textField , widget_t* parent)
         textField->view.Draw = AKTextFieldDraw;
         
         textField->view.KeyEvent =AKTextFieldKeyEvent;
-        textField->fontSizeInPoints = 16;
+        textField->fontSizeInPoints = FontDefaultSize;
         
         
         source_init(&textField->textColor);
         source_set_color(&textField->textColor, AKColorTo8bit( &AKColorRed));
         
+        
+        textField->font = AKFontGet( EmbeddedFontName , textField->fontSizeInPoints );
+        
+        if ( textField->font.handle == NULL)
+        {
+
+            return false;
+        }
+        
+        /*
         errno_t rc = embedded_font_create(&textField->font, textField->fontSizeInPoints);
         if (rc != EOK)
         {
@@ -74,6 +84,7 @@ bool AKTextFieldInit( AKTextField* textField , widget_t* parent)
             
             return false;
         }
+         */
         
         
         textField->textDidChange = NULL;
@@ -109,7 +120,7 @@ static void AKTextFieldKeyEvent(AKView* view , const AKKeyEvent* event)
         }
         else if (event->key == KC_ENTER)
         {
-            printf("Got KC_ENTER\n");
+            AK_DEBUG_LOG("Got KC_ENTER\n");
         }
         else if (event->c)
         {
@@ -145,28 +156,19 @@ static void AKTextFieldDraw(AKView * view , DrawContext* context)
     
     
     DrawContextSetSource( context , &self->textColor);
-    DrawContextSetFont(context , self->font);
+    DrawContextSetFont(context , self->font.handle);
 
     
     AKSize textSize;
     
-    if (DrawContextGetTextSize( context , self->font, self->text, &textSize) == false)
+    if (DrawContextGetTextSize( context , self->font.handle, self->text, &textSize) == false)
     {
         assert(false);
     }
     
-
-    
-//    printf("Text size %f %f \n", textSize.width , textSize.height);
-    
-
-    AKPoint textPos = AKPointMake( 50 , 50);
-    DrawContextAddText(context, self->text, &textPos);
-    //drawctx_print( context->ctx, self->text, x, y);
+    DrawContextAddText(context, self->text, AKPointMake( 50 , 50) );
 
 }
-
-
 
 void AKTextFieldSetTextColor( AKTextField* textField , const AKColor* color)
 {

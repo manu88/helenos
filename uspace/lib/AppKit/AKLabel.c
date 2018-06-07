@@ -35,14 +35,13 @@
 #include <str.h>
 #include <drawctx.h>
 #include <stdlib.h>
-#include <assert.h>
-#include <stdio.h>
+#include "AKCommonsPriv.h"
 #include "AKLabel.h"
 #include "WidgetImpl.h"
 #include "AKColor.h"
 #include <source.h>
 #include <window.h>
-#include <font/embedded.h>
+
 
 /*
  static void deinit_my_label(AKLabel *lbl)
@@ -182,6 +181,10 @@ static void AKLabelDraw(AKView * view , DrawContext* context)
         drawctx_set_font(context->ctx, label->font.handle);
         
         if (label->caption)
-            drawctx_print( context->ctx, label->caption, x, y);
+        {
+            //DrawContextAddText(context, btn->text, AKPointMake( x, y) );
+            DrawContextAddText(context , label->caption, AKPointMake( x, y) );
+            //drawctx_print( context->ctx, label->caption, x, y);
+        }
     }
 }

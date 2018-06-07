@@ -50,7 +50,7 @@ typedef struct _AKWindow
 {
     window_t *win;
     
-    bool isOpen; // Temp hack TODO: find a better system
+    //bool isOpen; // Temp hack TODO: find a better system
     
     
     void (*OnEvent)(AKWindow * window, AKWindowEvent event   );

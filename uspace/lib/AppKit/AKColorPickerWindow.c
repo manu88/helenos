@@ -32,9 +32,9 @@
 //  Created by Manuel Deneu on 01/06/2018.
 //
 
+#include <stdio.h> // snprintf
 #include <stdlib.h> // malloc
-#include <stdio.h>
-#include <assert.h>
+#include "AKCommonsPriv.h"
 #include "AKColorPickerWindow.h"
 
 
@@ -57,7 +57,7 @@ bool AKColorPickerWindowInitWithTitle(AKColorPickerWindow* colorPicker , const c
             return false;
         }
         
-        if (AKLabelInit(&colorPicker->colorLabel, NULL, "R:0.5 G:0.5 B:0.5", 24  ) == false)
+        if (AKLabelInit(&colorPicker->colorLabel, NULL, "R:0.5 G:0.5 B:0.5", 20  ) == false)
         {
             // TODO: Fix mem leak here
             return false;
@@ -85,17 +85,17 @@ bool AKColorPickerWindowInitWithTitle(AKColorPickerWindow* colorPicker , const c
         
         if (AKGridViewAdd(&colorPicker->grid , (AKView*) &colorPicker->sliderR ,0, 2, 2, 1) == false)
         {
-            printf("Error adding sliderR\n");
+            assert(false);
         }
         
         if (AKGridViewAdd(&colorPicker->grid , (AKView*) &colorPicker->sliderG ,0, 3, 2, 1) == false)
         {
-            printf("Error adding sliderG\n");
+            assert(false);
         }
         
         if (AKGridViewAdd(&colorPicker->grid , (AKView*) &colorPicker->sliderB ,0, 4, 2, 1) == false)
         {
-            printf("Error adding sliderB\n");
+            assert(false);
         }
         
         AKWindowResize( &colorPicker->win , 0, 0, 430, 240, WINDOW_PLACEMENT_CENTER | WINDOW_PLACEMENT_TOP);

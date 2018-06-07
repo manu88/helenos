@@ -33,11 +33,10 @@
 //
 
 #include <str.h>
-#include <stdio.h>
 #include <stdlib.h>
-#include <assert.h>
+#include "AKCommonsPriv.h"
 #include "WidgetImpl.h"
-#include <font/embedded.h>
+
 #include "AKButton.h"
 #include "AKColor.h"
 #include "window.h"
@@ -57,7 +56,7 @@ static void AKButton_Draw(AKView * view , DrawContext* context);
 static void AKButton_destroy(widget_t *widget)
 {
     
-    printf("AKButton removed\n");
+    
     AKButton *self = (AKButton *) widget;
     assert(self );
     
@@ -213,7 +212,10 @@ static void AKButton_Draw(AKView * view , DrawContext* context)
         drawctx_set_font(context->ctx, btn->font.handle);
         
         if (btn->text)
-            drawctx_print(context->ctx, btn->text, x, y);
+        {
+            DrawContextAddText(context, btn->text, AKPointMake( x, y) );
+            //drawctx_print(context->ctx, btn->text, x, y);
+        }
     }
     
 }

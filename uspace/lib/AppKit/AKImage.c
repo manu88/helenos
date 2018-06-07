@@ -31,7 +31,8 @@
 //
 //  Created by Manuel Deneu on 04/06/2018.
 //
-#include <assert.h>
+#include <AKCommonsPriv.h>
+#include "AKCommonsPriv.h"
 #include <codec/tga.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -66,7 +67,7 @@ bool AKImageInitWithTGAData(AKImage* image, void* data, size_t dataSize)
     
     if(surface == NULL)
     {
-        printf("Unable to decode TGA Data.\n");
+        AK_DEBUG_LOG("Unable to decode TGA Data.\n");
         return false;
     }
     
@@ -116,13 +117,13 @@ bool AKImageInitWithPNGData(AKImage* image, void* data, size_t dataSize)
     
     if( png == NULL )
     {
-        printf("Unable to create PNG From Data\n");
+        AK_DEBUG_LOG("Unable to create PNG From Data\n");
         return false;
     }
     
     if (upng_get_error(png) == UPNG_EOK)
     {
-        printf("error: %u %u\n", upng_get_error(png), upng_get_error_line(png));
+        AK_DEBUG_LOG("error: %u %u\n", upng_get_error(png), upng_get_error_line(png));
         return false;
     }
     
@@ -147,19 +148,19 @@ bool AKImageInitWithPNGFile(AKImage* image, const char* pngFilePath)
     
     if( png == NULL )
     {
-        printf("Unable to create PNG From File '%s'\n" , pngFilePath);
+        AK_DEBUG_LOG("Unable to create PNG From File '%s'\n" , pngFilePath);
         return false;
     }
     
-    printf("png from '%s' ok\n" , pngFilePath);
+    AK_DEBUG_LOG("png from '%s' ok\n" , pngFilePath);
     
     unsigned width = upng_get_width(png);
     unsigned height = upng_get_height(png);
-    unsigned depth = upng_get_bpp(png) / 8;
+    //unsigned depth = upng_get_bpp(png) / 8;
     
-    printf("size:    %ux%ux%u (%u)\n", width, height, upng_get_bpp(png), upng_get_size(png));
-    printf("format:    %u\n", upng_get_format(png));
-    printf("depth:    %u\n", depth);
+    AK_DEBUG_LOG("size:    %ux%ux%u (%u)\n", width, height, upng_get_bpp(png), upng_get_size(png));
+    AK_DEBUG_LOG("format:    %u\n", upng_get_format(png));
+    AK_DEBUG_LOG("depth:    %u\n", upng_get_bpp(png) / 8);
     
     
     //width  = 196;

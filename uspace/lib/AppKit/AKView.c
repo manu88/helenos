@@ -32,8 +32,8 @@
 //  Created by Manuel Deneu on 31/05/2018.
 //
 
-#include <stdio.h>
-#include <assert.h>
+
+#include "AKCommonsPriv.h"
 #include <window.h>
 #include <drawctx.h>
 #include <path.h>
@@ -139,13 +139,13 @@ static void AKView_destroy(widget_t *widget)
     {
         view->RemovedFromParentEvent(view);
     }
-    //printf("AKView_destroy called\n");
+    
     widget_deinit( widget );
 }
 
 static void AKView_reconfigure(widget_t *widget)
 {
-    //printf("AKView_reconfigure\n");
+
     /* No-op */
 }
 
@@ -188,8 +188,6 @@ static void paint_internal(widget_t *widget)
 static void AKView_rearrange(widget_t *widget, sysarg_t hpos, sysarg_t vpos,
                            sysarg_t width, sysarg_t height)
 {
-    //printf("AKView_rearrange\n");
-    
     widget_modify(widget, hpos, vpos, width, height);
     paint_internal(widget);
     
@@ -197,8 +195,6 @@ static void AKView_rearrange(widget_t *widget, sysarg_t hpos, sysarg_t vpos,
 
 static void AKView_repaint(widget_t *widget)
 {
-    //printf("AKView_repaint\n");
-    
    paint_internal(widget); 
    window_damage(widget->window);
 }
@@ -276,31 +272,7 @@ static void AKView_handle_position_event(widget_t *widget, pos_event_t event)
         
         view->MouseEvent( view , &ev);
     }
-    /*
-     event.btn_num = 1 : left, 2 : right
-     */
-    /*
-    printf("AKView_handle_position_event (%li %li)(%li) : " , event.vpos , event.hpos , event.btn_num);
-    
-    if (event.type == POS_RELEASE)
-    {
-        printf("Release \n");
-    }
-    else if (event.type == POS_PRESS)
-    {
-        printf("Press \n");
-    }
-    else if (event.type == POS_UPDATE)
-    {
-        printf("Move \n");
-    }
-    */
-    /*
-    if (event.btn_num == 1)
-    {
-        
-    }
-     */
+
 }
 
 

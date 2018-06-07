@@ -32,7 +32,7 @@
 //  Created by Manuel Deneu on 04/06/2018.
 //
 
-#include <assert.h>
+#include "AKCommonsPriv.h"
 #include <adt/list.h>
 #include "WidgetImpl.h"
 

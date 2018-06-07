@@ -32,7 +32,6 @@
 //  Created by Manuel Deneu on 31/05/2018.
 //
 
-#include <stdio.h>
 #include "AKSlider.h"
 
 static void AKSliderMouseEvent(AKView* view , const AKMouseEvent* event);
@@ -86,7 +85,7 @@ static void AKSliderDraw(AKView * view , DrawContext* context/*, int x , int y ,
     assert(self);
     
     AKRect bounds = AKViewGetBounds(view);
-    //printf("AKSliderDraw rect : %f %f %f %f\n" , bounds.origin.x , bounds.origin.y , bounds.size.width , bounds.size.height );
+    
     
     //lineTo2(context ,AKColorTo8bit(&AKColorGreen), bounds.origin.x, bounds.origin.y, 100, 50 , 10.);
     lineTo2(context ,AKColorTo8bit( &AKColorLightGray ),
@@ -103,7 +102,7 @@ static void AKSliderDraw(AKView * view , DrawContext* context/*, int x , int y ,
     handleRect.size.height -= 10;
     handleRect.size.width = 20;
     */
-    //printf("Draw handle at rect : %f %f %f %f\n" , handleRect.origin.x , handleRect.origin.y , handleRect.size.width , handleRect.size.height );
+    
     
     
     self->handleRect.size.height = bounds.size.height - 10;
@@ -138,8 +137,6 @@ static void AKSliderMouseEvent(AKView* view , const AKMouseEvent* event)
         {
             self->value = 1.;
         }
-        
-        //printf("AKSliderMouseEvent ( %f %f) value %f\n", event->pos.x ,  event->pos.y , self->value);
         
         AKViewUpdateView( view);
         

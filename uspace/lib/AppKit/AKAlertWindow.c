@@ -4,7 +4,7 @@
 //
 //  Created by Manuel Deneu on 06/06/2018.
 //
-#include <assert.h>
+#include "AKCommonsPriv.h"
 #include "AKAlertWindow.h"
 
 static void onButton(AKButton * button);
@@ -24,13 +24,13 @@ bool AKAlertWindowInit(AKAlertWindow* alert , const char* title , const char* te
             return false;
         }
         
-        AKLabelInit( &alert->text , NULL, text , 16);
+        AKLabelInit( &alert->text , NULL, text , FontDefaultSize);
         
-        AKButtonInit( &alert->okButton ,NULL, "Ok" , 16);
+        AKButtonInit( &alert->okButton ,NULL, "Ok" , FontDefaultSize);
         AKButtonSetClickedAction(&alert->okButton , onButton);
         alert->okButton.base.view.userData = alert;
         
-        AKButtonInit( &alert->cancelButton ,NULL, "Cancel" , 16);
+        AKButtonInit( &alert->cancelButton ,NULL, "Cancel" , FontDefaultSize);
         AKButtonSetClickedAction(&alert->cancelButton , onButton);
         alert->cancelButton.base.view.userData = alert;
         
@@ -54,6 +54,13 @@ bool AKAlertWindowInit(AKAlertWindow* alert , const char* title , const char* te
     }
     
     return false;
+}
+
+void AKAlertWindowDeInit(AKAlertWindow* alert)
+{
+    assert(alert);
+    
+    AKLabelDeInit( &alert->text);
 }
 
 static void onButton(AKButton * button)

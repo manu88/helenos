@@ -32,8 +32,7 @@
 //  Created by Manuel Deneu on 31/05/2018.
 //
 
-#include <stdio.h>
-#include <assert.h>
+#include "AKCommonsPriv.h"
 #include "AKWindow.h"
 #include "AKView.h"
 
@@ -56,7 +55,7 @@ bool AKWindowInitWithName( AKWindow *win , window_flags_t flags , const char* na
     win->win->root.data = win;
     
     win->OnEvent = NULL;
-    win->isOpen = false;
+    //win->isOpen = false;
     return win->win != NULL;
 }
 
@@ -115,23 +114,33 @@ void AKWindowRun( AKWindow* win)
 {
     assert(win && win->win);
     
+    if (win->win->surface == NULL)
+    {
+        AKWindowResize( win , 0, 0, 430, 240, WINDOW_PLACEMENT_CENTER);
+    }
+    //assert(win->win->surface);
+    
+    /*
     if (win->isOpen == false)
     {
         
         win->isOpen = true;
+     */
         window_exec(win->win);
-    }
+    //}
 }
 
 void AKWindowClose( AKWindow* win)
 {
     assert(win && win->win);
     
+    /*
     if (win->isOpen == true)
     {
         win->isOpen = false;
+     */
         window_close(win->win);
-    }
+    //}
 }
 
 void AKWindowSetFocusedView( AKWindow* win, AKView* view)

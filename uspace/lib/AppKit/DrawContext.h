@@ -39,6 +39,7 @@
 #include <surface.h>
 #include <io/pixel.h>
 #include <AKGeometry.h>
+#include <AKFont.h>
 
 typedef struct
 {
@@ -61,6 +62,7 @@ bool DrawContextGetTextSize(DrawContext* context ,font_t *font, const char* text
 void lineTo(DrawContext *context ,pixel_t color, int x0, int y0, int x1, int y1);
 void lineTo2(DrawContext *context ,pixel_t color, int x0, int y0, int x1, int y1 , float width);
 void DrawContextRect( DrawContext *context ,pixel_t color , const AKRect* rect);
-void DrawContextAddText( DrawContext* context, const char* text , const AKPoint* position);
+void DrawContextAddText( DrawContext* context, const char* text , AKPoint position);
+
 
 #endif /* DrawContext_h */

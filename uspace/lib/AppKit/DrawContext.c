@@ -38,7 +38,7 @@
 
 #include "DrawContext.h"
 #include <sqrt.h>
-#include <assert.h>
+#include "AKCommonsPriv.h"
 #include <errno.h>
 
 
@@ -68,11 +68,11 @@ void DrawContextSetFont( DrawContext* context, font_t *font)
     drawctx_set_font(context->ctx, font);
 }
 
-void DrawContextAddText( DrawContext* context, const char* text , const AKPoint* position)
+void DrawContextAddText( DrawContext* context, const char* text , AKPoint position)
 {
-    assert(context && text && position);
+    assert(context && text);
     
-    drawctx_print(context->ctx, text, (sysarg_t)position->x, (sysarg_t)position->y);
+    drawctx_print(context->ctx, text, (sysarg_t)position.x, (sysarg_t)position.y);
 }
 bool DrawContextGetTextSize(DrawContext* context ,font_t *font, const char* text , AKSize *size )
 {

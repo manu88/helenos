@@ -32,8 +32,7 @@
 //  Created by Manuel Deneu on 04/06/2018.
 //
 
-#include <assert.h>
-#include <stdio.h>
+#include "AKCommonsPriv.h"
 #include "AKImageView.h"
 
 #define LOGO_WIDTH   196

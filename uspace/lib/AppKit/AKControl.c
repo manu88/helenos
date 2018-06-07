@@ -5,7 +5,7 @@
 //  Created by Manuel Deneu on 06/06/2018.
 //
 
-#include <assert.h>
+#include "AKCommonsPriv.h"
 #include "AKControl.h"
 
 

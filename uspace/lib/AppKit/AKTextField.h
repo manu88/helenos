@@ -35,8 +35,9 @@
 #ifndef AKTextField_h
 #define AKTextField_h
 
-#include <font.h>
+
 #include <AKView.h>
+#include <AKFont.h>
 
 typedef struct _AKTextField AKTextField;
 
@@ -48,7 +49,7 @@ typedef struct _AKTextField
     AKView view;
     void* userData;
     
-    font_t *font;
+    AKFont font;
     source_t textColor;
     uint16_t fontSizeInPoints; // default to 16
     
