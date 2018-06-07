@@ -75,6 +75,7 @@ void AKWindowResize( AKWindow* win , int x , int y , int width , int height , wi
 
 window_t * AKWindowGetNativeHandle( const AKWindow* win);
 
+// must call 'AKWindowResize' before, otherwise surface will no be set
 void AKWindowRun( AKWindow* win);
 void AKWindowClose( AKWindow* win);
 

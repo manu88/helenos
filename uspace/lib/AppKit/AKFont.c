@@ -90,6 +90,7 @@ AKFont AKFontGet( const char* name , uint16_t points )
         if ( str_cmp(name , cur_item->font.name) == 0 && points == cur_item->font.sizePoints )
         {
             priv = cur_item;
+            break;
         }
         
     }
@@ -130,7 +131,7 @@ AKFont AKFontGet( const char* name , uint16_t points )
 
 void AKFontRelease( AKFont* font)
 {
-    assert(font);
+    assert(font && font->name);
     AK_DEBUG_LOG("AKFontRelease \n");
     
     list_foreach_safe(_manager.fontStash, cur_link, next_link)
@@ -139,19 +140,25 @@ void AKFontRelease( AKFont* font)
         
         assert(item);
         
-        item->refCount--;
-        AK_DEBUG_LOG("New ref count for font '%s' , size %u : %lu \n" ,item->font.name , item->font.sizePoints  , item->refCount);
         
-        if ( item->refCount <=0)
+        if ( str_cmp(font->name , item->font.name) == 0 && font->sizePoints == item->font.sizePoints )
         {
-            AK_DEBUG_LOG("Time to release\n");
-            // time to release font
-            font_release(item->font.handle);
+            item->refCount--;
+            AK_DEBUG_LOG("New ref count for font '%s' , size %u : %lu \n" ,item->font.name , item->font.sizePoints  , item->refCount);
             
-            free(item->font.name);
-            list_remove(&item->link);
+            if ( item->refCount <=0)
+            {
+                AK_DEBUG_LOG("Time to release\n");
+                // time to release font
+                font_release(item->font.handle);
+                
+                free(item->font.name);
+                list_remove(&item->link);
+                
+                free(item);
+            }
             
-            free(item);
+            break;
         }
         
         //

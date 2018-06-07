@@ -18,8 +18,6 @@
 #endif
 
 
-
-
 #ifdef AK_DEBUG
 #define AK_DEBUG_LOG( ...) printf( __VA_ARGS__)
 #else

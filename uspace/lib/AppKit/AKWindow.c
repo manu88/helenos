@@ -114,20 +114,22 @@ void AKWindowRun( AKWindow* win)
 {
     assert(win && win->win);
     
+    /*
     if (win->win->surface == NULL)
     {
-        AKWindowResize( win , 0, 0, 430, 240, WINDOW_PLACEMENT_CENTER);
-    }
-    //assert(win->win->surface);
-    
-    /*
-    if (win->isOpen == false)
-    {
         
-        win->isOpen = true;
+        sysarg_t w = win->win->root.width == 0? 300 : win->win->root.width;
+        sysarg_t h = win->win->root.height == 0? 200 : win->win->root.height;
+        AK_DEBUG_LOG("Root size %lu %lu\n",w , h);
+        
+        
+        AKWindowResize( win , 0, 0, w,h, WINDOW_PLACEMENT_CENTER);
+        
+    }
      */
-        window_exec(win->win);
-    //}
+    
+    window_exec(win->win);
+
 }
 
 void AKWindowClose( AKWindow* win)
