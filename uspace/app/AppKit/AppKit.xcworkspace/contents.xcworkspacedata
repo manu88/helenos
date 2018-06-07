@@ -216,6 +216,15 @@
       <FileRef
          location = "group:../../lib/draw/font.h">
       </FileRef>
+      <FileRef
+         location = "group:../../lib/draw/drawctx.h">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/draw/source.h">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/draw/surface.h">
+      </FileRef>
    </Group>
    <Group
       location = "group:../../lib/c/include/io"

@@ -8,6 +8,23 @@
 #ifndef AKTextView_h
 #define AKTextView_h
 
-#include <stdio.h>
+#include <AKControl.h>
+
+
+typedef struct _AKTextView
+{
+    AKControl base;
+    
+    AKFont font;
+    source_t textColor;
+    
+    char* text;
+    
+} AKTextView;
+
+bool AKTextViewInit( AKTextView* textView, widget_t* parent);
+void AKTextViewDeInit( AKTextView* textView);
+
+void AKTextViewSetText( AKTextView* textView, const char* text);
 
 #endif /* AKTextView_h */

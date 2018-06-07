@@ -41,4 +41,7 @@
 // returned buffer needs to be freed!
 char* getFileContent( const char* filePath , size_t* dataSize);
 
+// returned buffer needs to be freed!
+char* getFileContentText( const char* filePath , size_t* dataSize);
+
 #endif /* Utils_h */

@@ -69,3 +69,34 @@ char* getFileContent( const char* filePath , size_t* dataSize)
     return buffer;
     
 }
+
+char* getFileContentText( const char* filePath , size_t* dataSize)
+{
+    assert(filePath && dataSize);
+    
+    FILE *file = fopen(filePath , "r");
+    
+    if (file == NULL)
+    {
+        
+        return NULL;
+    }
+    
+    //Get file length
+    fseek(file, 0, SEEK_END);
+    *dataSize=ftell(file);
+    fseek(file, 0, SEEK_SET);
+    
+    char* buffer= (char *)malloc(*dataSize+1);
+    if( buffer==NULL)
+    {
+        fclose(file);
+        return NULL;
+    }
+    
+    fread(buffer, *dataSize, 1, file);
+    
+    fclose(file);
+    
+    return buffer;
+}

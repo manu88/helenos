@@ -30,6 +30,7 @@
     AppKit library demo
  */
 
+#include <Utils.h>
 #include <assert.h>
 #include <ApplicationKit.h>
 
@@ -41,12 +42,32 @@
 
 #include <window.h>
 
+/*
+static const char* testText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.\nlaboris nisi ut aliquip ex ea commodo consequat.\nDuis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+*/
 AKWindow win;
-AKGridView gridView;
-
+//AKGridView gridView;
+AKTextView textView;
 
 int main(int argc, char *argv[])
 {
+    
+    if (argc < 2)
+    {
+        printf("pass a text file as argument! \n");
+    }
+    
+    
+    const char* fileName = argv[1];
+    size_t fileDataSize = 0;
+    char* fileContent = getFileContentText( fileName , &fileDataSize);
+    
+    
+    if( fileContent == NULL)
+    {
+        return 4;
+    }
+    
     
     assert(AKApplicationInstance == NULL);
     
@@ -59,11 +80,16 @@ int main(int argc, char *argv[])
     assert(AKApplicationInstance != NULL);
     
     
-    if (AKWindowInit( &win,  WINDOW_MAIN | WINDOW_DECORATED | WINDOW_RESIZEABLE) == 0)
+    if (AKWindowInitWithName( &win,  WINDOW_MAIN | WINDOW_DECORATED | WINDOW_RESIZEABLE , fileName) == 0)
     {
         return 2;
     }
 
+    
+    if ( AKTextViewInit(&textView , window_root(AKWindowGetNativeHandle(&win) )) == false )
+    {
+        return 3;
+    }
     /*
     if (AKGridViewInit(&gridView ,
                        window_root(AKWindowGetNativeHandle(&win)) ,
@@ -75,12 +101,17 @@ int main(int argc, char *argv[])
     */
     AKWindowResize( &win , 0, 0, 200, 100, WINDOW_PLACEMENT_CENTER);
 
+    
+    
 
     AKWindowRun( &win);
+    
+    AKTextViewSetText( &textView, fileContent);
     
     //task_retval(0);
     async_manager();
 
+    free(fileContent);
     return 0;
 	
 }
