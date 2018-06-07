@@ -38,6 +38,7 @@ SOURCES = \
 	AKFont.c \
 	AKImage.c \
 	AKImageView.c \
+	AKTextView.c \
 	AKWindow.c \
 	AKLabel.c \
 	AKButton.c \

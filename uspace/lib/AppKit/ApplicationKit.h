@@ -56,6 +56,7 @@
 #include <AKSlider.h>
 #include <AKTextField.h>
 #include <AKImageView.h>
+#include <AKTextView.h>
 
 // Top level components
 #include <AKColorPickerWindow.h>
