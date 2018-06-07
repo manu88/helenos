@@ -7,13 +7,15 @@
 #include <assert.h>
 #include "AKAlertWindow.h"
 
+static void onButton(AKButton * button);
 
-bool AKAlertWindowInit(AKAlertWindow* alert , const char* title)
+
+bool AKAlertWindowInit(AKAlertWindow* alert , const char* title , const char* text )
 {
     assert(alert);
     assert(title);
     
-    if (AKWindowInitWithName( &alert->win,   WINDOW_DECORATED , title ) )
+    if (AKWindowInitWithName( &alert->win,  0/* WINDOW_DECORATED*/ , title ) )
     {
         
         if ( AKGridViewInit(&alert->grid, window_root(AKWindowGetNativeHandle(&alert->win)) , 2/*cols*/, 2/*rows*/ ) == false)
@@ -22,11 +24,15 @@ bool AKAlertWindowInit(AKAlertWindow* alert , const char* title)
             return false;
         }
         
-        AKLabelInit( &alert->text , NULL, "Some text here" , 16);
+        AKLabelInit( &alert->text , NULL, text , 16);
         
         AKButtonInit( &alert->okButton ,NULL, "Ok" , 16);
-        AKButtonInit( &alert->cancelButton ,NULL, "Cancel" , 16);
+        AKButtonSetClickedAction(&alert->okButton , onButton);
+        alert->okButton.base.view.userData = alert;
         
+        AKButtonInit( &alert->cancelButton ,NULL, "Cancel" , 16);
+        AKButtonSetClickedAction(&alert->cancelButton , onButton);
+        alert->cancelButton.base.view.userData = alert;
         
         if (AKGridViewAdd(&alert->grid , (AKView*) &alert->text ,0, 0, 2, 1) == false)
         {
@@ -49,3 +55,14 @@ bool AKAlertWindowInit(AKAlertWindow* alert , const char* title)
     
     return false;
 }
+
+static void onButton(AKButton * button)
+{
+    AKAlertWindow* alert = (AKAlertWindow*) button->base.view.userData;
+    
+    assert(alert);
+    
+    AKWindowClose( (AKWindow*) alert  );
+}
+
+

@@ -57,7 +57,7 @@ bool AKColorPickerWindowInitWithTitle(AKColorPickerWindow* colorPicker , const c
             return false;
         }
         
-        if (AKLabelInit(&colorPicker->colorLabel, NULL, "R:0.5 G:0.5 B:0.5", 16  ) == false)
+        if (AKLabelInit(&colorPicker->colorLabel, NULL, "R:0.5 G:0.5 B:0.5", 24  ) == false)
         {
             // TODO: Fix mem leak here
             return false;
@@ -65,17 +65,20 @@ bool AKColorPickerWindowInitWithTitle(AKColorPickerWindow* colorPicker , const c
         
         AKSliderInit( &colorPicker->sliderR , NULL);
         AKSliderSetHandleColor(&colorPicker->sliderR , &AKColorRed);
-        colorPicker->sliderR.userData = colorPicker;
+        
+        colorPicker->sliderR.base.view.userData = colorPicker;
         colorPicker->sliderR.onValueChange = sliderColorChanged;
         
         AKSliderInit( &colorPicker->sliderG , NULL);
         AKSliderSetHandleColor(&colorPicker->sliderG , &AKColorGreen);
-        colorPicker->sliderG.userData = colorPicker;
+        
+        colorPicker->sliderG.base.view.userData = colorPicker;
         colorPicker->sliderG.onValueChange = sliderColorChanged;
         
         AKSliderInit( &colorPicker->sliderB , NULL);
         AKSliderSetHandleColor(&colorPicker->sliderB , &AKColorBlue);
-        colorPicker->sliderB.userData = colorPicker;
+        
+        colorPicker->sliderB.base.view.userData = colorPicker;
         colorPicker->sliderB.onValueChange = sliderColorChanged;
         
         AKGridViewAdd(&colorPicker->grid , (AKView *)&colorPicker->colorLabel ,0, 0, 2, 1);
@@ -125,7 +128,9 @@ AKColorPickerWindow* AKColorPickerWindowCreate(const char* title , const AKColor
 
 void AKColorPickerWindowDeInit(AKColorPickerWindow* colorPicker)
 {
+    assert(colorPicker);
     
+    AKLabelDeInit( &colorPicker->colorLabel);
 }
 
 AKColor AKColorPickerWindowGetColor( const AKColorPickerWindow* colorPicker )
@@ -154,7 +159,7 @@ static void updateColor( AKColorPickerWindow* colorPicker)
 
 static void sliderColorChanged(AKSlider * slider)
 {
-    AKColorPickerWindow* self = (AKColorPickerWindow*) slider->userData;
+    AKColorPickerWindow* self = (AKColorPickerWindow*) slider->base.view.userData;
     assert(self);
     
     assert( slider == &self->sliderR || slider == &self->sliderG || slider == &self->sliderB);

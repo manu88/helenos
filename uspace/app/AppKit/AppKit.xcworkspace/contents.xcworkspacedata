@@ -8,6 +8,12 @@
       location = "container:"
       name = "libAppKit">
       <FileRef
+         location = "group:../../lib/AppKit/AKFont.h">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/AppKit/AKFont.c">
+      </FileRef>
+      <FileRef
          location = "group:../../lib/AppKit/ApplicationKit.h">
       </FileRef>
       <FileRef
@@ -193,6 +199,13 @@
       </FileRef>
       <FileRef
          location = "group:../../lib/gui/window.h">
+      </FileRef>
+   </Group>
+   <Group
+      location = "container:"
+      name = "draw">
+      <FileRef
+         location = "group:../../lib/draw/font.h">
       </FileRef>
    </Group>
    <Group

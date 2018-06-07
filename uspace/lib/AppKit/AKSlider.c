@@ -46,19 +46,6 @@ bool AKSliderInit( AKSlider* slider , widget_t* parent)
     {
         slider->value = 0.5;
         
-        
-        
-        
-        //slider->handleRect = AKRectMake(0,0, sizeView.width , sizeView.height);// AKViewGetBounds(&slider->view);
-        
-        //printf("AKSliderInit.handleRect : %f %f %f %f\n" , slider->handleRect.origin.x , slider->handleRect.origin.y , slider->handleRect.size.width , slider->handleRect.size.height );
-        
-        /*
-        slider->handleRect.origin.y += 5;
-        slider->handleRect.size.height -= 10;
-        slider->handleRect.size.width = 20;
-        */
-        
         slider->base.view.Draw = AKSliderDraw;
         slider->base.view.MouseEvent = AKSliderMouseEvent;
         
@@ -67,7 +54,7 @@ bool AKSliderInit( AKSlider* slider , widget_t* parent)
         slider->value = 0.5;
         slider->handleColor = AKColorBlue;
         
-        slider->userData = NULL;
+        //slider->userData = NULL;
         return true;
     }
     

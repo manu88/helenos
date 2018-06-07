@@ -24,6 +24,6 @@ typedef struct _AKAlertWindow
     
 } AKAlertWindow ;
 
-bool AKAlertWindowInit(AKAlertWindow* alert , const char* title);
+bool AKAlertWindowInit(AKAlertWindow* alert , const char* title , const char* text );
 
 #endif /* AKAlertWindow_h */

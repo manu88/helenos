@@ -67,6 +67,9 @@ typedef struct _AKView
     // called when removed from parent
     void (*RemovedFromParentEvent)(AKView* view );
     
+    
+    void* userData;
+    
 } AKView;
 
 // Every callback will be set to NULL. You must set them after init

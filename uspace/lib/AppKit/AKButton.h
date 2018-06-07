@@ -36,6 +36,7 @@
 #define AKButton_h
 
 #include <AKControl.h>
+#include <AKFont.h>
 #include <connection.h> // signal_t
 
 typedef struct _AKButton AKButton;
@@ -51,12 +52,12 @@ typedef struct _AKButton
     source_t textColor;
     source_t inactiveTextColor;
     
-    font_t *font;
+    AKFont font;
     
     char *text;
     signal_t clicked;
     
-    void* userPtr;
+    //void* userPtr;
     
     AKButtonClicked onClick;
     
@@ -71,8 +72,6 @@ typedef struct _AKButton
 bool AKButtonInit( AKButton * button ,widget_t* parent, const char* text , uint16_t textSize);
 
 void AKButtonDeInit( AKButton* button);
-
-widget_t* AKButtonGetWidget( AKButton * button);
 
 void AKButtonSetClickedAction( AKButton* button , AKButtonClicked action);
 

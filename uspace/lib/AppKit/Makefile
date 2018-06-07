@@ -35,6 +35,7 @@ SOURCES = \
 	WidgetImpl.c \
 	upng.c \
 	Utils.c \
+	AKFont.c \
 	AKImage.c \
 	AKImageView.c \
 	AKWindow.c \

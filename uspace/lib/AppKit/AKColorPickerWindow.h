@@ -60,7 +60,7 @@ typedef struct _AKColorPickerWindow
     AKColorPickerWindowColorChanged onColorChange;
 }AKColorPickerWindow ;
 
-// instance must be freed
+// instance must be DeInit'ed &  freed
 AKColorPickerWindow* AKColorPickerWindowCreate(const char* title , const AKColor* color ,AKColorPickerWindowColorChanged onColorChange);
 
 bool AKColorPickerWindowInitWithTitle(AKColorPickerWindow* colorPicker , const char* title);

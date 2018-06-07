@@ -85,6 +85,7 @@ static void onColorPickerWindowEvent(AKWindow * window, AKWindowEvent event   )
     
     //AKWindowClose( (AKWindow*) colorPicker);
     
+    AKColorPickerWindowDeInit(colorPicker);
     //free(colorPicker);
     colorPicker = NULL;
 }
@@ -198,7 +199,7 @@ int main(int argc, char *argv[])
     
     AKAlertWindow popup;
     
-    if ( AKAlertWindowInit(&popup , "Hello") == false)
+    if ( AKAlertWindowInit(&popup , "Hello" , "This is a text") == false)
     {
         return 8;
     }

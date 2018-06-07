@@ -36,20 +36,21 @@
 #define AKLabel_h
 
 #include <AKColor.h>
-//#include <label.h>
 #include <AKView.h>
+#include <AKFont.h>
 typedef struct
 {
     AKView view;
 
     source_t text;
     char *caption;
-    font_t *font;
+    AKFont font;
     
 } AKLabel;
 
 
 bool AKLabelInit(AKLabel *label, widget_t *parent, const char *caption, uint16_t points/*, const AKColor* background, const AKColor* text*/ );
+void AKLabelDeInit(AKLabel *label);
 
 void AKLabelSetText( AKLabel* label , const char* text);
 

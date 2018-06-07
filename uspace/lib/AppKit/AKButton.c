@@ -93,6 +93,16 @@ bool AKButtonInit( AKButton * button ,widget_t* parent, const char* text , uint1
         else
             button->text = str_dup(text);
         
+        
+        button->font = AKFontGet( EmbeddedFontName , textSize );
+        
+        if ( button->font.handle == NULL)
+        {
+            free(button->text);
+            button->text = NULL;
+            return false;
+        }
+        /*
         errno_t rc = embedded_font_create(&button->font, textSize);
         if (rc != EOK)
         {
@@ -100,12 +110,13 @@ bool AKButtonInit( AKButton * button ,widget_t* parent, const char* text , uint1
             button->text = NULL;
             return false;
         }
+         */
         
         //button->base.view.widget.destroy = AKButton_destroy;
         
         
         button->onClick = NULL;
-        button->userPtr = NULL;
+        //button->userPtr = NULL;
 
         button->base.view.Draw = AKButton_Draw;
         button->base.view.MouseEvent = AKButton_MouseEvent;
@@ -121,16 +132,9 @@ void AKButtonDeInit( AKButton* button)
     assert(button);
     
     free(button->text);
-    font_release(button->font);
     
+    AKFontRelease( &button->font);
     AKViewDeInit(&button->base.view);
-}
-
-widget_t* AKButtonGetWidget( AKButton * button)
-{
-    assert(button);
-    
-    return &button->base.view.widget;
 }
 
 void AKButtonSetText( AKButton* button , const char*text)
@@ -198,7 +202,7 @@ static void AKButton_Draw(AKView * view , DrawContext* context)
     
     sysarg_t cpt_width;
     sysarg_t cpt_height;
-    font_get_box(btn->font, btn->text, &cpt_width, &cpt_height);
+    font_get_box(btn->font.handle, btn->text, &cpt_width, &cpt_height);
     
     if ((widget->width >= cpt_width) && (widget->height >= cpt_height)) {
         sysarg_t x = ((widget->width - cpt_width) / 2) + widget->hpos;
@@ -206,7 +210,7 @@ static void AKButton_Draw(AKView * view , DrawContext* context)
         
         drawctx_set_source(context->ctx, AKControlIsActive(&btn->base)? &btn->textColor : &btn->inactiveTextColor );
         
-        drawctx_set_font(context->ctx, btn->font);
+        drawctx_set_font(context->ctx, btn->font.handle);
         
         if (btn->text)
             drawctx_print(context->ctx, btn->text, x, y);

@@ -78,6 +78,9 @@ bool AKViewInit( AKView* view , widget_t* parent /*, AKSize size*/)
     
     source_init(&view->background);
     source_set_color(&view->background, AKColorTo8bit( &AKColorWhite));
+    
+    
+    view->userData = NULL;
     return true;
 }
 

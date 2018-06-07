@@ -94,17 +94,20 @@ bool AKLabelInit(AKLabel *lbl, widget_t *parent, const char *caption, uint16_t p
         else
             lbl->caption = str_dup(caption);
         
-        errno_t rc = embedded_font_create(&lbl->font, points);
-        if (rc != EOK)
+        
+        lbl->font = AKFontGet( EmbeddedFontName , points );
+        
+        if ( lbl->font.handle == NULL)
         {
             free(lbl->caption);
             lbl->caption = NULL;
             return false;
         }
         
+        
         sysarg_t cpt_width;
         sysarg_t cpt_height;
-        font_get_box(lbl->font, lbl->caption, &cpt_width, &cpt_height);
+        font_get_box(lbl->font.handle, lbl->caption, &cpt_width, &cpt_height);
         
         lbl->view.widget.width_min = cpt_width + 4;
         lbl->view.widget.height_min = cpt_height + 4;
@@ -115,19 +118,15 @@ bool AKLabelInit(AKLabel *lbl, widget_t *parent, const char *caption, uint16_t p
         lbl->view.Draw = AKLabelDraw;
         return true;
     }
-    /*
-    bool initialized = init_label(&lbl->label,
-                                  parent,
-                                  NULL,
-                                  caption,
-                                  points,
-                                  AKColorTo8bit( &AKColorWhite),
-                                  AKColorTo8bit( &AKColorBlue)
-                                  );
-    
-    
-     */
+
     return false;
+}
+
+void AKLabelDeInit(AKLabel *label)
+{
+    assert(label );
+    
+    AKFontRelease(&label->font);
 }
 
 void AKLabelSetTextColor( AKLabel* label , const AKColor* color)
@@ -139,28 +138,6 @@ void AKLabelSetTextColor( AKLabel* label , const AKColor* color)
     window_refresh(label->view.widget.window);
     
 }
-/*
-static void on_rewrite(widget_t *widget, void *data)
-{
-    if (data != NULL) {
-        label_t *lbl = (label_t *) widget;
-        
-        const char *new_caption = (const char *) data;
-        lbl->caption = str_dup(new_caption);
-        
-        sysarg_t cpt_width;
-        sysarg_t cpt_height;
-        font_get_box(lbl->font, lbl->caption, &cpt_width, &cpt_height);
-        
-        lbl->widget.width_min = cpt_width + 4;
-        lbl->widget.height_min = cpt_height + 4;
-        lbl->widget.width_ideal = lbl->widget.width_min;
-        lbl->widget.height_ideal = lbl->widget.height_min;
-        
-        window_refresh(lbl->widget.window);
-    }
-}
-*/
 
 void AKLabelSetText( AKLabel* label , const char* text)
 {
@@ -173,7 +150,7 @@ void AKLabelSetText( AKLabel* label , const char* text)
         
         sysarg_t cpt_width;
         sysarg_t cpt_height;
-        font_get_box(label->font, label->caption, &cpt_width, &cpt_height);
+        font_get_box(label->font.handle, label->caption, &cpt_width, &cpt_height);
         
         label->view.widget.width_min = cpt_width + 4;
         label->view.widget.height_min = cpt_height + 4;
@@ -192,7 +169,7 @@ static void AKLabelDraw(AKView * view , DrawContext* context)
     
     sysarg_t cpt_width;
     sysarg_t cpt_height;
-    font_get_box(label->font, label->caption, &cpt_width, &cpt_height);
+    font_get_box(label->font.handle, label->caption, &cpt_width, &cpt_height);
     
     if (
         (label->view.widget.width >= cpt_width) &&
@@ -202,7 +179,7 @@ static void AKLabelDraw(AKView * view , DrawContext* context)
         sysarg_t y = ((label->view.widget.height - cpt_height) / 2) + label->view.widget.vpos;
         
         drawctx_set_source(context->ctx, &label->text);
-        drawctx_set_font(context->ctx, label->font);
+        drawctx_set_font(context->ctx, label->font.handle);
         
         if (label->caption)
             drawctx_print( context->ctx, label->caption, x, y);

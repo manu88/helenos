@@ -46,7 +46,7 @@ typedef void (*AKSliderValueChanged)(AKSlider * slider);
 typedef struct _AKSlider
 {
     AKControl base;
-    void* userData;
+    //void* userData;
     
     AKRect handleRect;
     AKColor handleColor;
