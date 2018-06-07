@@ -78,19 +78,19 @@ bool AKColorPickerWindowInitWithTitle(AKColorPickerWindow* colorPicker , const c
         colorPicker->sliderB.userData = colorPicker;
         colorPicker->sliderB.onValueChange = sliderColorChanged;
         
-        AKGridViewAdd(&colorPicker->grid , (widget_t *)&colorPicker->colorLabel ,0, 0, 2, 1);
+        AKGridViewAdd(&colorPicker->grid , (AKView *)&colorPicker->colorLabel ,0, 0, 2, 1);
         
-        if (AKGridViewAdd(&colorPicker->grid , (widget_t*) &colorPicker->sliderR ,0, 2, 2, 1) == false)
+        if (AKGridViewAdd(&colorPicker->grid , (AKView*) &colorPicker->sliderR ,0, 2, 2, 1) == false)
         {
             printf("Error adding sliderR\n");
         }
         
-        if (AKGridViewAdd(&colorPicker->grid , (widget_t*) &colorPicker->sliderG ,0, 3, 2, 1) == false)
+        if (AKGridViewAdd(&colorPicker->grid , (AKView*) &colorPicker->sliderG ,0, 3, 2, 1) == false)
         {
             printf("Error adding sliderG\n");
         }
         
-        if (AKGridViewAdd(&colorPicker->grid , (widget_t*) &colorPicker->sliderB ,0, 4, 2, 1) == false)
+        if (AKGridViewAdd(&colorPicker->grid , (AKView*) &colorPicker->sliderB ,0, 4, 2, 1) == false)
         {
             printf("Error adding sliderB\n");
         }

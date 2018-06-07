@@ -13,7 +13,6 @@ bool AKAlertWindowInit(AKAlertWindow* alert , const char* title)
     assert(alert);
     assert(title);
     
-    
     if (AKWindowInitWithName( &alert->win,   WINDOW_DECORATED , title ) )
     {
         
@@ -29,16 +28,16 @@ bool AKAlertWindowInit(AKAlertWindow* alert , const char* title)
         AKButtonInit( &alert->cancelButton ,NULL, "Cancel" , 16);
         
         
-        if (AKGridViewAdd(&alert->grid , (widget_t*) &alert->text ,0, 0, 2, 1) == false)
+        if (AKGridViewAdd(&alert->grid , (AKView*) &alert->text ,0, 0, 2, 1) == false)
         {
             return false;
         }
         
-        if (AKGridViewAdd(&alert->grid , (widget_t*) &alert->okButton ,0, 1, 1, 1) == false)
+        if (AKGridViewAdd(&alert->grid , (AKView*) &alert->okButton ,0, 1, 1, 1) == false)
         {
             return false;
         }
-        if (AKGridViewAdd(&alert->grid , (widget_t*) &alert->cancelButton ,1, 1, 1, 1) == false)
+        if (AKGridViewAdd(&alert->grid , (AKView*) &alert->cancelButton ,1, 1, 1, 1) == false)
         {
             return false;
         }

@@ -77,9 +77,9 @@ void AKGridViewDeInit( AKGridView *gridView)
 }
 
 
-bool AKGridViewAdd(AKGridView *gridView ,widget_t *widget ,size_t col , size_t row , size_t sizeCols , size_t sizeRows   )
+bool AKGridViewAdd(AKGridView *gridView ,AKView* view ,size_t col , size_t row , size_t sizeCols , size_t sizeRows   )
 {
-    assert(gridView && widget);
+    assert(gridView && view);
     
-    return gridView->grid.add(&gridView->grid , widget , col , row , sizeCols , sizeRows);
+    return gridView->grid.add(&gridView->grid ,(widget_t*) view , col , row , sizeCols , sizeRows);
 }

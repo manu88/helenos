@@ -40,6 +40,8 @@
 #include <grid.h>
 #include <AKGeometry.h>
 
+typedef struct _AKView AKView; // forward
+
 typedef struct _AKGridView
 {
     grid_t grid;
@@ -49,7 +51,7 @@ typedef struct _AKGridView
 bool AKGridViewInit(AKGridView *gridView, widget_t * parent, size_t cols , size_t rows);
 void AKGridViewDeInit( AKGridView *gridView);
 
-bool AKGridViewAdd(AKGridView *gridView ,widget_t *widget ,size_t col , size_t row , size_t sizeCols , size_t sizeRows   );
+bool AKGridViewAdd(AKGridView *gridView ,AKView* view ,size_t col , size_t row , size_t sizeCols , size_t sizeRows   );
 
 
 #endif /* AKGridView_h */

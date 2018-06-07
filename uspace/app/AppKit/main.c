@@ -181,10 +181,10 @@ int main(int argc, char *argv[])
         return 7;
     }
     
-    AKGridViewAdd(&gridView, (widget_t*) &textField , 0, 0, 2, 1);
-    AKGridViewAdd(&gridView, AKButtonGetWidget(&btn_confirm), 0, 1, 1, 1);
-    AKGridViewAdd(&gridView, AKButtonGetWidget(&btn_cancel),  1, 1, 1, 1);
-    AKGridViewAdd(&gridView, &imageView.canvas.widget,  0, 2, 1, 1);
+    AKGridViewAdd(&gridView, (AKView*) &textField , 0, 0, 2, 1);
+    AKGridViewAdd(&gridView, (AKView*) &btn_confirm, 0, 1, 1, 1);
+    AKGridViewAdd(&gridView, (AKView*) &btn_cancel,  1, 1, 1, 1);
+    AKGridViewAdd(&gridView, (AKView*) &imageView,  0, 2, 1, 1);
     
     /* Some tests*/
     widget_t* gridW = (widget_t*) &gridView.grid;
