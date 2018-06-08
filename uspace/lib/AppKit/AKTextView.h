@@ -26,5 +26,5 @@ bool AKTextViewInit( AKTextView* textView, widget_t* parent);
 void AKTextViewDeInit( AKTextView* textView);
 
 void AKTextViewSetText( AKTextView* textView, const char* text);
-
+void AKTextViewSetTextColor( AKTextView* textView , const AKColor* color);
 #endif /* AKTextView_h */

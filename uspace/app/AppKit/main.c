@@ -42,19 +42,30 @@
 
 #include <window.h>
 
-/*
-static const char* testText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.\nlaboris nisi ut aliquip ex ea commodo consequat.\nDuis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
-*/
-AKWindow win;
-//AKGridView gridView;
-AKTextView textView;
 
+
+
+AKWindow win;
+AKTextView textView;
+AKColorPickerWindow colorPicker;
+
+
+static void colorPickerWindowColorChanged(AKColorPickerWindow * colorPicker)
+{
+    const AKColor color = AKColorPickerWindowGetColor(colorPicker);
+    
+    AKTextViewSetTextColor( &textView , &color);
+    
+    AKViewUpdateView((AKView*)  &textView);
+}
 int main(int argc, char *argv[])
 {
     
     if (argc < 2)
     {
         printf("pass a text file as argument! \n");
+        
+        return 1;
     }
     
     
@@ -101,6 +112,15 @@ int main(int argc, char *argv[])
     */
     AKWindowResize( &win , 0, 0, 200, 100, WINDOW_PLACEMENT_CENTER);
 
+    
+    
+    AKColorPickerWindowInitWithTitle(&colorPicker , "Text Color");
+    
+    //colorPicker = AKColorPickerWindowCreate("Color picker", NULL ,colorPickerWindowColorChanged);
+    
+    colorPicker.onColorChange = colorPickerWindowColorChanged;
+    AKWindowRun( (AKWindow*) &colorPicker);
+    
     
     
 

@@ -23,7 +23,7 @@ bool AKTextViewInit( AKTextView* textView, widget_t* parent)
     if (AKControlInit( &textView->base , parent ) )
     {
         source_init(&textView->textColor);
-        source_set_color(&textView->textColor, AKColorTo8bit( &AKColorRed));
+        source_set_color(&textView->textColor, AKColorTo8bit( &AKColorBlack));
         
         
         textView->text = str_dup("");
@@ -64,6 +64,13 @@ void AKTextViewSetText( AKTextView* textView, const char* text)
     free(last);
     
     //AKViewUpdateView( (AKView*) textView);
+}
+
+void AKTextViewSetTextColor( AKTextView* textView , const AKColor* color)
+{
+    assert(textView);
+    
+    source_set_color(&textView->textColor, AKColorTo8bit(color) );
 }
 
 static char *substr(char const *input, size_t start, size_t len)
