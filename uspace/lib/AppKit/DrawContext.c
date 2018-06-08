@@ -37,6 +37,7 @@
  */
 
 #include "DrawContext.h"
+#include <drawctx.h>
 #include <sqrt.h>
 #include "AKCommonsPriv.h"
 #include <errno.h>

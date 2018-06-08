@@ -35,11 +35,14 @@
 #ifndef DrawContext_h
 #define DrawContext_h
 
-#include <drawctx.h>
+
 #include <surface.h>
 #include <io/pixel.h>
 #include <AKGeometry.h>
 #include <AKFont.h>
+
+
+typedef struct drawctx drawctx_t; // forward def
 
 typedef struct
 {
@@ -57,10 +60,10 @@ void DrawContextRestore( DrawContext* context );
 // Text operations
 bool DrawContextGetTextSize(DrawContext* context ,font_t *font, const char* text , AKSize *size );
 
-
 // Draw routines
 void lineTo(DrawContext *context ,pixel_t color, int x0, int y0, int x1, int y1);
 void lineTo2(DrawContext *context ,pixel_t color, int x0, int y0, int x1, int y1 , float width);
+
 void DrawContextRect( DrawContext *context ,pixel_t color , const AKRect* rect);
 void DrawContextAddText( DrawContext* context, const char* text , AKPoint position);
 

@@ -1,9 +1,3 @@
-//
-//  AKEvent.h
-//  
-//
-//  Created by Manuel Deneu on 01/06/2018.
-//
 /*
  * Copyright (c) 2018 Manuel Deneu
  * All rights reserved.
@@ -31,6 +25,13 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+//
+//  AKEvent.h
+//  
+//
+//  Created by Manuel Deneu on 01/06/2018.
+//
+
 
 #ifndef AKEvent_h
 #define AKEvent_h

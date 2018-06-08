@@ -42,13 +42,9 @@
 
 #include <window.h>
 
-
-
-
 AKWindow win;
 AKTextView textView;
 AKColorPickerWindow colorPicker;
-
 
 static void colorPickerWindowColorChanged(AKColorPickerWindow * colorPicker)
 {

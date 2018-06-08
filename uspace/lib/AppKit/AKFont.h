@@ -41,7 +41,6 @@
 extern const char EmbeddedFontName[];
 extern const uint16_t FontDefaultSize;
 
-
 /*
     Ref counted font object
  */
@@ -55,6 +54,7 @@ typedef struct
 
 
 // AKFont must be released!
+// Embedded font will be returned a font is not found with `name`.
 AKFont AKFontGet( const char* name , uint16_t points );
 void AKFontRelease( AKFont* font);
 
