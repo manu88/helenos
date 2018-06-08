@@ -47,6 +47,8 @@ typedef struct _AKTextView
     
     char* text;
     
+
+    
 } AKTextView;
 
 bool AKTextViewInit( AKTextView* textView, widget_t* parent);

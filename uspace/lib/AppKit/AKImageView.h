@@ -41,8 +41,12 @@
 
 typedef struct _AKImageView
 {
-    //AKView view;
-    canvas_t canvas;
+    AKView view;
+    sysarg_t width;
+    sysarg_t height;
+    //surface_t *surface;
+    
+    //canvas_t canvas;
     void* userData;
     
     AKImage image;

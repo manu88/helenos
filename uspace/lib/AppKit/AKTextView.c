@@ -42,6 +42,8 @@
 
 static void AKTextView_Draw(AKView * view , DrawContext* context);
 
+
+ 
 bool AKTextViewInit( AKTextView* textView, widget_t* parent)
 {
     assert(textView);
@@ -54,6 +56,7 @@ bool AKTextViewInit( AKTextView* textView, widget_t* parent)
         
         
         textView->text = str_dup("");
+        
         
         textView->font = AKFontGet( EmbeddedFontName , FontDefaultSize );
         
@@ -110,6 +113,8 @@ static char *substr(char const *input, size_t start, size_t len)
 
 static void AKTextView_Draw(AKView * view , DrawContext* context)
 {
+    
+    AK_DEBUG_LOG("AKTextView_Draw\n");
     AKTextView* self = (AKTextView*) view;
     
     DrawContextSetSource( context , &self->textColor);

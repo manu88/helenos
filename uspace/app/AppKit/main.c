@@ -30,7 +30,6 @@
     AppKit library demo
  */
 
-#include <Utils.h>
 #include <assert.h>
 #include <ApplicationKit.h>
 
@@ -42,39 +41,100 @@
 
 #include <window.h>
 
+static void colorPickerWindowColorChanged(AKColorPickerWindow * colorPicker);
+
+AKGridView gridView;
+AKTextField textField;
 AKWindow win;
-AKTextView textView;
-AKColorPickerWindow colorPicker;
+AKButton btn_confirm;
+AKButton btn_cancel;
+AKColorPickerWindow* colorPicker = NULL;
+AKImageView imageView;
+
+static int loadImage()
+{
+    AKImage image;
+    
+    
+    const char* fileP = "data/images/helenos.tga";
+    //const char* fileP = "data/images/helenos.png";
+    
+    if ( AKImageInitWithTGAFile(&image ,fileP ) == false)
+    //if ( AKImageInitWithPNGFile(&image ,fileP ) == false)
+    {
+        return 0;
+    }
+    
+    if( AKImageViewInitWithImage(&imageView ,NULL, &image) == false)
+    {
+        printf("Error : unable to create AKImageView\n" );
+        return 0;
+    }
+    
+    
+    //free(buffer);
+    
+    return 1;
+}
+
+static void onColorPickerWindowEvent(AKWindow * window, AKWindowEvent event   )
+{
+    assert( colorPicker != NULL);
+    assert( window == (AKWindow *) colorPicker);
+    printf("Received ColorPickerWindowEvent :  %i\n" , event);
+    
+    //AKWindowClose( (AKWindow*) colorPicker);
+    
+    AKColorPickerWindowDeInit(colorPicker);
+    //free(colorPicker);
+    colorPicker = NULL;
+}
+
+static void on_confirm(AKButton * button)
+{
+    assert(button == &btn_confirm);
+    
+    
+    if(colorPicker == NULL)
+    {
+        colorPicker = AKColorPickerWindowCreate("Color picker", NULL ,colorPickerWindowColorChanged);
+        
+        ((AKWindow*)colorPicker)->OnEvent = onColorPickerWindowEvent;
+        AKWindowRun( (AKWindow*) colorPicker);
+    }
+}
+
+static void on_cancel(AKButton *button)
+{
+    assert(button == &btn_cancel);
+    
+    bool state = AKControlIsActive( (AKControl*) &btn_confirm);
+    
+    AKControlSetActive((AKControl*) &btn_confirm , !state);
+    
+    AKButtonSetText( &btn_cancel , state? "Enable" : "Disable");
+    
+/*
+    if (colorPicker)
+    {
+        AKWindowClose( (AKWindow*) colorPicker);
+
+        //free(colorPicker);
+        colorPicker = NULL;
+    }
+ */
+}
 
 static void colorPickerWindowColorChanged(AKColorPickerWindow * colorPicker)
 {
     const AKColor color = AKColorPickerWindowGetColor(colorPicker);
-    
-    AKTextViewSetTextColor( &textView , &color);
-    
-    AKViewUpdateView((AKView*)  &textView);
+    AKTextFieldSetTextColor(&textField, &color);
 }
+
+
+
 int main(int argc, char *argv[])
 {
-    
-    if (argc < 2)
-    {
-        printf("pass a text file as argument! \n");
-        
-        return 1;
-    }
-    
-    
-    const char* fileName = argv[1];
-    size_t fileDataSize = 0;
-    char* fileContent = getFileContentText( fileName , &fileDataSize);
-    
-    
-    if( fileContent == NULL)
-    {
-        return 4;
-    }
-    
     
     assert(AKApplicationInstance == NULL);
     
@@ -86,48 +146,85 @@ int main(int argc, char *argv[])
 	
     assert(AKApplicationInstance != NULL);
     
+    if (loadImage())
+    {
+        printf("Init imageView ok \n");
+    }
     
-    if (AKWindowInitWithName( &win,  WINDOW_MAIN | WINDOW_DECORATED | WINDOW_RESIZEABLE , fileName) == 0)
+    
+    if (AKWindowInit( &win,  WINDOW_MAIN | WINDOW_DECORATED | WINDOW_RESIZEABLE) == 0)
     {
         return 2;
     }
+    
+    if (AKTextFieldInit(&textField , NULL)== false)
+    {
+        return 5;
+    }
+    
+
+    if (AKButtonInit( &btn_confirm , NULL/* parent*/ , "Show colors" , 16) == false)
+    {
+        return 5;
+    }
+
+    if (AKButtonInit( &btn_cancel , NULL/* parent*/ ,"Disable" , 16) == false)
+    {
+        return 6;
+    }
+    
+    AKButtonSetClickedAction( &btn_confirm , on_confirm);
+    AKButtonSetClickedAction( &btn_cancel , on_cancel);
 
     
-    if ( AKTextViewInit(&textView , window_root(AKWindowGetNativeHandle(&win) )) == false )
-    {
-        return 3;
-    }
-    /*
-    if (AKGridViewInit(&gridView ,
-                       window_root(AKWindowGetNativeHandle(&win)) ,
-                       2//cols,
-                       3//rows) == false)
+    if (AKGridViewInit(&gridView ,window_root(AKWindowGetNativeHandle(&win)) ,  2/*cols*/, 3/*rows*/) == false)
     {
         return 7;
     }
-    */
-    AKWindowResize( &win , 0, 0, 200, 100, WINDOW_PLACEMENT_CENTER);
-
+    
+    AKGridViewAdd(&gridView, (AKView*) &textField , 0, 0, 2, 1);
+    AKGridViewAdd(&gridView, (AKView*) &btn_confirm, 0, 1, 1, 1);
+    AKGridViewAdd(&gridView, (AKView*) &btn_cancel,  1, 1, 1, 1);
+    AKGridViewAdd(&gridView, (AKView*) &imageView,  0, 2, 1, 1);
+    
+    /* Some tests*/
+    widget_t* gridW = (widget_t*) &gridView.grid;
+    
+    widget_t* b1W = (widget_t*) &btn_confirm;
+    widget_t* b2W = (widget_t*) &btn_cancel;
+    //assert(gridW == labW->parent);
+    assert(gridW == b1W->parent);
+    assert(gridW == b2W->parent);
+    /* END TESTS */
+    
+    AKAlertWindow popup;
+    
+    if ( AKAlertWindowInit(&popup , "Hello" , "This is a text") == false)
+    {
+        return 8;
+    }
+    
+    AKWindowRun((AKWindow*) &popup);
+    
+    AKWindowResize( &win , 0, 0, 430, 240, WINDOW_PLACEMENT_CENTER);
     
     
-    AKColorPickerWindowInitWithTitle(&colorPicker , "Text Color");
-    
-    //colorPicker = AKColorPickerWindowCreate("Color picker", NULL ,colorPickerWindowColorChanged);
-    
-    colorPicker.onColorChange = colorPickerWindowColorChanged;
-    AKWindowRun( (AKWindow*) &colorPicker);
-    
-    
-    
-
+    AKWindowSetFocusedView( &win , (AKView*) &textField);
     AKWindowRun( &win);
     
-    AKTextViewSetText( &textView, fileContent);
+    
+    
+    
+    
+    
+    
     
     //task_retval(0);
     async_manager();
-
-    free(fileContent);
+    
+    
+    AKAlertWindowDeInit(&popup);
+    
     return 0;
 	
 }

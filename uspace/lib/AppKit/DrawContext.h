@@ -67,5 +67,7 @@ void lineTo2(DrawContext *context ,pixel_t color, int x0, int y0, int x1, int y1
 void DrawContextRect( DrawContext *context ,pixel_t color , const AKRect* rect);
 void DrawContextAddText( DrawContext* context, const char* text , AKPoint position);
 
+void DrawContexTransfer( DrawContext *context, AKRect bounds);
+
 
 #endif /* DrawContext_h */

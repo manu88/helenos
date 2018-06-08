@@ -189,7 +189,7 @@ static void AKView_rearrange(widget_t *widget, sysarg_t hpos, sysarg_t vpos,
                            sysarg_t width, sysarg_t height)
 {
     widget_modify(widget, hpos, vpos, width, height);
-    paint_internal(widget);
+    //paint_internal(widget);
     
 }
 

@@ -51,8 +51,6 @@ typedef struct
 typedef pixel_t AKColor8Bit;
 
 
-
-
 static inline AKColor AKColorMake( float r , float g , float b , float a)
 {
     return (AKColor){ r ,g , b ,a};

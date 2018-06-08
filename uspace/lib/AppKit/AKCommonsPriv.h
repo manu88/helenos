@@ -35,9 +35,11 @@
 #ifndef AKCommonsPriv_h
 #define AKCommonsPriv_h
 
+
 #ifndef AK_DEBUG
 #define AK_DEBUG
 #endif
+
 
 #include <assert.h>
 #ifdef AK_DEBUG

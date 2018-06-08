@@ -148,7 +148,7 @@ void AKFontRelease( AKFont* font)
             
             if ( item->refCount <=0)
             {
-                AK_DEBUG_LOG("Time to release\n");
+                AK_DEBUG_LOG("Time to release Font \n");
                 // time to release font
                 font_release(item->font.handle);
                 

@@ -34,38 +34,81 @@
 
 #include "AKCommonsPriv.h"
 #include "AKImageView.h"
+#include <drawctx.h>
 
 #define LOGO_WIDTH   196
 #define LOGO_HEIGHT  66
 
-static void canvas_destroy(widget_t *widget);
+//static void canvas_destroy(widget_t *widget);
+
+static void AKImageViewDraw(AKView * view , DrawContext* context);
+
+static bool AKImageViewInit( AKImageView* imageView, widget_t * parent)
+{
+    return AKViewInit( &imageView->view , parent);
+}
+
+
 
 bool AKImageViewInitWithImage(AKImageView* imageView, widget_t * parent, AKImage* image)
 {
     assert(imageView && image);
     
-    imageView->image = *image;
+    if (AKImageViewInit(imageView , parent))
+    {
+        imageView->image = *image;
+    }
+    
+    imageView->view.Draw = AKImageViewDraw;
+    /*
     if( init_canvas(&imageView->canvas,
                     parent,
-                    NULL/*data*/,
+                    NULL//data,
                      LOGO_WIDTH, LOGO_HEIGHT,
                     image->surface) == false)
     {
         return false;
     }
     
-    imageView->canvas.widget.destroy = canvas_destroy;
+     */
+    //imageView->canvas.widget.destroy = canvas_destroy;
     
     return true;
 }
 
-
+/*
 static void canvas_destroy(widget_t *widget)
 {
     canvas_t *canvas = (canvas_t *) widget;
     
     deinit_canvas(canvas);
 //    free(canvas);
+}
+*/
+static void AKImageViewDraw(AKView * view , DrawContext* context)
+{
+    AKImageView* self = (AKImageView*) view;
+    
+    
+    transform_t transform;
+    transform_identity(&transform);
+    transform_translate(&transform, view->widget.hpos, view->widget.vpos);
+    
+    source_t source;
+    source_init(&source);
+    source_set_transform(&source, transform);
+    source_set_texture(&source,
+                       self->image.surface,
+                       PIXELMAP_EXTEND_TRANSPARENT_BLACK);
+    
+    DrawContextSetSource(context, &source);
+    DrawContexTransfer( context, AKViewGetBounds( view));
+    /*
+                     view->widget.hpos,
+                     view->widget.vpos,
+                     view->widget.width,
+                     view->widget.height);
+     */
 }
 
 

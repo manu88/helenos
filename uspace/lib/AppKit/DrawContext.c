@@ -188,3 +188,11 @@ void DrawContextRect( DrawContext *context ,pixel_t color , const AKRect* rect)
     drawctx_transfer(context->ctx, rect->origin.x, rect->origin.y , rect->size.width, rect->size.height);
     //drawctx_transfer(context->ctx, hpos, vpos + 1, 1, height - 2);
 }
+
+void DrawContexTransfer( DrawContext *context, AKRect bounds)
+{
+    assert(context);
+    
+    drawctx_transfer(context->ctx, bounds.origin.x, bounds.origin.y, bounds.size.width, bounds.size.height);
+    
+}

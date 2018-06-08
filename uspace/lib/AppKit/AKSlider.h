@@ -42,7 +42,6 @@ typedef struct _AKSlider AKSlider;
 
 typedef void (*AKSliderValueChanged)(AKSlider * slider);
 
-
 typedef struct _AKSlider
 {
     AKControl base;
@@ -55,8 +54,6 @@ typedef struct _AKSlider
     AKSliderValueChanged onValueChange;
     
 } AKSlider;
-
-
 
 bool AKSliderInit( AKSlider* slider , widget_t* parent);
 
