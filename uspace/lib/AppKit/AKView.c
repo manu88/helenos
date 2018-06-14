@@ -116,6 +116,20 @@ AKRect AKViewGetBounds( const AKView* view)
     return AKRectMake( view->widget.hpos , view->widget.vpos , view->widget.width , view->widget.height );
 }
 
+void AKViewSetSize( AKView* view , AKSize size)
+{
+    assert(view);
+    
+    view->widget.width        = size.width;
+    view->widget.height       = size.height;
+    view->widget.width_min    = size.width;
+    view->widget.height_min   = size.height;
+    view->widget.width_ideal  = size.width;
+    view->widget.height_ideal = size.height;
+    view->widget.width_max    = size.width;
+    view->widget.height_max   = size.height;
+}
+
 void AKViewUpdateView( AKView* view)
 {
     assert(view);

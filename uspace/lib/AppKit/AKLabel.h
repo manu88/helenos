@@ -38,6 +38,7 @@
 #include <AKColor.h>
 #include <AKView.h>
 #include <AKFont.h>
+
 typedef struct
 {
     AKView view;

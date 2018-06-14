@@ -32,6 +32,8 @@
 //  Created by Manuel Deneu on 31/05/2018.
 //
 
+#include <str.h>
+#include <stdlib.h>
 #include "AKCommonsPriv.h"
 #include "AKWindow.h"
 #include "AKView.h"
@@ -81,8 +83,34 @@ bool AKWindowSetTitle(  AKWindow *win , const char* title)
 {
     assert(win && title);
     
-    return window_set_caption(win->win , title) == EOK;
+    
+    char *cap;
+    
+    if (title == NULL)
+    {
+        win->win->caption = NULL;
+    }
+    else
+    {
+        cap = str_dup(title);
+        if (cap == NULL)
+        {
+            return false;//ENOMEM;
+        }
+        
+        free(win->win->caption);
+        win->win->caption = cap;
+    }
+    
+    win->win->is_focused = false;
+    //handle_refresh(win);
+    
+    return true;//EOK;
+    
+    
+    //return window_set_caption(win->win , title) == EOK;
 }
+
 const char* AKWindowGetTitle( const AKWindow *win)
 {
     assert(win);

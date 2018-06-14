@@ -81,6 +81,7 @@ void AKViewUpdateView( AKView* view);
 void AKViewSetBackgroundColor( AKView* view , const AKColor* color);
 AKColor AKViewGetBackgroundColor( const AKView* view);
 
+void AKViewSetSize( AKView* view , AKSize size);
 AKRect AKViewGetBounds( const AKView* view);
 
 

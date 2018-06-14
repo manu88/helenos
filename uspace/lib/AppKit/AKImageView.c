@@ -60,6 +60,8 @@ bool AKImageViewInitWithImage(AKImageView* imageView, widget_t * parent, AKImage
     }
     
     imageView->view.Draw = AKImageViewDraw;
+    
+    AKViewSetSize( &imageView->view , AKImageGetSize( image));
     /*
     if( init_canvas(&imageView->canvas,
                     parent,
@@ -103,12 +105,7 @@ static void AKImageViewDraw(AKView * view , DrawContext* context)
     
     DrawContextSetSource(context, &source);
     DrawContexTransfer( context, AKViewGetBounds( view));
-    /*
-                     view->widget.hpos,
-                     view->widget.vpos,
-                     view->widget.width,
-                     view->widget.height);
-     */
+    
 }
 
 

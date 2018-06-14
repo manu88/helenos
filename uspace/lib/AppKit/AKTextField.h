@@ -36,7 +36,7 @@
 #define AKTextField_h
 
 
-#include <AKView.h>
+#include <AKControl.h>
 #include <AKFont.h>
 
 typedef struct _AKTextField AKTextField;
@@ -46,7 +46,7 @@ typedef void (*AKTextFieldTextChanged)(AKTextField * button);
 
 typedef struct _AKTextField
 {
-    AKView view;
+    AKControl base;
     void* userData;
     
     AKFont font;

@@ -75,6 +75,12 @@ bool AKImageInitWithTGAData(AKImage* image, void* data, size_t dataSize)
     //free(image->data);
     image->surface = surface;
     
+    surface_coord_t img_width;
+    surface_coord_t img_height;
+    
+    surface_get_resolution(surface, &img_width, &img_height);
+    image->size = AKSizeMake(img_width , img_height);
+    
     return true;
 }
 

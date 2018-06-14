@@ -157,8 +157,7 @@ void AKLabelSetText( AKLabel* label , const char* text)
         label->view.widget.height_ideal = label->view.widget.height_min;
         
         window_refresh(label->view.widget.window);
-    }
-    
+    }    
 }
 
 

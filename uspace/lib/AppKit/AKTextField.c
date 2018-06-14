@@ -52,15 +52,15 @@ bool AKTextFieldInit( AKTextField* textField , widget_t* parent)
     
     //const AKSize sizeView = AKSizeMake( 200 , 50  );
     
-    if (AKViewInit( &textField->view , parent /*, sizeView*/))
+    if (AKControlInit( &textField->base , parent /*, sizeView*/))
     {
         // debug
-        AKViewSetBackgroundColor(&textField->view , &AKColorGreen);
+        AKViewSetBackgroundColor(&textField->base.view , &AKColorGreen);
         
         textField->text = str_dup("Label");
-        textField->view.Draw = AKTextFieldDraw;
+        textField->base.view.Draw = AKTextFieldDraw;
         
-        textField->view.KeyEvent =AKTextFieldKeyEvent;
+        textField->base.view.KeyEvent =AKTextFieldKeyEvent;
         textField->fontSizeInPoints = FontDefaultSize;
         
         
@@ -101,6 +101,11 @@ static void AKTextFieldKeyEvent(AKView* view , const AKKeyEvent* event)
     AKTextField* self = (AKTextField*) view;
     assert(self);
     
+    if (AKControlIsActive(&self->base) ==false)
+    {
+        return ;
+    }
+
     bool textChanged = false;
     
     if (event->state == AKKeyState_Press && event->c)
@@ -156,7 +161,7 @@ static void AKTextFieldDraw(AKView * view , DrawContext* context)
     
     
     DrawContextSetSource( context , &self->textColor);
-    DrawContextSetFont(context , self->font.handle);
+    DrawContextSetFont(context , &self->font);
 
     
     AKSize textSize;
@@ -176,7 +181,7 @@ void AKTextFieldSetTextColor( AKTextField* textField , const AKColor* color)
     
     source_set_color(&textField->textColor, AKColorTo8bit(color) );
     
-    window_refresh(textField->view.widget.window);
+    window_refresh(textField->base.view.widget.window);
     
 }
 

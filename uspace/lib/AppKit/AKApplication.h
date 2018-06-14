@@ -36,13 +36,28 @@
 #define AKApplication_h
 
 #include <stdbool.h>
+#include <AKWindow.h>
 
 typedef struct _AKWindow AKWindow;
+typedef struct _AKApplicationDelegate AKApplicationDelegate;
+
+/* **** **** **** **** **** **** **** **** **** **** */
 
 typedef struct _AKApplication
 {
-    AKWindow *rootWindow;
+    AKWindow                rootWindow;
+    AKApplicationDelegate*  delegate;
+    
 } AKApplication;
+
+/* **** **** **** **** **** **** **** **** **** **** */
+
+typedef struct _AKApplicationDelegate
+{
+    
+}AKApplicationDelegate;
+
+/* **** **** **** **** **** **** **** **** **** **** */
 
 extern AKApplication* AKApplicationInstance;
 

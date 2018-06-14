@@ -51,7 +51,8 @@ typedef struct
 
 
 void DrawContextSetSource( DrawContext* context , source_t* source);
-void DrawContextSetFont( DrawContext* context, font_t *font);
+void DrawContextSetFont( DrawContext* context, AKFont *font);
+void DrawContextSetFont2( DrawContext* context, font_t *font);
 
 // Push and Restore context
 void DrawContextSave( DrawContext* context );

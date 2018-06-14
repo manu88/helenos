@@ -62,7 +62,14 @@ void DrawContextSetSource( DrawContext* context , source_t* source)
     drawctx_set_source( context->ctx, source);
 }
 
-void DrawContextSetFont( DrawContext* context, font_t *font)
+void DrawContextSetFont( DrawContext* context, AKFont *font)
+{
+    assert(context && font);
+    
+    drawctx_set_font(context->ctx, font->handle);
+}
+
+void DrawContextSetFont2( DrawContext* context, font_t *font)
 {
     assert(context && font);
     

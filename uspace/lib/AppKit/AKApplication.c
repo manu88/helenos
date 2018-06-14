@@ -33,6 +33,7 @@
 //
 #include <stddef.h> // NULL definition
 #include <mem.h> // memset
+#include <async.h>
 #include "AKApplication.h"
 
 static AKApplication _mainApp;
@@ -47,6 +48,12 @@ bool AKApplicationInit()
         AKApplicationInstance = &_mainApp;
         
         memset(AKApplicationInstance , 0 , sizeof(AKApplication));
+
+        if (AKWindowInitWithName( &AKApplicationInstance->rootWindow,  WINDOW_MAIN | WINDOW_DECORATED | WINDOW_RESIZEABLE , "fileName") == 0)
+        {
+            return false;
+        }
+        
         
         return true;
     }
@@ -58,5 +65,7 @@ bool AKApplicationInit()
 
 int AKApplicationMain(int argc, char *argv[])
 {
+    async_manager();
+    
     return 0;
 }

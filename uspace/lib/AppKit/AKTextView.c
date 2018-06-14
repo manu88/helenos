@@ -118,7 +118,7 @@ static void AKTextView_Draw(AKView * view , DrawContext* context)
     AKTextView* self = (AKTextView*) view;
     
     DrawContextSetSource( context , &self->textColor);
-    DrawContextSetFont( context, self->font.handle);
+    DrawContextSetFont( context, &self->font);
     /*
     drawctx_set_source(context->ctx, &self->textColor);
     drawctx_set_font(context->ctx, self->font.handle);
@@ -132,13 +132,14 @@ static void AKTextView_Draw(AKView * view , DrawContext* context)
     
     //printf("Original '%s'\n" ,self->text );
     
-    AKPoint pos = AKViewGetBounds( (const AKView*) self).origin;// AKPointMake(10 , 50);
+    const AKRect bounds = AKViewGetBounds( (const AKView*) self);
+    AKPoint pos = bounds.origin;// AKPointMake(10 , 50);
     
     pos.x +=10;
     pos.y +=10;
     
     // Why coef 2 ??
-    const size_t maxCharPerLine  = 2.f * (AKViewGetBounds( (const AKView*) self).size.width - 20.f) /  AKFontGetSize( &self->font);
+    const size_t maxCharPerLine  = 2.f *( bounds.size.width - 20.f) /  AKFontGetSize( &self->font);
     
     //printf(" num chars for size %lu %f\n",maxCharPerLine ,AKViewGetBounds( (const AKView*) self).size.width );
     
@@ -168,6 +169,14 @@ static void AKTextView_Draw(AKView * view , DrawContext* context)
             lineStrLen -= size;
             
             free(l);
+            
+            // stop text rendering when outside view bounds ( height)
+            if(pos.y > bounds.size.height)
+            {
+                //printf("Y exceeds height %f %f\n", pos.y , bounds.size.height);
+                next = NULL;
+                break;
+            }
             
             
         }
