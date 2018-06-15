@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Martin Decky
+ * Copyright (c) 2018 Jiri Svoboda
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -26,37 +26,38 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/** @addtogroup generic
+/** @addtogroup libc
  * @{
  */
-/** @file
+/**
+ * @file
+ * @brief sscanf, vsscanf
  */
 
-#ifndef KERN_LIB_MEMFNC_H_
-#define KERN_LIB_MEMFNC_H_
+#include <stdarg.h>
+#include <stdio.h>
+#include "../private/stdio.h"
+#include "../private/sstream.h"
 
-#include <stddef.h>
-#include <cc.h>
+int vsscanf(const char *s, const char *fmt, va_list ap)
+{
+	FILE f;
 
-#ifdef CONFIG_LTO
-#define DO_NOT_DISCARD ATTRIBUTE_USED
-#else
-#define DO_NOT_DISCARD
-#endif
+	__sstream_init(s, &f);
+	return vfscanf(&f, fmt, ap);
+}
 
-extern void *memset(void *, int, size_t)
-    __attribute__((nonnull(1)))
-    ATTRIBUTE_OPTIMIZE("-fno-tree-loop-distribute-patterns") DO_NOT_DISCARD;
-extern void *memcpy(void *, const void *, size_t)
-    __attribute__((nonnull(1, 2)))
-    ATTRIBUTE_OPTIMIZE("-fno-tree-loop-distribute-patterns") DO_NOT_DISCARD;
-extern int memcmp(const void *, const void *, size_t len)
-    __attribute__((nonnull(1, 2)))
-    ATTRIBUTE_OPTIMIZE("-fno-tree-loop-distribute-patterns") DO_NOT_DISCARD;
+int sscanf(const char *s, const char *fmt, ...)
+{
+	va_list args;
+	int rc;
 
-#define alloca(size) __builtin_alloca((size))
+	va_start(args, fmt);
+	rc = vsscanf(s, fmt, args);
+	va_end(args);
 
-#endif
+	return rc;
+}
 
 /** @}
  */

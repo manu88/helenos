@@ -73,7 +73,6 @@ extern vfs_out_ops_t tmpfs_ops;
 extern libfs_ops_t tmpfs_libfs_ops;
 
 extern bool tmpfs_init(void);
-extern bool tmpfs_restore(service_id_t);
 
 #endif
 

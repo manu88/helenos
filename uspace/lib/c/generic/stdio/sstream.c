@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Martin Decky
+ * Copyright (c) 2018 Jiri Svoboda
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -26,37 +26,77 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/** @addtogroup generic
+/** @addtogroup libc
  * @{
  */
 /** @file
  */
 
-#ifndef KERN_LIB_MEMFNC_H_
-#define KERN_LIB_MEMFNC_H_
+#include <stdio.h>
+#include <str.h>
+#include <errno.h>
+#include <adt/list.h>
+#include <wchar.h>
+#include "../private/stdio.h"
+#include "../private/sstream.h"
 
-#include <stddef.h>
-#include <cc.h>
+static size_t stdio_str_read(void *, size_t, size_t, FILE *);
+static size_t stdio_str_write(const void *, size_t, size_t, FILE *);
+static int stdio_str_flush(FILE *);
 
-#ifdef CONFIG_LTO
-#define DO_NOT_DISCARD ATTRIBUTE_USED
-#else
-#define DO_NOT_DISCARD
-#endif
+static __stream_ops_t stdio_str_ops = {
+	.read = stdio_str_read,
+	.write = stdio_str_write,
+	.flush = stdio_str_flush
+};
 
-extern void *memset(void *, int, size_t)
-    __attribute__((nonnull(1)))
-    ATTRIBUTE_OPTIMIZE("-fno-tree-loop-distribute-patterns") DO_NOT_DISCARD;
-extern void *memcpy(void *, const void *, size_t)
-    __attribute__((nonnull(1, 2)))
-    ATTRIBUTE_OPTIMIZE("-fno-tree-loop-distribute-patterns") DO_NOT_DISCARD;
-extern int memcmp(const void *, const void *, size_t len)
-    __attribute__((nonnull(1, 2)))
-    ATTRIBUTE_OPTIMIZE("-fno-tree-loop-distribute-patterns") DO_NOT_DISCARD;
+/** Read from string stream. */
+static size_t stdio_str_read(void *buf, size_t size, size_t nmemb, FILE *stream)
+{
+	size_t nread;
+	char *cp = (char *)stream->arg;
+	char *bp = (char *)buf;
 
-#define alloca(size) __builtin_alloca((size))
+	nread = 0;
+	while (nread < size * nmemb) {
+		if (*cp == '\0') {
+			stream->eof = true;
+			break;
+		}
 
-#endif
+		bp[nread] = *cp;
+		++nread;
+		++cp;
+		stream->arg = (void *)cp;
+	}
+
+	return (nread / size);
+}
+
+/** Write to string stream. */
+static size_t stdio_str_write(const void *buf, size_t size, size_t nmemb,
+    FILE *stream)
+{
+	return 0;
+}
+
+/** Flush string stream. */
+static int stdio_str_flush(FILE *stream)
+{
+	return EOF;
+}
+
+/** Initialize string stream.
+ *
+ * @param str String used as backend for reading
+ * @param stream Stream to initialize
+ */
+void __sstream_init(const char *str, FILE *stream)
+{
+	memset(stream, 0, sizeof(FILE));
+	stream->ops = &stdio_str_ops;
+	stream->arg = (void *)str;
+}
 
 /** @}
  */

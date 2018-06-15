@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Martin Decky
+ * Copyright (c) 2018 Jiri Svoboda
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -26,35 +26,18 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/** @addtogroup generic
+/** @addtogroup libc
  * @{
  */
 /** @file
  */
 
-#ifndef KERN_LIB_MEMFNC_H_
-#define KERN_LIB_MEMFNC_H_
+#ifndef LIBC_PRIVATE_SSTREAM_H_
+#define LIBC_PRIVATE_SSTREAM_H_
 
-#include <stddef.h>
-#include <cc.h>
+#include <stdio.h>
 
-#ifdef CONFIG_LTO
-#define DO_NOT_DISCARD ATTRIBUTE_USED
-#else
-#define DO_NOT_DISCARD
-#endif
-
-extern void *memset(void *, int, size_t)
-    __attribute__((nonnull(1)))
-    ATTRIBUTE_OPTIMIZE("-fno-tree-loop-distribute-patterns") DO_NOT_DISCARD;
-extern void *memcpy(void *, const void *, size_t)
-    __attribute__((nonnull(1, 2)))
-    ATTRIBUTE_OPTIMIZE("-fno-tree-loop-distribute-patterns") DO_NOT_DISCARD;
-extern int memcmp(const void *, const void *, size_t len)
-    __attribute__((nonnull(1, 2)))
-    ATTRIBUTE_OPTIMIZE("-fno-tree-loop-distribute-patterns") DO_NOT_DISCARD;
-
-#define alloca(size) __builtin_alloca((size))
+extern void __sstream_init(const char *, FILE *);
 
 #endif
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Martin Decky
+ * Copyright (c) 2011 Jiri Zarevucky
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -26,37 +26,28 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/** @addtogroup generic
+/** @addtogroup libc
  * @{
  */
-/** @file
+/** @file Alternative spellings.
  */
 
-#ifndef KERN_LIB_MEMFNC_H_
-#define KERN_LIB_MEMFNC_H_
+#ifndef LIBC_ISO646_H_
+#define LIBC_ISO646_H_
 
-#include <stddef.h>
-#include <cc.h>
+#define and &&
+#define and_eq &=
+#define bitand &
+#define bitor |
+#define compl ˜
+#define not !
+#define not_eq !=
+#define or ||
+#define or_eq |=
+#define xor ^
+#define xor_eq ^=
 
-#ifdef CONFIG_LTO
-#define DO_NOT_DISCARD ATTRIBUTE_USED
-#else
-#define DO_NOT_DISCARD
-#endif
-
-extern void *memset(void *, int, size_t)
-    __attribute__((nonnull(1)))
-    ATTRIBUTE_OPTIMIZE("-fno-tree-loop-distribute-patterns") DO_NOT_DISCARD;
-extern void *memcpy(void *, const void *, size_t)
-    __attribute__((nonnull(1, 2)))
-    ATTRIBUTE_OPTIMIZE("-fno-tree-loop-distribute-patterns") DO_NOT_DISCARD;
-extern int memcmp(const void *, const void *, size_t len)
-    __attribute__((nonnull(1, 2)))
-    ATTRIBUTE_OPTIMIZE("-fno-tree-loop-distribute-patterns") DO_NOT_DISCARD;
-
-#define alloca(size) __builtin_alloca((size))
-
-#endif
+#endif /* LIBC_ISO646_H_ */
 
 /** @}
  */

@@ -71,6 +71,9 @@ static LIST_INITIALIZE(fibril_list);
  */
 static void fibril_main(void)
 {
+	/* fibril_futex is locked when a fibril is first started. */
+	futex_unlock(&fibril_futex);
+
 	fibril_t *fibril = __tcb_get()->fibril_data;
 
 #ifdef FUTEX_UPGRADABLE
@@ -111,8 +114,6 @@ fibril_t *fibril_setup(void)
 	fibril->flags = 0;
 
 	fibril->waits_for = NULL;
-
-	fibril->switches = 0;
 
 	/*
 	 * We are called before __tcb_set(), so we need to use
@@ -202,15 +203,12 @@ int fibril_switch(fibril_switch_type_t stype)
 		// Nothing.
 		break;
 	case FIBRIL_TO_MANAGER:
-		srcf->switches++;
 		/*
 		 * Don't put the current fibril into any list, it should
 		 * already be somewhere, or it will be lost.
 		 */
 		break;
 	}
-
-	futex_unlock(&fibril_futex);
 
 #ifdef FUTEX_UPGRADABLE
 	if (stype == FIBRIL_FROM_DEAD) {
@@ -222,6 +220,9 @@ int fibril_switch(fibril_switch_type_t stype)
 	context_swap(&srcf->ctx, &dstf->ctx);
 
 	/* Restored by another fibril! */
+
+	/* Must be after context_swap()! */
+	futex_unlock(&fibril_futex);
 
 	if (srcf->clean_after_me) {
 		/*

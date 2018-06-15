@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Martin Decky
+ * Copyright (c) 2018 Martin Decky
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -26,37 +26,85 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/** @addtogroup generic
+/** @addtogroup init
  * @{
  */
-/** @file
+/**
+ * @file
  */
 
-#ifndef KERN_LIB_MEMFNC_H_
-#define KERN_LIB_MEMFNC_H_
+#include <stdio.h>
+#include <stdbool.h>
+#include <errno.h>
+#include <loc.h>
+#include <untar.h>
+#include <block.h>
+#include "init.h"
+#include "untar.h"
 
-#include <stddef.h>
-#include <cc.h>
+typedef struct {
+	const char *dev;
+	
+	service_id_t sid;
+	aoff64_t offset;
+} tar_state_t;
 
-#ifdef CONFIG_LTO
-#define DO_NOT_DISCARD ATTRIBUTE_USED
-#else
-#define DO_NOT_DISCARD
-#endif
+static int bd_tar_open(tar_file_t *tar)
+{
+	tar_state_t *state = (tar_state_t *) tar->data;
 
-extern void *memset(void *, int, size_t)
-    __attribute__((nonnull(1)))
-    ATTRIBUTE_OPTIMIZE("-fno-tree-loop-distribute-patterns") DO_NOT_DISCARD;
-extern void *memcpy(void *, const void *, size_t)
-    __attribute__((nonnull(1, 2)))
-    ATTRIBUTE_OPTIMIZE("-fno-tree-loop-distribute-patterns") DO_NOT_DISCARD;
-extern int memcmp(const void *, const void *, size_t len)
-    __attribute__((nonnull(1, 2)))
-    ATTRIBUTE_OPTIMIZE("-fno-tree-loop-distribute-patterns") DO_NOT_DISCARD;
+	errno_t ret = loc_service_get_id(state->dev, &state->sid,
+	    IPC_FLAG_BLOCKING);
+	if (ret != EOK)
+		return ret;
 
-#define alloca(size) __builtin_alloca((size))
+	ret = block_init(state->sid, 4096);
+	if (ret != EOK)
+		return ret;
 
-#endif
+	state->offset = 0;
+	return EOK;
+}
+
+static void bd_tar_close(tar_file_t *tar)
+{
+	tar_state_t *state = (tar_state_t *) tar->data;
+	block_fini(state->sid);
+}
+
+static size_t bd_tar_read(tar_file_t *tar, void *data, size_t size)
+{
+	tar_state_t *state = (tar_state_t *) tar->data;
+
+	if (block_read_bytes_direct(state->sid, state->offset, size,
+	    data) != EOK)
+		return 0;
+
+	state->offset += size;
+	return size;
+}
+
+static void bd_tar_vreport(tar_file_t *tar, const char *fmt, va_list args)
+{
+	vprintf(fmt, args);
+}
+
+tar_file_t tar = {
+	.open = bd_tar_open,
+	.close = bd_tar_close,
+
+	.read = bd_tar_read,
+	.vreport = bd_tar_vreport
+};
+
+bool bd_untar(const char *dev)
+{
+	tar_state_t state;
+	state.dev = dev;
+
+	tar.data = (void *) &state;
+	return (untar(&tar) == EOK);
+}
 
 /** @}
  */
