@@ -10,6 +10,8 @@ EXTRA_CFLAGS = -I.
 BINARY = settings
 SOURCES = settings.c \
         SettingsClient.c \
+        DataStore.c \
+
 
 
 include $(USPACE_PREFIX)/Makefile.common

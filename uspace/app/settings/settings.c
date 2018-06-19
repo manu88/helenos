@@ -28,10 +28,13 @@
 
 #include <stdio.h>
 #include <SettingsClient.h>
+#include <DataStore.h>
 
 int main()
 {
     printf("Settings app\n");
+    
+    test();
     
     return 0;
 }
