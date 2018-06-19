@@ -1,7 +1,7 @@
 # Fork content
 * AppKit library for gui oriented applications
-* improved compositor (context menus, modal windows ; and an interface for setting/getting display parameters )
-* A settings server for storing user values, with a settings library for reading/writing them.
+* -In Progress- improved compositor (context menus, modal windows ; and an interface for setting/getting display parameters )
+* A settings server for storing user values, with an associated library for reading/writing them.
 
 
 # HelenOS
