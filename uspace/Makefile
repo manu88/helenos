@@ -193,6 +193,7 @@ DIRS = \
 	drv/test/test3 \
 	drv/time/cmos-rtc \
 	app/AppKit \
+	app/vizctl \
 
 
 ## sun4u driver won't compile on 32-bit targets

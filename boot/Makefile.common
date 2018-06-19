@@ -226,6 +226,7 @@ RD_APPS_NON_ESSENTIAL = \
 	$(USPACE_PATH)/app/fontviewer/fontviewer \
 	$(USPACE_PATH)/app/wifi_supplicant/wifi_supplicant \
 	$(USPACE_PATH)/app/AppKit/AppKit \
+	$(USPACE_PATH)/app/vizctl/vizctl \
 
 ifeq ($(CONFIG_BUILD_SHARED_LIBS), y)
 	RD_APPS_NON_ESSENTIAL += \
