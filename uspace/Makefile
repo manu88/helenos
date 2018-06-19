@@ -195,6 +195,7 @@ DIRS = \
 	drv/time/cmos-rtc \
 	app/AppKit \
 	app/vizctl \
+	app/settings \
 	
 
 

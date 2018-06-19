@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "container:settings.c">
+   </FileRef>
+   <FileRef
+      location = "container:SettingsClient.c">
+   </FileRef>
+   <FileRef
+      location = "container:SettingsClient.h">
+   </FileRef>
+   <FileRef
+      location = "group:../../Documents/projets/Dev/helenos/uspace/app/settings/Makefile"
+      assignedFileDataType = "public.bash-script">
+   </FileRef>
+</Workspace>
