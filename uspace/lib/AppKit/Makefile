@@ -28,9 +28,11 @@
 
 USPACE_PREFIX = ../..
 LIBRARY = libAppKit
-LIBS = gui draw softrend compress graph math
+LIBS=gui draw softrend compress graph math
 #LIBS = gui draw softrend compress AppKit
 
+
+EXTRA_CFLAGS = -D__HELENOS__
 SOURCES = \
 	WidgetImpl.c \
 	upng.c \
@@ -49,11 +51,12 @@ SOURCES = \
 	AKSlider.c \
 	DrawContext.c \
 	AKGeometry.c \
+	AKScreen.c \
 	AKEvent.c \
 	AKColorPickerWindow.c \
 	AKAlertWindow.c \
 	AKApplication.c \
 	AKTextField.c \
-	
+
 
 include $(USPACE_PREFIX)/Makefile.common
