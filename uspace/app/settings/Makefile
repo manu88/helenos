@@ -11,6 +11,9 @@ BINARY = settings
 SOURCES = settings.c \
         SettingsClient.c \
         DataStore.c \
+        DataStoreJSON.c \
+        cJSON.c \
+
 
 
 

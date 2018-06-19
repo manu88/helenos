@@ -16,7 +16,7 @@ typedef char DBValue;
 typedef struct
 {
     ht_link_t link;
-    const char* key;
+    char* key;
     DBValue* value;
     
 } DBItem;
@@ -27,6 +27,20 @@ typedef struct
     hash_table_t hashTable;
 }DataStore;
 
-void test(void);
+
+bool DataStoreInit(DataStore* dataStore);
+void DataStoreDeInit(DataStore* dataStore);
+
+bool DataStoreAddValue(DataStore* dataStore,const DBValue* value , const char* key );
+bool DataStoreRemoveKey(DataStore* dataStore,const char* key );
+bool DataStoreContainsKey(const DataStore* dataStore , const char* key);
+
+const DBValue* DataStoreGetValueForKey(const DataStore* dataStore , const char* key);
+
+
+
+size_t DataStoreGetSize(const DataStore* dataStore);
+
+
 
 #endif /* DataStore_h */

@@ -27,14 +27,98 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <cJSON.h>
 #include <SettingsClient.h>
 #include <DataStore.h>
+#include <DataStoreJSON.h>
 
 int main()
 {
-    printf("Settings app\n");
     
-    test();
+    
+    DataStore ds;
+    
+    //cJSON *json= cJSON_Parse("{\"Key1\" : \"Value1\",\"Key2\" : \"Value2\"}");
+    
+    if( DataStoreInitFromJSON(&ds , "{\"Key1\" : \"Value1\",\"Key2\" : \"Value2\"}") == false)
+    {
+        return 1;
+    }
+    
+    printf("+DS Size %lu\n" , DataStoreGetSize(&ds));
+    
+    printf("Value for key Key1 : '%s'\n" , DataStoreGetValueForKey(&ds , "Key1"));
+    printf("Value for key Key2 : '%s'\n" , DataStoreGetValueForKey(&ds , "Key2"));
+    printf("Value for key Key3 : '%s'\n" , DataStoreGetValueForKey(&ds , "Key3"));
+    
+    /*
+    if( DataStoreInit(&ds) == false)
+    {
+        return 1;
+    }
+    
+    //test();
+    
+    printf("+DS Size %lu\n" , DataStoreGetSize(&ds));
+    DataStoreAddValue(&ds , "Key1" , "value1");
+    printf("+DS Size %lu\n" , DataStoreGetSize(&ds));
+    
+    DataStoreAddValue(&ds , "Key2" , "value2");
+    printf("+DS Size %lu\n" , DataStoreGetSize(&ds));
+    
+    DataStoreAddValue(&ds , "Key3" , "value3");
+    printf("+DS Size %lu\n" , DataStoreGetSize(&ds));
+    
+    
+    
+    if(DataStoreAddValue(&ds , "Key1" , "value1") == false)
+    {
+        printf("+error adding again Key1\n");
+    }
+    
+    printf("+DS Size %lu\n" , DataStoreGetSize(&ds));
+    
+    printf("Value for key Key1 : '%s'\n" , DataStoreGetValueForKey(&ds , "Key1"));
+    printf("Value for key Key2 : '%s'\n" , DataStoreGetValueForKey(&ds , "Key2"));
+    printf("Value for key Key3 : '%s'\n" , DataStoreGetValueForKey(&ds , "Key3"));
+    printf("Value for key Key4 : '%s'\n" , DataStoreGetValueForKey(&ds , "Key4"));
+    
+    
+    if(DataStoreRemoveKey(&ds , "Key2") == false)
+    {
+        printf("+error removing Key2\n");
+    }
+    
+    printf("+DS Size %lu\n" , DataStoreGetSize(&ds));
+    
+    DataStoreDeInit(&ds);
+    
+    
+    
+    cJSON *json= cJSON_Parse("{\"Key1\" : \"Value1\",\"Key2\" : \"Value2\"}");
+    
+    if( json == NULL)
+    {
+        printf("JSON parsing error \n");
+        return 2;
+    }
+    
+    if(cJSON_IsObject(json))
+    {
+        printf("Is object\n");
+    }
+    
+    const cJSON *element = NULL;
+    cJSON_ArrayForEach(element, json)
+    {
+        printf("Key '%s' Value '%s'\n",element->string,element->valuestring);
+        
+    }
+    
+    cJSON_Delete(json);
+     */
+     
     
     return 0;
 }

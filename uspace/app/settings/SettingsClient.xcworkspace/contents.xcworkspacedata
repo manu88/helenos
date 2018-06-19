@@ -17,6 +17,18 @@
       location = "group:DataStore.c">
    </FileRef>
    <FileRef
+      location = "group:DataStoreJSON.h">
+   </FileRef>
+   <FileRef
+      location = "group:DataStoreJSON.c">
+   </FileRef>
+   <FileRef
       location = "group:Makefile">
+   </FileRef>
+   <FileRef
+      location = "group:cJSON.c">
+   </FileRef>
+   <FileRef
+      location = "group:cJSON.h">
    </FileRef>
 </Workspace>
