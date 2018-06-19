@@ -38,9 +38,4 @@ SOURCES = main.c \
 
 
 
-
-
-
-
-
 include $(USPACE_PREFIX)/Makefile.common

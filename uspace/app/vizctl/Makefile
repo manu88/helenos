@@ -5,5 +5,6 @@ USPACE_PREFIX = ../..
 LIBS =  AppKit gui draw softrend compress  math
 
 BINARY = vizctl
-SOURCES = vizctl.c AKScreen.c
+SOURCES = vizctl.c
+
 include $(USPACE_PREFIX)/Makefile.common

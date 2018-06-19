@@ -25,60 +25,50 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-//
-//  ApplicationKit.h
-//  
-//
-//  Created by Manuel Deneu on 31/05/2018.
-//
 
-#ifndef ApplicationKit_h
-#define ApplicationKit_h
+#ifndef AKSCREEN_H
+#define AKSCREEN_H
 
-#define ApplicationKitVersion_Maj   (int) 0
-#define ApplicationKitVersion_Min   (int) 0
-#define ApplicationKitVersion_Patch (int) 0
-
-#include <AKView.h>
-
-#include <AKWindow.h>
-
-#include <AKColor.h>
+#include <loc.h>
 #include <AKGeometry.h>
 
-#include <AKEvent.h>
-#include <AKImage.h>
 
-// Basic components
-#include <AKGridView.h>
-#include <AKLabel.h>
-#include <AKButton.h>
-#include <AKSlider.h>
-#include <AKTextField.h>
-#include <AKImageView.h>
-#include <AKTextView.h>
+typedef struct
+{
+    AKSize size;
+    
+} AKScreenConfiguration;
 
-#include <AKScreen.h>
-
-// Top level components
-#include <AKColorPickerWindow.h>
-#include <AKAlertWindow.h>
-#include <AKApplication.h>
+typedef struct
+{
+    async_sess_t *reg_sess;
+    
+} AKScreenManager;
 
 
-
-/*
- General notes : AK* object are defined in header - an thus not opaque- so they can be stack-allocated, BUT you should'nt access struct fields directly.
- Especialy, every AK* object have a `init` method (always named `AKObjectNameInit`) method that will modify Callback methods and possibly other fields, thus you should'nt do
- anything with the object instance before calling the init method
- */
-
-/*
- Widget lifecycle:
- - Widget are NOT destroyed when top widget are distroyed
- */
+// if optionalCompositorName is NULL, default compositor will be "comp:0/disp"
+bool AKScreenManagerInit(AKScreenManager* manager, const char* optionalCompositorName);
+void AKScreenManagerDeInit(AKScreenManager* manager);
 
 
 
 
-#endif /* ApplicationKit_h */
+
+size_t AKScreenManagerGetNumDisplays( AKScreenManager* manager );
+size_t AKScreenManagerGetModCountForDisplay(AKScreenManager* manager , size_t displayIndex);
+
+bool AKScreenManagerGetModForDisplay(AKScreenManager* manager,AKScreenConfiguration* config, size_t displayIndex , size_t modIndex);
+//bool DisplaySuspend(AKScreenManager* manager,  size_t displayIndex);
+
+
+
+
+
+
+
+
+
+
+
+
+#endif /* AKSCREEN_H*/

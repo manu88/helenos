@@ -20,6 +20,12 @@
          location = "group:../../lib/AppKit/ApplicationKit.h">
       </FileRef>
       <FileRef
+         location = "group:../../lib/AppKit/AKScreen.c">
+      </FileRef>
+      <FileRef
+         location = "group:../../lib/AppKit/AKScreen.h">
+      </FileRef>
+      <FileRef
          location = "group:../../lib/AppKit/AKApplication.c">
       </FileRef>
       <FileRef

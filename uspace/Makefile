@@ -194,6 +194,7 @@ DIRS = \
 	drv/time/cmos-rtc \
 	app/AppKit \
 	app/vizctl \
+	
 
 
 ## sun4u driver won't compile on 32-bit targets
@@ -255,6 +256,9 @@ LIBS = \
 	lib/posix \
 	lib/ieee80211 \
 	lib/AppKit \
+
+
+
 
 BASE_BUILDS := $(addsuffix .build,$(BASE_LIBS))
 BUILDS := $(addsuffix .build,$(DIRS) $(LIBS))

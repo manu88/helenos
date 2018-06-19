@@ -59,13 +59,18 @@ static void colorPickerWindowColorChanged(AKColorPickerWindow * colorPicker)
 int main(int argc, char *argv[])
 {
     
+    AKScreenManager man;
+    
+    if (AKScreenManagerInit(&man , NULL) == false)
+    {
+        return 1;
+    }
     if (argc < 2)
     {
         printf("pass a text file as argument! \n");
         
         return 1;
     }
-    
     
     const char* fileName = argv[1];
     size_t fileDataSize = 0;
