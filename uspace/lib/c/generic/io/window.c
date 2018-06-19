@@ -39,6 +39,9 @@
 
 #include <stdio.h>
 
+
+
+
 errno_t win_register(async_sess_t *sess, window_flags_t flags, service_id_t *in,
     service_id_t *out)
 {

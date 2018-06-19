@@ -108,6 +108,7 @@ typedef struct {
 } window_t;
 
 static service_id_t winreg_id;
+static service_id_t displayConfigService_id;
 static sysarg_t window_id = 0;
 static FIBRIL_MUTEX_INITIALIZE(window_list_mtx);
 static LIST_INITIALIZE(window_list);
@@ -908,20 +909,201 @@ static void comp_window_close_request(window_t *win, cap_call_handle_t icall_han
 	async_answer_0(icall_handle, EOK);
 }
 
+/*
+static void test()
+{
+    FILE* f = fopen("testMods" , "w");
+    
+    if (f)
+    {
+        fprintf(f,"List \n");
+        list_foreach(viewport_list, link, viewport_t, vp)
+        {
+            fprintf(f,"%li %li \n" , vp->mode.screen_width, vp->mode.screen_height);
+        }
+        
+        fclose(f);
+    }
+}
+ */
+
+static void handleDisplayConfigService(cap_call_handle_t icall_handle, ipc_call_t *icall, void *arg)
+{
+    ipc_call_t call;
+    cap_call_handle_t chandle;
+    
+    while(true)
+    {
+        chandle = async_get_call(&call);
+        
+        if (!IPC_GET_IMETHOD(call))
+        {
+            async_answer_0(chandle, EOK);
+            return;
+        }
+        //test();
+        if (IPC_GET_IMETHOD(call) == WINDOW_DISPLAY_COUNT)
+        {
+            
+            sysarg_t cout = 0;
+            
+            /* LOCK */
+            
+            fibril_mutex_lock(&viewport_list_mtx);
+            
+                list_foreach(viewport_list, link, viewport_t, vp)
+                {
+                    cout++;
+                }
+            
+            fibril_mutex_unlock(&viewport_list_mtx);
+            /* UNLOCK */
+            async_answer_1(chandle, EOK, cout);
+            
+        }
+        else if (IPC_GET_IMETHOD(call) == WINDOW_DISPLAY_MODS_COUNT)
+        {
+            
+            sysarg_t indexDisplay = IPC_GET_ARG1(call);
+            
+            /* LOCK */
+            
+            fibril_mutex_lock(&viewport_list_mtx);
+            
+            const viewport_t* viewPort = list_get_instance( list_nth(&viewport_list, indexDisplay  ), viewport_t, link) ;
+            
+            fibril_mutex_unlock(&viewport_list_mtx);
+            
+            /* UNLOCK */
+            
+            if ( viewPort != NULL )
+            {
+                sysarg_t numIndex = 0;
+                
+                vslmode_t mode;
+                while(visualizer_enumerate_modes(viewPort->sess, &mode, numIndex) == EOK)
+                {
+                    numIndex++;
+                }
+                
+                
+                async_answer_1(chandle, EOK, numIndex);
+            }
+            else
+            {
+                sysarg_t retValue = 0;
+                async_answer_1(chandle, EINVAL, retValue);
+                continue;
+            }
+            
+            
+            
+            
+            sysarg_t retValue = 200;
+            async_answer_1(chandle, EOK, retValue);
+        }
+        else if (IPC_GET_IMETHOD(call) == WINDOW_DISPLAY_MODS)
+        {
+            
+            sysarg_t indexDisplay = IPC_GET_ARG1(call);
+            sysarg_t indexMod     = IPC_GET_ARG2(call);
+            
+            /* LOCK */
+            
+            fibril_mutex_lock(&viewport_list_mtx);
+            
+            const viewport_t* viewPort = list_get_instance( list_nth(&viewport_list, indexDisplay  ), viewport_t, link) ;
+            
+            fibril_mutex_unlock(&viewport_list_mtx);
+            
+            /* UNLOCK */
+            
+            if (viewPort == NULL)
+            {
+                sysarg_t retValue = 0;
+                async_answer_1(chandle, EINVAL, retValue);
+                continue;
+            }
+            
+            vslmode_t mode;
+            if (visualizer_enumerate_modes(viewPort->sess, &mode, indexMod) != EOK)
+            {
+                sysarg_t retValue = 0;
+                async_answer_1(chandle, EINVAL, retValue);
+                continue;
+            }
+            
+            
+            
+            sysarg_t retW = mode.screen_width;
+            sysarg_t retH = mode.screen_height;
+            async_answer_2(chandle, EOK, retW , retH);
+        }
+        else if (IPC_GET_IMETHOD(call) == WINDOW_SUSPEND)
+        {
+            sysarg_t indexDisplay = IPC_GET_ARG1(call);
+            
+            /* LOCK */
+            
+            fibril_mutex_lock(&viewport_list_mtx);
+            
+            const viewport_t* viewPort = list_get_instance( list_nth(&viewport_list, indexDisplay  ), viewport_t, link) ;
+            
+            fibril_mutex_unlock(&viewport_list_mtx);
+            
+            /* UNLOCK */
+            
+            if (viewPort == NULL)
+            {
+                sysarg_t retValue = 0;
+                async_answer_1(chandle, EINVAL, retValue);
+                continue;
+            }
+            
+            visualizer_suspend(viewPort->sess);
+            
+            async_answer_0(chandle, EOK);
+            
+        }
+        else
+        {
+            //test();
+            
+        }
+        
+    }
+}
 static void client_connection(cap_call_handle_t icall_handle, ipc_call_t *icall, void *arg)
 {
 	ipc_call_t call;
 	cap_call_handle_t chandle;
 	service_id_t service_id = (service_id_t) IPC_GET_ARG2(*icall);
 
+    
+    if (service_id == displayConfigService_id)
+    {
+        
+        async_answer_0(icall_handle, EOK);
+        
+        handleDisplayConfigService( icall_handle , icall , arg );
+
+        
+        
+    }
 	/* Allocate resources for new window and register it to the location service. */
-	if (service_id == winreg_id) {
+	else if (service_id == winreg_id)
+    {
 		async_answer_0(icall_handle, EOK);
 
 		chandle = async_get_call(&call);
+        
+        
 		if (IPC_GET_IMETHOD(call) == WINDOW_REGISTER) {
 			fibril_mutex_lock(&window_list_mtx);
 
+            
+            
+            
 			window_t *win = window_create();
 			if (!win) {
 				async_answer_2(chandle, ENOMEM, 0, 0);
@@ -2303,6 +2485,16 @@ static errno_t compositor_srv_init(char *input_svc, char *name)
 		printf("%s: Unable to register service %s\n", NAME, winreg);
 		return -1;
 	}
+    
+    char dispreg[LOC_NAME_MAXLEN + 1];
+    snprintf(dispreg, LOC_NAME_MAXLEN, "%s%s/disp", NAMESPACE, server_name);
+    if (loc_service_register(dispreg, &displayConfigService_id) != EOK)
+    {
+        printf("%s: Unable to register service %s\n", NAME, dispreg);
+        return -1;
+    }
+    
+    
 
 	/* Establish input bidirectional connection. */
 	rc = input_connect(input_svc);

@@ -633,6 +633,9 @@ window_t *window_open(const char *winreg, const void *data,
 	service_id_t in_dsid;
 	service_id_t out_dsid;
 	rc = win_register(reg_sess, flags, &in_dsid, &out_dsid);
+    
+    
+    
 	async_hangup(reg_sess);
 	if (rc != EOK) {
 		free(win);

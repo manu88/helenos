@@ -112,6 +112,8 @@ typedef struct {
 	window_event_data_t data;
 } window_event_t;
 
+
+
 extern errno_t win_register(async_sess_t *, window_flags_t, service_id_t *,
     service_id_t *);
 

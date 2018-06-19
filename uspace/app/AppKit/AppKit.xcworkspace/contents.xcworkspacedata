@@ -257,6 +257,9 @@
          location = "group:window.h">
       </FileRef>
       <FileRef
+         location = "group:../../generic/io/window.c">
+      </FileRef>
+      <FileRef
          location = "group:concaps.h">
       </FileRef>
       <FileRef
@@ -312,6 +315,9 @@
       </FileRef>
       <FileRef
          location = "group:kio.h">
+      </FileRef>
+      <FileRef
+         location = "group:../../generic/io/visualizer.c">
       </FileRef>
       <FileRef
          location = "group:visualizer.h">

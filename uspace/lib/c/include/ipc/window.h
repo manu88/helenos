@@ -44,7 +44,13 @@ typedef enum {
 	WINDOW_GRAB,
 	WINDOW_RESIZE,
 	WINDOW_CLOSE,
-	WINDOW_CLOSE_REQUEST
+	WINDOW_CLOSE_REQUEST,
+    
+    WINDOW_DISPLAY_COUNT,      // # of connected displays
+    WINDOW_DISPLAY,            // generic infos about the display
+    WINDOW_DISPLAY_MODS_COUNT, // # of display settings, for a given display
+    WINDOW_DISPLAY_MODS,        // n-th mode set
+    WINDOW_SUSPEND
 } window_request_t;
 
 #endif
