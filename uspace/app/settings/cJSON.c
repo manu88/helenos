@@ -50,9 +50,11 @@
 
 
 
-
+extern int vsnprintf(char *, size_t, const char *, va_list);
+extern int sscanf(const char *, const char *, ...);
 //#include <string.h>
-#include <stdio.h>
+//#include <posix/stdio.h>
+
 static inline int sprintf (char *s, const char *format, ...)
 {
     va_list arg;
@@ -64,6 +66,7 @@ static inline int sprintf (char *s, const char *format, ...)
     
     return done;
 }
+
 //#include <math.h>
 #include <stdlib.h>
 #include <limits.h>
