@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Jakub Jermar
+ * Copyright (c) 2018 Jiri Svoboda
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -26,33 +26,68 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef LIBC_ARCH_FIBRIL_CONTEXT_H_
-#define LIBC_ARCH_FIBRIL_CONTEXT_H_
-
-#include <stdint.h>
-
-/*
- * Only registers preserved accross function calls are included. r9 is
- * used to store a TLS address. -ffixed-r9 gcc forces gcc not to use this
- * register. -mtp=soft forces gcc to use #__aeabi_read_tp to obtain
- * TLS address.
+/** @addtogroup libc
+ * @{
+ */
+/**
+ * @file
+ * @brief Test stdio module
  */
 
-// XXX: This struct must match the assembly code in src/fibril.S
+#include <errno.h>
+#include <pcut/pcut.h>
+#include <stdio.h>
 
-typedef struct context {
-	uintptr_t sp;
-	uintptr_t pc;
-	uint32_t r4;
-	uint32_t r5;
-	uint32_t r6;
-	uint32_t r7;
-	uint32_t r8;
-	/* r9 */
-	uint32_t tls;
-	uint32_t r10;
-	/* r11 */
-	uint32_t fp;
-} context_t;
+PCUT_INIT;
 
-#endif
+PCUT_TEST_SUITE(stdio);
+
+/** fgetpos and fsetpos functions */
+PCUT_TEST(fgetpos_setpos)
+{
+	fpos_t pos;
+	int rc;
+	FILE *f;
+
+	// XXX Use tmpfile() when it is available
+	f = fopen("/tmp/fgpsp.tmp", "w+");
+	PCUT_ASSERT_NOT_NULL(f);
+	rc = remove("/tmp/fgpsp.tmp");
+	PCUT_ASSERT_INT_EQUALS(0, rc);
+
+	rc = fputs("abc", f);
+	PCUT_ASSERT_TRUE(rc >= 0);
+
+	rc = fgetpos(f, &pos);
+	PCUT_ASSERT_TRUE(rc >= 0);
+
+	rewind(f);
+
+	rc = fsetpos(f, &pos);
+	PCUT_ASSERT_TRUE(rc >= 0);
+
+	(void) fclose(f);
+}
+
+/** perror function with NULL as argument */
+PCUT_TEST(perror_null_msg)
+{
+	errno = EINVAL;
+	perror(NULL);
+}
+
+/** perror function with empty string as argument */
+PCUT_TEST(perror_empty_msg)
+{
+	errno = EINVAL;
+	perror("");
+}
+
+/** perror function with a message argument */
+PCUT_TEST(perror_msg)
+{
+	errno = EINVAL;
+	perror("This is a test");
+}
+
+PCUT_EXPORT(stdio);

@@ -131,8 +131,10 @@ GENERIC_SOURCES = \
 	generic/double_to_str.c \
 	generic/malloc.c \
 	generic/stdio/scanf.c \
+	generic/stdio/sprintf.c \
 	generic/stdio/sscanf.c \
 	generic/stdio/sstream.c \
+	generic/stdio/vsprintf.c \
 	generic/sysinfo.c \
 	generic/ipc.c \
 	generic/ns.c \
@@ -162,6 +164,7 @@ GENERIC_SOURCES = \
 	generic/arg_parse.c \
 	generic/stats.c \
 	generic/assert.c \
+	generic/bsearch.c \
 	generic/pio_trace.c \
 	generic/qsort.c \
 	generic/ubsan.c \
@@ -192,6 +195,8 @@ TEST_SOURCES = \
 	test/odict.c \
 	test/qsort.c \
 	test/sprintf.c \
+	test/stdio.c \
+	test/stdlib.c \
 	test/str.c
 
 include $(USPACE_PREFIX)/Makefile.common

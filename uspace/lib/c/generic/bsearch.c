@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Jakub Jermar
+ * Copyright (c) 2018 Jiri Svoboda
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -26,33 +26,53 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef LIBC_ARCH_FIBRIL_CONTEXT_H_
-#define LIBC_ARCH_FIBRIL_CONTEXT_H_
-
-#include <stdint.h>
-
-/*
- * Only registers preserved accross function calls are included. r9 is
- * used to store a TLS address. -ffixed-r9 gcc forces gcc not to use this
- * register. -mtp=soft forces gcc to use #__aeabi_read_tp to obtain
- * TLS address.
+/** @addtogroup libc
+ * @{
  */
 
-// XXX: This struct must match the assembly code in src/fibril.S
+/**
+ * @file
+ * @brief Binary search.
+ */
 
-typedef struct context {
-	uintptr_t sp;
-	uintptr_t pc;
-	uint32_t r4;
-	uint32_t r5;
-	uint32_t r6;
-	uint32_t r7;
-	uint32_t r8;
-	/* r9 */
-	uint32_t tls;
-	uint32_t r10;
-	/* r11 */
-	uint32_t fp;
-} context_t;
+#include <bsearch.h>
+#include <stddef.h>
 
-#endif
+/** Binary search.
+ *
+ * @param key Key to search for
+ * @param base Array of objects
+ * @param nmemb Number of objects in array
+ * @param size Size of each object
+ * @param compar Comparison function
+ */
+void *bsearch(const void *key, const void *base, size_t nmemb, size_t size,
+    int (*compar)(const void *, const void *))
+{
+	size_t pividx;
+	const void *pivot;
+	int r;
+
+	while (nmemb != 0) {
+		pividx = nmemb / 2;
+		pivot = base + size * pividx;
+
+		r = compar(key, pivot);
+		if (r == 0)
+			return (void *)pivot;
+
+		if (r < 0) {
+			/* Now only look at members preceding pivot */
+			nmemb = pividx;
+		} else {
+			/* Now only look at members following pivot */
+			nmemb = nmemb - pividx - 1;
+			base += size * (pividx + 1);
+		}
+	}
+
+	return NULL;
+}
+
+/** @}
+ */
