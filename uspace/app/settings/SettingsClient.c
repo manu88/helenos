@@ -26,4 +26,49 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <SettingsClient.h>
+#include <stddef.h>
 
+#include <assert.h>
+
+bool SettingsClientInit(SettingsClient* client)
+{
+    assert(client);
+    
+    return true;
+    
+}
+
+void SettingsClientDeInit(SettingsClient* client)
+{
+    assert(client);
+}
+
+
+bool SettingsClientAddValue(SettingsClient* client,const char* value , const char* key )
+{
+    assert(client);
+    
+    return false;
+}
+
+bool SettingsClientRemoveKey(SettingsClient* client,const char* key )
+{
+    assert(client);
+    
+    return false;
+}
+
+bool SettingsClientContainsKey(const SettingsClient* client , const char* key)
+{
+    assert(client);
+    
+    return false;
+}
+
+const char* SettingsClientGetValueForKey(const SettingsClient* client , const char* key)
+{
+    assert(client);
+    
+    return NULL;
+}

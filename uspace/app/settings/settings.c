@@ -26,6 +26,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <str.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <cJSON.h>
@@ -33,24 +34,58 @@
 #include <DataStore.h>
 #include <DataStoreJSON.h>
 
-int main()
+
+static bool TraverseDB(DataStore* dataStore,DBItem *item, void *context)
+{
+    printf("Key '%s' Value '%s'\n" , item->key , item->value);
+    return true;
+}
+
+int main( int argc , char* argv[])
 {
     
-    
-    DataStore ds;
-    
-    //cJSON *json= cJSON_Parse("{\"Key1\" : \"Value1\",\"Key2\" : \"Value2\"}");
-    
-    if( DataStoreInitFromJSON(&ds , "{\"Key1\" : \"Value1\",\"Key2\" : \"Value2\"}") == false)
+    if (argc <2)
     {
+        printf("Usage ... \n");
         return 1;
     }
+    SettingsClient client;
     
-    printf("+DS Size %lu\n" , DataStoreGetSize(&ds));
+    if ( SettingsClientInit(&client) == false)
+    {
+        printf("Unable to initialize SettingsClient\n");
+        return 2;
+    }
     
-    printf("Value for key Key1 : '%s'\n" , DataStoreGetValueForKey(&ds , "Key1"));
-    printf("Value for key Key2 : '%s'\n" , DataStoreGetValueForKey(&ds , "Key2"));
-    printf("Value for key Key3 : '%s'\n" , DataStoreGetValueForKey(&ds , "Key3"));
+    if( DataStoreInitFromJSON(&client.ds , "{\"Key1\" : \"Value1\",\"Key2\" : \"Value2\"}") == false)
+    {
+        return 2;
+    }
+    
+    printf("+DS Size %lu\n" , DataStoreGetSize(&client.ds));
+    
+    printf("Value for key Key1 : '%s'\n" , DataStoreGetValueForKey(&client.ds , "Key1"));
+    printf("Value for key Key2 : '%s'\n" , DataStoreGetValueForKey(&client.ds , "Key2"));
+    printf("Value for key Key3 : '%s'\n" , DataStoreGetValueForKey(&client.ds , "Key3"));
+    
+    
+    printf("--- Iterate ----- \n");
+    
+    DataStoreIterate( &client.ds , TraverseDB , NULL);
+    
+    printf("--- Save to JSON ----- \n");
+    
+    char* outBuf =  DataStoreGetJSONBuffer(&client.ds);
+    
+    if (outBuf)
+    {
+        printf("'%s'\n" , outBuf);
+    }
+    
+    free(outBuf);
+    
+    
+    return 0;
     
     /*
     if( DataStoreInit(&ds) == false)
@@ -120,5 +155,5 @@ int main()
      */
      
     
-    return 0;
+    
 }

@@ -48,10 +48,48 @@ bool DataStoreInitFromJSON(DataStore* dataStore , const char*buffer)
     return true;
 }
 
-char* DataStoreGetJSONBuffer(const DataStore* store)
+/* **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** */
+
+typedef struct
 {
+    cJSON *root;
+} JSONSerializationContext;
+
+static bool TraverseDB(DataStore* dataStore,DBItem *item, void *context_)
+{
+    assert(context_);
     assert(dataStore);
     
-    return NULL;
+    JSONSerializationContext* context = (JSONSerializationContext*) context_;
+    assert(context->root);
+    
+    
+    printf("Key '%s' Value '%s'\n" , item->key , item->value);
+    
+    cJSON *itemJSON = cJSON_CreateStringReference(item->value);
+    
+    if (itemJSON)
+    {
+       cJSON_AddItemToObjectCS(context->root, item->key, itemJSON);
+    }
+    //cJSON_CreateStringReference(const char *string);
+    //cJSON_AddItemToObjectCS(cJSON *object, const char *string, cJSON *item);
+    return true;
+}
+
+char* DataStoreGetJSONBuffer(const DataStore* store)
+{
+    assert(store);
+    
+    JSONSerializationContext context;
+    context.root = cJSON_CreateObject();
+    
+    DataStoreIterate(( DataStore*) store , TraverseDB , &context); // Cast from CONST!
+    
+    
+    char* buffer = cJSON_Print(context.root);
+    
+    
+    return buffer;
     
 }

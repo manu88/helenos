@@ -169,3 +169,36 @@ size_t DataStoreGetSize(const DataStore* dataStore)
     return hash_table_size( (hash_table_t*) &dataStore->hashTable); // CAST TO CONST!
 }
 
+/* **** **** **** **** **** **** **** **** **** **** **** **** */
+
+typedef struct
+{
+    DataStore* dataStore;
+    TraverseDataStore method;
+    void *ctx;
+    
+}ContextIterator;
+
+static bool IterateDataStore(ht_link_t *item_, void *context)
+{
+    assert(context);
+    DBItem* item = (DBItem*)item_;
+    
+    ContextIterator* internalContext = (ContextIterator*) context;
+    
+    return internalContext->method( internalContext->dataStore , item ,internalContext->ctx);
+}
+
+void DataStoreIterate( DataStore* dataStore , TraverseDataStore method , void* context)
+{
+    assert(dataStore);
+    
+    ContextIterator internalContext;
+    internalContext.dataStore = dataStore;
+    internalContext.ctx    = context;
+    internalContext.method = method;
+    
+    hash_table_apply( &dataStore->hashTable,IterateDataStore/* method*/, &internalContext);
+
+}
+

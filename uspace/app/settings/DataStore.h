@@ -22,7 +22,7 @@ typedef struct
 } DBItem;
 
 
-typedef struct
+typedef struct _DataStore
 {
     hash_table_t hashTable;
 }DataStore;
@@ -37,6 +37,10 @@ bool DataStoreContainsKey(const DataStore* dataStore , const char* key);
 
 const DBValue* DataStoreGetValueForKey(const DataStore* dataStore , const char* key);
 
+
+typedef bool (*TraverseDataStore)( DataStore* dataStore ,DBItem *item, void *context);
+
+void DataStoreIterate( DataStore* dataStore , TraverseDataStore method , void* context);
 
 
 size_t DataStoreGetSize(const DataStore* dataStore);

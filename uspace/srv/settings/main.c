@@ -55,6 +55,7 @@ static void onClient(cap_call_handle_t icall_handle, ipc_call_t *icall, void *ar
         if (!method)
         {
             /* The other side has hung up */
+            printf("Client has hung up \n");
             async_answer_0(chandle, EOK);
             return;
         }

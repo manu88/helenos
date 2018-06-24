@@ -26,5 +26,22 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <stdbool.h>
 
 
+#include <DataStore.h>
+
+typedef struct
+{
+    DataStore ds;
+    
+} SettingsClient;
+
+bool SettingsClientInit(SettingsClient* client);
+void SettingsClientDeInit(SettingsClient* client);
+
+
+bool SettingsClientAddValue(SettingsClient* client,const char* value , const char* key );
+bool SettingsClientRemoveKey(SettingsClient* client,const char* key );
+bool SettingsClientContainsKey(const SettingsClient* client , const char* key);
+const char* SettingsClientGetValueForKey(const SettingsClient* client , const char* key);
