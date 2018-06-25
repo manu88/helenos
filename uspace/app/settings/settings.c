@@ -27,6 +27,7 @@
  */
 
 #include <str.h>
+#include <str_error.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <cJSON.h>
@@ -34,6 +35,12 @@
 #include <DataStore.h>
 #include <DataStoreJSON.h>
 
+
+#include <loc.h> //loc_service_get_id
+
+#include <IPCCommons.h>
+
+#define NAME  "settings"
 
 static bool TraverseDB(DataStore* dataStore,DBItem *item, void *context)
 {
@@ -43,6 +50,41 @@ static bool TraverseDB(DataStore* dataStore,DBItem *item, void *context)
 
 int main( int argc , char* argv[])
 {
+    
+    service_id_t reg_dsid;
+    errno_t rc = loc_service_get_id(NAME, &reg_dsid, 0);
+    if (rc != EOK)
+    {
+        printf("%s: unable to find server: %s.\n",
+               NAME, str_error(rc));
+        return 10;
+    }
+    
+    printf("loc_service_get_id OK \n");
+    
+    async_sess_t *reg_sess = loc_service_connect(reg_dsid, INTERFACE_COMPOSITOR, 0);
+    if (reg_sess == NULL)
+    {
+        //free(win);
+        return 11;
+    }
+    
+    printf("loc_service_connect OK \n");
+    
+    
+    async_exch_t *exch = async_exchange_begin(reg_sess);
+    
+    sysarg_t retVal = 0;
+    errno_t ret = async_req_0_1(exch, SettingsIPC_Messages_Test ,&retVal/*, x, y, width, height*/);
+    async_exchange_end(exch);
+    
+    if (ret != EOK)
+    {
+        printf("Err async_req_1_0 %i\n" , ret);
+        
+    }
+    
+    
     
     if (argc <2)
     {

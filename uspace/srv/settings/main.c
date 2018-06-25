@@ -38,6 +38,7 @@
 
 #define NAME  "settings"
 
+#include "IPCCommons.h"
 
 static void onClient(cap_call_handle_t icall_handle, ipc_call_t *icall, void *arg)
 {
@@ -59,6 +60,14 @@ static void onClient(cap_call_handle_t icall_handle, ipc_call_t *icall, void *ar
             async_answer_0(chandle, EOK);
             return;
         }
+        else if (method == SettingsIPC_Messages_Test)
+        {
+            printf("Got SettingsIPC_Messages_Test \n");
+        }
+        else
+        {
+            printf("Got a message \n");
+        }
     } // while (true)
     
     
@@ -66,7 +75,7 @@ static void onClient(cap_call_handle_t icall_handle, ipc_call_t *icall, void *ar
 
 int main(int argc, char *argv[])
 {
-	printf("%s: Task Monitoring Service\n", NAME);
+	printf("%s: Settings DB Service\n", NAME);
 
     
     async_set_fallback_port_handler(onClient, NULL);
@@ -80,7 +89,7 @@ int main(int argc, char *argv[])
     }
     
     service_id_t sid;
-    rc = loc_service_register(SERVICE_NAME_CORECFG, &sid);
+    rc = loc_service_register(NAME, &sid);
     if (rc != EOK)
     {
         printf("%s: Failed registering service: %s.\n",
@@ -89,7 +98,7 @@ int main(int argc, char *argv[])
     }
 
 
-	task_retval(0);
+	//task_retval(0);
 	async_manager();
 
 	return 0;

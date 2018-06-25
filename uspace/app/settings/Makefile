@@ -5,7 +5,7 @@ USPACE_PREFIX = ../..
 #LIBS =  AppKit posix gui draw softrend compress  math
 
 #This is temporary and should be remove when SettingsClient.c/h are moved into a proper library.
-EXTRA_CFLAGS = -I. 
+EXTRA_CFLAGS = -I. -I../../srv/settings
 
 BINARY = settings
 SOURCES = settings.c \

@@ -5,6 +5,12 @@
       location = "container:"
       name = "Server">
       <FileRef
+         location = "group:../../srv/settings/Makefile">
+      </FileRef>
+      <FileRef
+         location = "group:../../srv/settings/IPCCommons.h">
+      </FileRef>
+      <FileRef
          location = "group:../../srv/settings/main.c">
       </FileRef>
    </Group>
