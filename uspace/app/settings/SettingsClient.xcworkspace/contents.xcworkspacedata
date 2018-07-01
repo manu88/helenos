@@ -14,34 +14,38 @@
          location = "group:../../srv/settings/main.c">
       </FileRef>
    </Group>
-   <FileRef
-      location = "container:settings.c">
-   </FileRef>
-   <FileRef
-      location = "container:SettingsClient.c">
-   </FileRef>
-   <FileRef
-      location = "container:SettingsClient.h">
-   </FileRef>
-   <FileRef
-      location = "group:DataStore.h">
-   </FileRef>
-   <FileRef
-      location = "group:DataStore.c">
-   </FileRef>
-   <FileRef
-      location = "group:DataStoreJSON.h">
-   </FileRef>
-   <FileRef
-      location = "group:DataStoreJSON.c">
-   </FileRef>
-   <FileRef
-      location = "group:Makefile">
-   </FileRef>
-   <FileRef
-      location = "group:cJSON.c">
-   </FileRef>
-   <FileRef
-      location = "group:cJSON.h">
-   </FileRef>
+   <Group
+      location = "container:"
+      name = "Client">
+      <FileRef
+         location = "container:settings.c">
+      </FileRef>
+      <FileRef
+         location = "container:SettingsClient.c">
+      </FileRef>
+      <FileRef
+         location = "container:SettingsClient.h">
+      </FileRef>
+      <FileRef
+         location = "group:DataStore.h">
+      </FileRef>
+      <FileRef
+         location = "group:DataStore.c">
+      </FileRef>
+      <FileRef
+         location = "group:DataStoreJSON.h">
+      </FileRef>
+      <FileRef
+         location = "group:DataStoreJSON.c">
+      </FileRef>
+      <FileRef
+         location = "group:Makefile">
+      </FileRef>
+      <FileRef
+         location = "group:cJSON.c">
+      </FileRef>
+      <FileRef
+         location = "group:cJSON.h">
+      </FileRef>
+   </Group>
 </Workspace>

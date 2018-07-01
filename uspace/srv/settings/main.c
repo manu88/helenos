@@ -28,6 +28,7 @@
 
 #include <stdio.h>
 #include <async.h>
+
 #include <ipc/services.h>
 #include <task.h>
 #include <ipc/corecfg.h>
@@ -40,9 +41,13 @@
 
 #include "IPCCommons.h"
 
+
+static size_t numClients = 0;
+
 static void onClient(cap_call_handle_t icall_handle, ipc_call_t *icall, void *arg)
 {
-    printf("Got a new client \n");
+    numClients++;
+    printf("Got a new client  %lu \n" , numClients);
     /* Accept the connection */
     async_answer_0(icall_handle, EOK);
     
@@ -50,19 +55,78 @@ static void onClient(cap_call_handle_t icall_handle, ipc_call_t *icall, void *ar
     while (true)
     {
         ipc_call_t call;
+        
         cap_call_handle_t chandle = async_get_call(&call);
         sysarg_t method = IPC_GET_IMETHOD(call);
         
         if (!method)
         {
             /* The other side has hung up */
-            printf("Client has hung up \n");
+            
+            numClients--;
+            printf("Client has hung up %lu \n" , numClients);
             async_answer_0(chandle, EOK);
             return;
         }
         else if (method == SettingsIPC_Messages_Test)
         {
             printf("Got SettingsIPC_Messages_Test \n");
+            /*
+            cap_call_handle_t callid;
+            size_t len;
+            if (!async_data_write_receive(&callid, &len))
+            {
+                printf("But client is not sending datas ... \n");
+                // Protocol error - the sender is not sending data
+            }
+            
+            printf("Got datas! size %lu\n",len);
+            
+            // Success, the receive phase is complete
+             */
+            
+            
+            char *data;
+            size_t size;
+            errno_t rc = async_data_write_accept((void **) &data, false, 0, 0, 0, &size);
+            if (rc != EOK) {
+                async_answer_0(chandle, rc);
+                break;
+            }
+            
+            printf("Got a size %lu\n", size);
+            
+            printf("Got Data %s\n", data);
+            async_answer_0(chandle, EOK);
+            /*
+            cap_call_handle_t chandle2;
+            
+            
+            rc = async_data_read_receive(&chandle2, &size);
+            if ( rc != EOK)
+            {
+                async_answer_0(chandle2, EINVAL);
+                async_answer_0(chandle, EINVAL);
+                
+                printf("Error async_data_read_receive %i %s\n",rc ,str_error(rc) );
+                break;
+            }
+            
+            
+            char *clip_data = NULL;
+            
+            errno_t retval = async_data_read_finalize(chandle2, clip_data, size);
+            if (retval != EOK)
+            {
+                async_answer_0(chandle, retval);
+            }
+            else
+            {
+                printf("Got Data %s\n", clip_data);
+                async_answer_0(chandle, EOK);
+            }
+             */
+            
         }
         else
         {
@@ -98,7 +162,7 @@ int main(int argc, char *argv[])
     }
 
 
-	//task_retval(0);
+	task_retval(0);
 	async_manager();
 
 	return 0;

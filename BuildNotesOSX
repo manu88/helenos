@@ -65,6 +65,7 @@ http://www.helenos.org/wiki/Tutorial
 create image disk
 dd if=/dev/zero of=disk.img bs=4096 count=1024
 
+qemu arg -hda disk.img
 in HelenOS
 loc show-cat disk
 mkfat --type 12 devices/\hw\pci0\00:01.0\ata-c1\d0

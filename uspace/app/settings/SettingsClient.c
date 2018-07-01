@@ -28,12 +28,17 @@
 
 #include <SettingsClient.h>
 #include <stddef.h>
-
+#include <stdlib.h>
+#include <str.h>
 #include <assert.h>
 
-bool SettingsClientInit(SettingsClient* client)
+bool SettingsClientInit(SettingsClient* client, const char* clientID)
 {
     assert(client);
+    assert(clientID);
+    
+    
+    client->clientID = str_dup(clientID);
     
     return true;
     
@@ -42,6 +47,8 @@ bool SettingsClientInit(SettingsClient* client)
 void SettingsClientDeInit(SettingsClient* client)
 {
     assert(client);
+    
+    free( client->clientID);
 }
 
 
@@ -70,5 +77,5 @@ const char* SettingsClientGetValueForKey(const SettingsClient* client , const ch
 {
     assert(client);
     
-    return NULL;
+    return DataStoreGetValueForKey( &client->ds, key);
 }

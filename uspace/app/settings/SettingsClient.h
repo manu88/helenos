@@ -34,10 +34,10 @@
 typedef struct
 {
     DataStore ds;
-    
+    char* clientID;
 } SettingsClient;
 
-bool SettingsClientInit(SettingsClient* client);
+bool SettingsClientInit(SettingsClient* client, const char* clientID);
 void SettingsClientDeInit(SettingsClient* client);
 
 

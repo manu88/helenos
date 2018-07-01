@@ -51,6 +51,12 @@ static bool TraverseDB(DataStore* dataStore,DBItem *item, void *context)
 int main( int argc , char* argv[])
 {
     
+    if (argc <2)
+    {
+        printf("Usage ... \n");
+        return 1;
+    }
+    
     service_id_t reg_dsid;
     errno_t rc = loc_service_get_id(NAME, &reg_dsid, 0);
     if (rc != EOK)
@@ -71,29 +77,49 @@ int main( int argc , char* argv[])
     
     printf("loc_service_connect OK \n");
     
+    //
     
     async_exch_t *exch = async_exchange_begin(reg_sess);
     
-    sysarg_t retVal = 0;
-    errno_t ret = async_req_0_1(exch, SettingsIPC_Messages_Test ,&retVal/*, x, y, width, height*/);
+    aid_t req = async_send_1(exch, SettingsIPC_Messages_Test, 1,
+                             NULL);
+    
+    const char* str = argv[1];//"hello";
+    size_t size = str_length(str);
+    rc = async_data_write_start(exch, (void *) str, size);
     async_exchange_end(exch);
+    
+    if (rc != EOK)
+    {
+        printf("Err async_data_write_start %i %s\n" , rc, str_error(rc));
+    }
+    
+    
+    
+    async_wait_for(req, &rc);
+    
+    /*
+    async_exch_t *exch = async_exchange_begin(reg_sess);
+    
+    
+    sysarg_t retVal = 0;
+    errno_t ret = async_req_0_1(exch, SettingsIPC_Messages_Test ,&retVal);
     
     if (ret != EOK)
     {
         printf("Err async_req_1_0 %i\n" , ret);
-        
     }
     
     
+    async_exchange_end(exch);
     
-    if (argc <2)
-    {
-        printf("Usage ... \n");
-        return 1;
-    }
+     */
+    
+    
+    
     SettingsClient client;
     
-    if ( SettingsClientInit(&client) == false)
+    if ( SettingsClientInit(&client, "TheClientID") == false)
     {
         printf("Unable to initialize SettingsClient\n");
         return 2;
@@ -106,9 +132,9 @@ int main( int argc , char* argv[])
     
     printf("+DS Size %lu\n" , DataStoreGetSize(&client.ds));
     
-    printf("Value for key Key1 : '%s'\n" , DataStoreGetValueForKey(&client.ds , "Key1"));
-    printf("Value for key Key2 : '%s'\n" , DataStoreGetValueForKey(&client.ds , "Key2"));
-    printf("Value for key Key3 : '%s'\n" , DataStoreGetValueForKey(&client.ds , "Key3"));
+    printf("Value for key Key1 : '%s'\n" , SettingsClientGetValueForKey(&client , "Key1"));
+    printf("Value for key Key2 : '%s'\n" , SettingsClientGetValueForKey(&client , "Key2"));
+    printf("Value for key Key3 : '%s'\n" , SettingsClientGetValueForKey(&client , "Key3"));
     
     
     printf("--- Iterate ----- \n");
