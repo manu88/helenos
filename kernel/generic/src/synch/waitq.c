@@ -56,6 +56,7 @@
 #include <context.h>
 #include <adt/list.h>
 #include <arch/cycle.h>
+#include <mem.h>
 
 static void waitq_sleep_timed_out(void *);
 static void waitq_complete_wakeup(waitq_t *);
@@ -70,9 +71,9 @@ static void waitq_complete_wakeup(waitq_t *);
  */
 void waitq_initialize(waitq_t *wq)
 {
+	memsetb(wq, sizeof(*wq), 0);
 	irq_spinlock_initialize(&wq->lock, "wq.lock");
 	list_initialize(&wq->sleepers);
-	wq->missed_wakeups = 0;
 }
 
 /** Handle timeout during waitq_sleep_timeout() call
@@ -113,6 +114,8 @@ grab_locks:
 		list_remove(&thread->wq_link);
 		thread->saved_context = thread->sleep_timeout_context;
 		do_wakeup = true;
+		if (thread->sleep_composable)
+			wq->ignore_wakeups++;
 		thread->sleep_queue = NULL;
 		irq_spinlock_unlock(&wq->lock, false);
 	}
@@ -175,6 +178,8 @@ grab_locks:
 
 		list_remove(&thread->wq_link);
 		thread->saved_context = thread->sleep_interruption_context;
+		if (thread->sleep_composable)
+			wq->ignore_wakeups++;
 		do_wakeup = true;
 		thread->sleep_queue = NULL;
 		irq_spinlock_unlock(&wq->lock, false);
@@ -184,41 +189,6 @@ grab_locks:
 
 	if (do_wakeup)
 		thread_ready(thread);
-}
-
-/** Interrupt the first thread sleeping in the wait queue.
- *
- * Note that the caller somehow needs to know that the thread to be interrupted
- * is sleeping interruptibly.
- *
- * @param wq Pointer to wait queue.
- *
- */
-void waitq_unsleep(waitq_t *wq)
-{
-	irq_spinlock_lock(&wq->lock, true);
-
-	if (!list_empty(&wq->sleepers)) {
-		thread_t *thread = list_get_instance(list_first(&wq->sleepers),
-		    thread_t, wq_link);
-
-		irq_spinlock_lock(&thread->lock, false);
-
-		assert(thread->sleep_interruptible);
-
-		if ((thread->timeout_pending) &&
-		    (timeout_unregister(&thread->sleep_timeout)))
-			thread->timeout_pending = false;
-
-		list_remove(&thread->wq_link);
-		thread->saved_context = thread->sleep_interruption_context;
-		thread->sleep_queue = NULL;
-
-		irq_spinlock_unlock(&thread->lock, false);
-		thread_ready(thread);
-	}
-
-	irq_spinlock_unlock(&wq->lock, true);
 }
 
 #define PARAM_NON_BLOCKING(flags, usec) \
@@ -393,6 +363,8 @@ errno_t waitq_sleep_timeout_unsafe(waitq_t *wq, uint32_t usec, unsigned int flag
 	 */
 	irq_spinlock_lock(&THREAD->lock, false);
 
+	THREAD->sleep_composable = (flags & SYNCH_FLAGS_FUTEX);
+
 	if (flags & SYNCH_FLAGS_INTERRUPTIBLE) {
 		/*
 		 * If the thread was already interrupted,
@@ -536,6 +508,14 @@ void _waitq_wakeup_unsafe(waitq_t *wq, wakeup_mode_t mode)
 
 	assert(interrupts_disabled());
 	assert(irq_spinlock_locked(&wq->lock));
+
+	if (wq->ignore_wakeups > 0) {
+		if (mode == WAKEUP_FIRST) {
+			wq->ignore_wakeups--;
+			return;
+		}
+		wq->ignore_wakeups = 0;
+	}
 
 loop:
 	if (list_empty(&wq->sleepers)) {

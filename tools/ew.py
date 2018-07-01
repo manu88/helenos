@@ -145,6 +145,9 @@ def qemu_nic_e1k_options():
 def qemu_nic_rtl8139_options():
 	return ' -device rtl8139,vlan=0'
 
+def qemu_nic_virtio_options():
+	return ' -device virtio-net,vlan=0'
+
 def qemu_net_options():
 	if is_override('nonet'):
 		return ''
@@ -157,6 +160,8 @@ def qemu_net_options():
 			nic_options += qemu_nic_rtl8139_options()
 		if 'ne2k' in overrides['net'].keys():
 			nic_options += qemu_nic_ne2k_options()
+		if 'virtio-net' in overrides['net'].keys():
+			nic_options += qemu_nic_virtio_options()
 	else:
 		# Use the default NIC
 		nic_options += qemu_nic_e1k_options()
@@ -210,6 +215,9 @@ def qemu_run(platform, machine, processor):
 
 	if (is_override('nographic')):
 		cmdline += ' -nographic'
+
+	if ((not is_override('nographic')) and not is_override('noserial')):
+		cmdline += ' -serial stdio'
 
 	if (is_override('bigmem')):
 		cmdline += ' -m 4G'
@@ -325,7 +333,7 @@ emulators = {
 
 def usage():
 	print("%s - emulator wrapper for running HelenOS\n" % os.path.basename(sys.argv[0]))
-	print("%s [-d] [-h] [-net e1k|rtl8139|ne2k] [-nohdd] [-nokvm] [-nonet] [-nosnd] [-nousb] [-noxhci] [-notablet]\n" %
+	print("%s [-d] [-h] [-net e1k|rtl8139|ne2k|virtio-net] [-nohdd] [-nokvm] [-nonet] [-nosnd] [-nousb] [-noxhci] [-notablet]\n" %
 	    os.path.basename(sys.argv[0]))
 	print("-d\tDry run: do not run the emulation, just print the command line.")
 	print("-h\tPrint the usage information and exit.")
@@ -337,6 +345,7 @@ def usage():
 	print("-noxhci\tDisable XHCI support, if applicable.")
 	print("-notablet\tDisable USB tablet (use only relative-position PS/2 mouse instead), if applicable.")
 	print("-nographic\tDisable graphical output. Serial port output must be enabled for this to be useful.")
+	print("-noserial\tDisable serial port output in the terminal.")
 	print("-bigmem\tSets maximum RAM size to 4GB.")
 
 def fail(platform, machine):
@@ -359,6 +368,8 @@ def run():
 				overrides['net']['rtl8139'] = True
 			elif sys.argv[i] == 'ne2k':
 				overrides['net']['ne2k'] = True
+			elif sys.argv[i] == 'virtio-net':
+				overrides['net']['virtio-net'] = True
 			else:
 				usage()
 				exit()
@@ -393,6 +404,8 @@ def run():
 			overrides['nographic'] = True
 		elif sys.argv[i] == '-bigmem':
 			overrides['bigmem'] = True
+		elif sys.argv[i] == '-noserial':
+			overrides['noserial'] = True
 		elif sys.argv[i] == '-qemu_path' and i < len(sys.argv) - 1:
 			expect_qemu = True
 		else:

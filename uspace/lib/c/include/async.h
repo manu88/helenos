@@ -50,6 +50,8 @@
 #include <abi/ipc/interfaces.h>
 #include <abi/cap.h>
 
+#include <_bits/__noreturn.h>
+
 typedef sysarg_t aid_t;
 typedef sysarg_t port_id_t;
 
@@ -107,11 +109,7 @@ struct async_sess;
 typedef struct async_sess async_sess_t;
 typedef struct async_exch async_exch_t;
 
-#define async_manager() \
-	do { \
-		futex_down(&async_futex); \
-		fibril_switch(FIBRIL_FROM_DEAD); \
-	} while (0)
+extern __noreturn void async_manager(void);
 
 #define async_get_call(data) \
 	async_get_call_timeout(data, 0)

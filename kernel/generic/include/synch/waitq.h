@@ -61,6 +61,9 @@ typedef struct {
 	 */
 	int missed_wakeups;
 
+	/** Number of wakeups that need to be ignored due to futex timeout. */
+	int ignore_wakeups;
+
 	/** List of sleeping threads for which there was no missed_wakeup. */
 	list_t sleepers;
 } waitq_t;
@@ -78,7 +81,6 @@ extern void waitq_sleep_finish(waitq_t *, bool, ipl_t);
 extern void waitq_wakeup(waitq_t *, wakeup_mode_t);
 extern void _waitq_wakeup_unsafe(waitq_t *, wakeup_mode_t);
 extern void waitq_interrupt_sleep(struct thread *);
-extern void waitq_unsleep(waitq_t *);
 extern int waitq_count_get(waitq_t *);
 extern void waitq_count_set(waitq_t *, int val);
 

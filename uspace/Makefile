@@ -78,6 +78,7 @@ DIRS = \
 	app/top \
 	app/untar \
 	app/usbinfo \
+	app/vol \
 	app/vuhid \
 	app/nic \
 	app/ping \
@@ -181,6 +182,7 @@ DIRS = \
 	drv/nic/rtl8139 \
 	drv/nic/rtl8169 \
 	drv/nic/ar9271 \
+	drv/nic/virtio-net \
 	drv/platform/amdm37x \
 	drv/platform/icp \
 	drv/platform/mac \
@@ -258,8 +260,7 @@ LIBS = \
 	lib/posix \
 	lib/ieee80211 \
 	lib/AppKit \
-
-
+	lib/virtio
 
 
 BASE_BUILDS := $(addsuffix .build,$(BASE_LIBS))

@@ -139,6 +139,7 @@ RD_DRVS_NON_ESSENTIAL = \
 	nic/rtl8139 \
 	nic/rtl8169 \
 	nic/ar9271 \
+	nic/virtio-net \
 	block/ahci
 
 RD_DRV_CFG =
@@ -216,6 +217,7 @@ RD_APPS_NON_ESSENTIAL = \
 	$(USPACE_PATH)/app/top/top \
 	$(USPACE_PATH)/app/untar/untar \
 	$(USPACE_PATH)/app/usbinfo/usbinfo \
+	$(USPACE_PATH)/app/vol/vol \
 	$(USPACE_PATH)/app/vuhid/vuh \
 	$(USPACE_PATH)/app/mkbd/mkbd \
 	$(USPACE_PATH)/app/websrv/websrv \

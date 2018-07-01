@@ -57,7 +57,7 @@ extern long double strtold(const char *__restrict__ nptr, char **__restrict__ en
 extern int mkstemp(char *tmpl);
 
 /* Legacy Declarations */
-extern char *mktemp(char *tmpl);
+extern char *mktemp(char *tmpl) __attribute__((deprecated));
 extern int bsd_getloadavg(double loadavg[], int nelem);
 
 #endif  // POSIX_STDLIB_H_
